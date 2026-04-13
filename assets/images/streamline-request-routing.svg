@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 440" width="840" height="440">
+  <defs>
+    <marker id="arr-f" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,1 L9,5 L0,9 Z" fill="#4da6ff"/>
+    </marker>
+    <marker id="arr-r" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,1 L9,5 L0,9 Z" fill="#888888"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="840" height="440" fill="#111111"/>
+
+  <!-- ── Participant header boxes ─────────────────────────────────────────── -->
+
+  <rect x="20"  y="14" width="100" height="36" rx="5" fill="#1e1e1e" stroke="#333" stroke-width="1.5"/>
+  <text x="70"  y="37" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="12" font-weight="600" fill="#cccccc" text-anchor="middle">Browser</text>
+
+  <rect x="170" y="14" width="115" height="36" rx="5" fill="#1e1e1e" stroke="#4da6ff" stroke-width="1.5"/>
+  <text x="227" y="37" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="12" font-weight="600" fill="#4da6ff" text-anchor="middle">CloudFront</text>
+
+  <rect x="335" y="14" width="90" height="36" rx="5" fill="#1e1e1e" stroke="#333" stroke-width="1.5"/>
+  <text x="380" y="37" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="12" font-weight="600" fill="#cccccc" text-anchor="middle">S3</text>
+
+  <rect x="480" y="14" width="96" height="36" rx="5" fill="#1e1e1e" stroke="#333" stroke-width="1.5"/>
+  <text x="528" y="37" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="12" font-weight="600" fill="#cccccc" text-anchor="middle">Lambda</text>
+
+  <rect x="636" y="14" width="100" height="36" rx="5" fill="#1e1e1e" stroke="#333" stroke-width="1.5"/>
+  <text x="686" y="37" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="12" font-weight="600" fill="#cccccc" text-anchor="middle">IVS</text>
+
+  <!-- ── Swimlane vertical lines ──────────────────────────────────────────── -->
+  <g stroke="#2a2a2a" stroke-width="1" stroke-dasharray="4,4">
+    <line x1="70"  y1="50" x2="70"  y2="425"/>
+    <line x1="227" y1="50" x2="227" y2="425"/>
+    <line x1="380" y1="50" x2="380" y2="425"/>
+    <line x1="528" y1="50" x2="528" y2="425"/>
+    <line x1="686" y1="50" x2="686" y2="425"/>
+  </g>
+
+  <!-- ── Group separators and labels ──────────────────────────────────────── -->
+
+  <!-- Group 1: Player page -->
+  <rect x="12" y="56" width="816" height="22" rx="3" fill="#1a1a1a"/>
+  <text x="24" y="71" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="11" fill="#666666">Player page (first load)</text>
+
+  <!-- Group 2: Status poll -->
+  <rect x="12" y="196" width="816" height="22" rx="3" fill="#1a1a1a"/>
+  <text x="24" y="211" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="11" fill="#666666">Status poll — every 15 s</text>
+
+  <!-- Group 3: HLS playback -->
+  <rect x="12" y="316" width="816" height="22" rx="3" fill="#1a1a1a"/>
+  <text x="24" y="331" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="11" fill="#666666">HLS playback</text>
+
+  <!-- ── Group 1 arrows  (page load) ──────────────────────────────────────── -->
+
+  <!-- Browser → CloudFront: GET / -->
+  <line x1="72" y1="98" x2="224" y2="98" stroke="#4da6ff" stroke-width="1.5" marker-end="url(#arr-f)"/>
+  <text x="148" y="93" font-family="monospace" font-size="10" fill="#4da6ff" text-anchor="middle">GET /</text>
+
+  <!-- CloudFront → S3: GET /* OAC-signed -->
+  <line x1="229" y1="116" x2="378" y2="116" stroke="#4da6ff" stroke-width="1.5" marker-end="url(#arr-f)"/>
+  <text x="303" y="111" font-family="monospace" font-size="10" fill="#4da6ff" text-anchor="middle">GET /* (OAC-signed)</text>
+
+  <!-- S3 → CloudFront: index.html -->
+  <line x1="378" y1="134" x2="230" y2="134" stroke="#888888" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr-r)"/>
+  <text x="303" y="129" font-family="monospace" font-size="10" fill="#888888" text-anchor="middle">index.html</text>
+
+  <!-- CloudFront → Browser: 200 must-revalidate -->
+  <line x1="225" y1="152" x2="73" y2="152" stroke="#888888" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr-r)"/>
+  <text x="149" y="147" font-family="monospace" font-size="10" fill="#888888" text-anchor="middle">200  must-revalidate</text>
+
+  <!-- ── Group 2 arrows  (status poll) ────────────────────────────────────── -->
+
+  <!-- Browser → CloudFront: GET /api/stream -->
+  <line x1="72" y1="238" x2="224" y2="238" stroke="#4da6ff" stroke-width="1.5" marker-end="url(#arr-f)"/>
+  <text x="148" y="233" font-family="monospace" font-size="10" fill="#4da6ff" text-anchor="middle">GET /api/stream</text>
+
+  <!-- CloudFront → Lambda: SigV4 signed -->
+  <line x1="229" y1="256" x2="526" y2="256" stroke="#4da6ff" stroke-width="1.5" marker-end="url(#arr-f)"/>
+  <text x="376" y="251" font-family="monospace" font-size="10" fill="#4da6ff" text-anchor="middle">SigV4 (OAC-signed)</text>
+
+  <!-- Lambda → CloudFront: JSON response -->
+  <line x1="526" y1="274" x2="230" y2="274" stroke="#888888" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr-r)"/>
+  <text x="376" y="269" font-family="monospace" font-size="9" fill="#888888" text-anchor="middle">&#123;"status":"live","playbackUrl":"…","dvr":&#123;…&#125;&#125;</text>
+
+  <!-- CloudFront → Browser: 200 no-cache -->
+  <line x1="225" y1="292" x2="73" y2="292" stroke="#888888" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr-r)"/>
+  <text x="149" y="287" font-family="monospace" font-size="10" fill="#888888" text-anchor="middle">200  no-cache</text>
+
+  <!-- ── Group 3 arrows  (HLS playback) ───────────────────────────────────── -->
+
+  <!-- Browser → CloudFront: GET /hls/master.m3u8 -->
+  <line x1="72" y1="358" x2="224" y2="358" stroke="#4da6ff" stroke-width="1.5" marker-end="url(#arr-f)"/>
+  <text x="148" y="353" font-family="monospace" font-size="10" fill="#4da6ff" text-anchor="middle">GET /hls/master.m3u8</text>
+
+  <!-- CloudFront → IVS: GET /hls/master.m3u8 -->
+  <line x1="229" y1="376" x2="684" y2="376" stroke="#4da6ff" stroke-width="1.5" marker-end="url(#arr-f)"/>
+  <text x="456" y="371" font-family="monospace" font-size="10" fill="#4da6ff" text-anchor="middle">GET /hls/master.m3u8</text>
+
+  <!-- IVS → CloudFront: HLS manifest -->
+  <line x1="684" y1="394" x2="230" y2="394" stroke="#888888" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr-r)"/>
+  <text x="456" y="389" font-family="monospace" font-size="10" fill="#888888" text-anchor="middle">HLS manifest</text>
+
+  <!-- CloudFront → Browser: 200 TTL 5s -->
+  <line x1="225" y1="412" x2="73" y2="412" stroke="#888888" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr-r)"/>
+  <text x="149" y="407" font-family="monospace" font-size="10" fill="#888888" text-anchor="middle">200  TTL: 5 s</text>
+</svg>

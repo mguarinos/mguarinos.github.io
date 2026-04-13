@@ -13,7 +13,7 @@ Most of what ends up here is hard-won: things that weren't obvious from the docs
 <div class="about-section">
 <h3>Focus areas</h3>
 <ul>
-  <li>AWS serverless (Lambda, IVS, EventBridge)</li>
+  <li>AWS serverless</li>
   <li>Infrastructure as code (Terraform)</li>
   <li>CI/CD and GitOps</li>
   <li>Observability and reliability</li>
@@ -24,10 +24,11 @@ Most of what ends up here is hard-won: things that weren't obvious from the docs
 <div class="about-section">
 <h3>Stack</h3>
 <ul>
-  <li>AWS · GCP</li>
-  <li>Terraform · CDK</li>
-  <li>Node.js · TypeScript · Python</li>
-  <li>GitHub Actions · ArgoCD</li>
+  <li>AWS</li>
+  <li>Terraform</li>
+  <li>Node.js · Python</li>
+  <li>GitHub Actions · ArgoCD </li>
+  <li>Kubernetes</li>
   <li>PostgreSQL · Redis</li>
 </ul>
 </div>

@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 210" width="760" height="210">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,1 L9,5 L0,9 Z" fill="#cccccc"/>
+    </marker>
+    <marker id="arr-live" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,1 L9,5 L0,9 Z" fill="#e63946"/>
+    </marker>
+    <marker id="arr-idle" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,1 L9,5 L0,9 Z" fill="#4da6ff"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="760" height="210" fill="#111111"/>
+
+  <!-- Initial state indicator -->
+  <circle cx="54" cy="105" r="8" fill="#cccccc"/>
+  <line x1="62" y1="105" x2="118" y2="105" stroke="#cccccc" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- ── State boxes ──────────────────────────────────────────────────────── -->
+
+  <!-- idle -->
+  <rect x="120" y="75" width="160" height="60" rx="30"
+        fill="#1a1a1a" stroke="#4da6ff" stroke-width="2"/>
+  <text x="200" y="101" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="14" font-weight="600" fill="#cccccc" text-anchor="middle">idle</text>
+  <text x="200" y="120" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="10" fill="#666666" text-anchor="middle">player shows offline</text>
+
+  <!-- live -->
+  <rect x="480" y="75" width="160" height="60" rx="30"
+        fill="#1a1a1a" stroke="#e63946" stroke-width="2"/>
+  <text x="560" y="101" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="14" font-weight="600" fill="#cccccc" text-anchor="middle">live</text>
+  <text x="560" y="120" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="10" fill="#666666" text-anchor="middle">DVR window active</text>
+
+  <!-- ── Transition arrows ─────────────────────────────────────────────────── -->
+
+  <!-- idle → live  (upper arc) -->
+  <path d="M 278,88 C 340,38 420,38 479,88"
+        fill="none" stroke="#e63946" stroke-width="1.5" marker-end="url(#arr-live)"/>
+  <text x="378" y="44" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="10" fill="#e63946" text-anchor="middle">IVS Stream Start</text>
+  <text x="378" y="58" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="10" fill="#666666" text-anchor="middle">EventBridge → Lambda → SSM</text>
+
+  <!-- live → idle  (lower arc) -->
+  <path d="M 481,122 C 420,170 340,170 280,122"
+        fill="none" stroke="#4da6ff" stroke-width="1.5" marker-end="url(#arr-idle)"/>
+  <text x="378" y="166" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="10" fill="#4da6ff" text-anchor="middle">IVS Stream End / Failure</text>
+  <text x="378" y="180" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="10" fill="#666666" text-anchor="middle">EventBridge → Lambda → SSM</text>
+</svg>

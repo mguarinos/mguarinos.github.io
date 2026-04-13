@@ -19,33 +19,7 @@ This post walks through the architecture of [Streamline](https://github.com/mgua
 
 The whole system fits in one diagram. A broadcaster pushes RTMP to IVS. Viewers hit a single CloudFront distribution that fans out to three origins depending on the URL path. A side channel — EventBridge → Lambda → SSM — keeps stream state without any polling.
 
-```mermaid
-flowchart LR
-    OBS["Broadcaster\nOBS · Larix · GoPro"]
-
-    subgraph AWS
-        IVS["AWS IVS\nRTMP ingest\nLL-HLS transcode\n4h DVR window"]
-        EB["EventBridge"]
-        LMB["Lambda\nstream status API\nstate handler"]
-        SSM["SSM Parameter Store\nstream state"]
-        CF["CloudFront\nsingle distribution"]
-        S3["S3\nstatic player page"]
-    end
-
-    Browser["Viewer browser\nVideo.js + HLS.js"]
-
-    OBS -->|RTMP| IVS
-    IVS -->|HLS segments| CF
-    IVS -->|Stream Start / End| EB
-    EB -->|invoke| LMB
-    LMB <-->|read / write| SSM
-
-    CF -->|"/hls/*  TTL 5s"| IVS
-    CF -->|"/api/*  no cache"| LMB
-    CF -->|"/*  immutable"| S3
-
-    Browser -->|HTTPS| CF
-```
+![Streamline architecture — broadcaster to viewer via IVS and CloudFront, with EventBridge/Lambda/SSM state side channel](/assets/images/streamline-architecture.svg)
 
 There is no media server. There is no recording bucket. IVS handles ingest and transcode entirely on its own infrastructure. CloudFront is the only public surface — the S3 bucket and Lambda function URL both reject requests that don't come through CloudFront.
 
@@ -69,35 +43,7 @@ Configuring OBS is a two-field job: paste the `ingest_endpoint` Terraform output
 
 A single CloudFront distribution handles three completely different types of traffic. The path prefix determines which origin receives the request:
 
-```mermaid
-sequenceDiagram
-    participant B as Browser
-    participant CF as CloudFront
-    participant S3 as S3<br/>(player page)
-    participant L as Lambda<br/>(status API)
-    participant IVS as IVS<br/>(HLS segments)
-
-    Note over B,IVS: First load — player page
-
-    B->>CF: GET /
-    CF->>S3: GET / (OAC-signed)
-    S3-->>CF: index.html
-    CF-->>B: 200  Cache-Control: must-revalidate
-
-    Note over B,IVS: Status poll (every 15s)
-
-    B->>CF: GET /api/stream
-    CF->>L: POST (SigV4 OAC-signed)
-    L-->>CF: {"status":"live","playbackUrl":"...","dvr":{...}}
-    CF-->>B: 200  Cache-Control: no-cache
-
-    Note over B,IVS: HLS playback
-
-    B->>CF: GET /hls/master.m3u8
-    CF->>IVS: GET /hls/master.m3u8
-    IVS-->>CF: HLS manifest
-    CF-->>B: 200  TTL: 5s
-```
+![Request routing — CloudFront fans out to S3 (player page), Lambda (status API), and IVS (HLS segments) based on path prefix](/assets/images/streamline-request-routing.svg)
 
 Each origin has its own cache policy:
 - **S3** (`/*`): `index.html` gets `must-revalidate` (always fresh); other assets get `immutable` (hash in filename, 1-year TTL)
@@ -110,15 +56,7 @@ Each origin has its own cache policy:
 
 The player needs to know whether a stream is live before it tries to load an HLS manifest. The naive approach — calling IVS `GetStream` on every API request — adds unnecessary latency and cost at scale. The approach here is event-driven:
 
-```mermaid
-stateDiagram-v2
-    direction LR
-    [*] --> idle : Terraform sets initial state
-
-    idle --> live : IVS "Stream Start"\nEventBridge triggers Lambda\nLambda writes {status: live} to SSM
-
-    live --> idle : IVS "Stream End" or "Stream Failure"\nEventBridge triggers Lambda\nLambda writes {status: idle} to SSM
-```
+![Stream state machine — idle and live states driven by IVS events via EventBridge and Lambda](/assets/images/streamline-state-machine.svg)
 
 When a broadcaster goes live, IVS fires a `Stream Start` event to EventBridge. EventBridge invokes Lambda, which writes `{"status":"live","updatedAt":"..."}` to an SSM Parameter. When the stream ends or fails, the same path runs in reverse.
 

@@ -1,0 +1,130 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 370" width="900" height="370">
+  <defs>
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,1 L9,5 L0,9 Z" fill="#4da6ff"/>
+    </marker>
+    <marker id="arr-red" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,1 L9,5 L0,9 Z" fill="#e63946"/>
+    </marker>
+    <marker id="arr-gray" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,1 L9,5 L0,9 Z" fill="#666666"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="370" fill="#111111"/>
+
+  <!-- AWS boundary -->
+  <rect x="210" y="22" width="588" height="322" rx="8"
+        fill="none" stroke="#2a2a2a" stroke-width="1.5" stroke-dasharray="6,3"/>
+  <text x="226" y="37" font-family="monospace" font-size="11" fill="#444444">AWS</text>
+
+  <!-- ── Boxes ─────────────────────────────────────────────────────────────── -->
+
+  <!-- Broadcaster -->
+  <rect x="18" y="60" width="142" height="62" rx="6"
+        fill="#1a1a1a" stroke="#333333" stroke-width="1.5"/>
+  <text x="89" y="85" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="12" font-weight="600" fill="#cccccc" text-anchor="middle">Broadcaster</text>
+  <text x="89" y="103" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="10" fill="#666666" text-anchor="middle">OBS · Larix · GoPro</text>
+
+  <!-- IVS -->
+  <rect x="228" y="44" width="158" height="84" rx="6"
+        fill="#1a1a1a" stroke="#333333" stroke-width="1.5"/>
+  <text x="307" y="70" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="12" font-weight="600" fill="#cccccc" text-anchor="middle">AWS IVS</text>
+  <text x="307" y="87" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="10" fill="#666666" text-anchor="middle">RTMP ingest · LL-HLS</text>
+  <text x="307" y="103" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="10" fill="#666666" text-anchor="middle">4-hour DVR window</text>
+
+  <!-- CloudFront -->
+  <rect x="488" y="54" width="175" height="72" rx="6"
+        fill="#1a1a1a" stroke="#333333" stroke-width="1.5"/>
+  <text x="575" y="78" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="12" font-weight="600" fill="#cccccc" text-anchor="middle">CloudFront</text>
+  <text x="575" y="94" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="10" fill="#666666" text-anchor="middle">/hls/* → IVS · /api/* → Lambda</text>
+  <text x="575" y="108" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="10" fill="#666666" text-anchor="middle">/* → S3</text>
+
+  <!-- Viewer -->
+  <rect x="762" y="60" width="120" height="62" rx="6"
+        fill="#1a1a1a" stroke="#333333" stroke-width="1.5"/>
+  <text x="822" y="85" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="12" font-weight="600" fill="#cccccc" text-anchor="middle">Viewer</text>
+  <text x="822" y="103" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="10" fill="#666666" text-anchor="middle">Video.js + HLS.js</text>
+
+  <!-- EventBridge -->
+  <rect x="228" y="240" width="142" height="46" rx="6"
+        fill="#1a1a1a" stroke="#333333" stroke-width="1.5"/>
+  <text x="299" y="261" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="11" font-weight="600" fill="#cccccc" text-anchor="middle">EventBridge</text>
+  <text x="299" y="277" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="10" fill="#666666" text-anchor="middle">IVS stream events</text>
+
+  <!-- Lambda -->
+  <rect x="430" y="230" width="160" height="64" rx="6"
+        fill="#1a1a1a" stroke="#333333" stroke-width="1.5"/>
+  <text x="510" y="254" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="11" font-weight="600" fill="#cccccc" text-anchor="middle">Lambda</text>
+  <text x="510" y="270" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="10" fill="#666666" text-anchor="middle">status API · state handler</text>
+  <text x="510" y="284" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="10" fill="#666666" text-anchor="middle">Node 22 · IAM URL auth</text>
+
+  <!-- SSM -->
+  <rect x="648" y="240" width="134" height="46" rx="6"
+        fill="#1a1a1a" stroke="#333333" stroke-width="1.5"/>
+  <text x="715" y="261" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="11" font-weight="600" fill="#cccccc" text-anchor="middle">SSM Parameter</text>
+  <text x="715" y="277" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="10" fill="#666666" text-anchor="middle">stream state</text>
+
+  <!-- ── Arrows ────────────────────────────────────────────────────────────── -->
+
+  <!-- Broadcaster → IVS  (RTMP) -->
+  <line x1="161" y1="91" x2="226" y2="86"
+        stroke="#4da6ff" stroke-width="1.5" marker-end="url(#arr-blue)"/>
+  <text x="193" y="80" font-family="monospace" font-size="10" fill="#4da6ff" text-anchor="middle">RTMP</text>
+
+  <!-- IVS → CloudFront  (HLS) -->
+  <line x1="387" y1="86" x2="486" y2="86"
+        stroke="#4da6ff" stroke-width="1.5" marker-end="url(#arr-blue)"/>
+  <text x="436" y="79" font-family="monospace" font-size="10" fill="#4da6ff" text-anchor="middle">HLS</text>
+
+  <!-- CloudFront → Viewer  (HTTPS) -->
+  <line x1="664" y1="90" x2="760" y2="90"
+        stroke="#4da6ff" stroke-width="1.5" marker-end="url(#arr-blue)"/>
+  <text x="712" y="83" font-family="monospace" font-size="10" fill="#4da6ff" text-anchor="middle">HTTPS</text>
+
+  <!-- IVS → EventBridge  (stream events, red dashed) -->
+  <line x1="307" y1="129" x2="307" y2="238"
+        stroke="#e63946" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr-red)"/>
+  <text x="328" y="178" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="10" fill="#e63946">Stream</text>
+  <text x="328" y="192" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="10" fill="#e63946">Start / End</text>
+
+  <!-- EventBridge → Lambda  (invoke) -->
+  <line x1="371" y1="263" x2="428" y2="263"
+        stroke="#e63946" stroke-width="1.5" marker-end="url(#arr-red)"/>
+  <text x="399" y="255" font-family="monospace" font-size="10" fill="#e63946" text-anchor="middle">invoke</text>
+
+  <!-- Lambda ↔ SSM  (bidirectional, gray) -->
+  <line x1="591" y1="263" x2="646" y2="263"
+        stroke="#666666" stroke-width="1.5"
+        marker-start="url(#arr-gray)" marker-end="url(#arr-gray)"/>
+  <text x="619" y="255" font-family="monospace" font-size="9" fill="#666666" text-anchor="middle">read/write</text>
+
+  <!-- CloudFront → Lambda  (/api/*, curved dashed gray) -->
+  <path d="M 575,127 C 575,190 510,200 510,228"
+        fill="none" stroke="#555555" stroke-width="1" stroke-dasharray="4,3"
+        marker-end="url(#arr-gray)"/>
+  <text x="558" y="188" font-family="monospace" font-size="9" fill="#555555">/api/*</text>
+</svg>
