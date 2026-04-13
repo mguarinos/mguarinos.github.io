@@ -1,0 +1,128 @@
+---
+---
+
+@import "minima";
+
+// ── Home ─────────────────────────────────────────────────────────────────────
+
+.home-hero {
+  padding: 2rem 0 1.5rem;
+  border-bottom: 1px solid #2a2a2a;
+  margin-bottom: 2rem;
+}
+
+.home-bio {
+  font-size: 1.15rem;
+  color: #aaaaaa;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.post-list-heading {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #666666;
+  margin-bottom: 1.5rem;
+}
+
+.post-list {
+  list-style: none;
+  margin-left: 0;
+}
+
+.post-card {
+  padding: 1.25rem 0;
+  border-bottom: 1px solid #1e1e1e;
+}
+
+.post-card-meta {
+  font-size: 0.8rem;
+  color: #666666;
+  margin-bottom: 0.35rem;
+}
+
+.post-card-title {
+  font-size: 1.1rem;
+  margin: 0 0 0.4rem;
+  font-weight: 600;
+}
+
+.post-card-title a {
+  color: #e8e8e8;
+  text-decoration: none;
+}
+
+.post-card-title a:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+.post-card-excerpt {
+  font-size: 0.9rem;
+  color: #888888;
+  margin: 0;
+  line-height: 1.5;
+}
+
+// ── Tags ─────────────────────────────────────────────────────────────────────
+
+.post-tag {
+  display: inline-block;
+  font-size: 0.75rem;
+  color: #888888;
+  background: #1e1e1e;
+  border: 1px solid #2a2a2a;
+  border-radius: 3px;
+  padding: 0 5px;
+  line-height: 1.6;
+}
+
+// ── About ────────────────────────────────────────────────────────────────────
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+@media (max-width: 600px) {
+  .about-grid { grid-template-columns: 1fr; }
+}
+
+.about-section h3 {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #666666;
+  margin-bottom: 0.75rem;
+}
+
+.about-section ul {
+  list-style: none;
+  margin-left: 0;
+  color: #aaaaaa;
+  font-size: 0.95rem;
+}
+
+.about-section ul li {
+  padding: 0.2rem 0;
+}
+
+// ── Mermaid ───────────────────────────────────────────────────────────────────
+
+.mermaid {
+  margin: 2rem 0;
+  text-align: center;
+  overflow-x: auto;
+}
+
+// ── Post images ───────────────────────────────────────────────────────────────
+
+.post-content img {
+  max-width: 100%;
+  border-radius: 6px;
+  margin: 1.5rem 0;
+  display: block;
+}
