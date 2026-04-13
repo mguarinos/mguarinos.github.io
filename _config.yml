@@ -14,6 +14,12 @@ minima:
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
+  - jekyll-toc
+
+toc:
+  min_level: 2
+  max_level: 3
+  ordered_list: false
 
 markdown: kramdown
 highlighter: rouge
