@@ -13,6 +13,11 @@ layout: default
     {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
     {%- for post in site.posts -%}
     <li class="post-card">
+      {%- if post.image -%}
+        <a href="{{ post.url | relative_url }}">
+          <img src="{{ post.image | relative_url }}" alt="{{ post.title | escape }}" class="post-card-image"/>
+        </a>
+      {%- endif -%}
       <div class="post-card-meta">
         <time class="post-meta" datetime="{{ post.date | date_to_xmlschema }}">
           {{ post.date | date: date_format }}
@@ -28,7 +33,7 @@ layout: default
         <a class="post-link" href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
       </h3>
       {%- if post.excerpt -%}
-        <p class="post-card-excerpt">{{ post.excerpt | strip_html | truncatewords: 30 }}</p>
+        <p class="post-card-excerpt">{{ post.excerpt | strip_html | truncatewords: 150 }}</p>
       {%- endif -%}
     </li>
     {%- endfor -%}

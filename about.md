@@ -4,7 +4,7 @@ title: About
 permalink: /about/
 ---
 
-Cloud Engineer · DevOps · SRE. I build and operate infrastructure on AWS — serverless platforms, CI/CD pipelines, and the glue that keeps systems reliable at scale.
+Cloud Engineer · DevOps · SRE based in Switzerland. I build and operate infrastructure on AWS — serverless platforms, CI/CD pipelines, and the glue that keeps systems reliable at scale.
 
 Most of what ends up here is hard-won: things that weren't obvious from the docs, architecture decisions that took a few iterations to get right, or tools that turned out to be more useful than expected.
 
@@ -37,4 +37,4 @@ Most of what ends up here is hard-won: things that weren't obvious from the docs
 
 ---
 
-Find me on [GitHub](https://github.com/mguarinos).
+Find me on [GitHub](https://github.com/mguarinos) or [LinkedIn](https://www.linkedin.com/in/mguarinos/).

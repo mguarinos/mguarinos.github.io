@@ -3,7 +3,7 @@ layout: post
 title: "Streamline: a serverless live streaming platform with 4-hour DVR on AWS"
 date: 2026-04-13
 categories: [aws, serverless, streaming]
-tags: [aws, ivs, cloudfront, lambda, terraform, typescript]
+tags: [aws, ivs, cloudfront, lambda, terraform]
 image: /assets/images/streamline-header.svg
 ---
 

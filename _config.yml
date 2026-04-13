@@ -1,14 +1,15 @@
-title: mguarinos
+title: Manuel Guarinos
 description: Cloud engineering and SRE notes — AWS, serverless, infrastructure.
 url: "https://mguarinos.github.io"
 baseurl: ""
-author: mguarinos
+author: Manuel Guarinos
 
 theme: minima
 minima:
   skin: dark
   social_links:
-    - { platform: github, user_url: "https://github.com/mguarinos" }
+    - { platform: github,    user_url: "https://github.com/mguarinos" }
+    - { platform: linkedin,  user_url: "https://www.linkedin.com/in/mguarinos/" }
 
 plugins:
   - jekyll-feed
