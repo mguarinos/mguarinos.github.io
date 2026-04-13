@@ -4,7 +4,10 @@ title: "Streamline: a serverless live streaming platform with 4-hour DVR on AWS"
 date: 2026-04-13
 categories: [aws, serverless, streaming]
 tags: [aws, ivs, cloudfront, lambda, terraform, typescript]
+image: /assets/images/streamline-header.svg
 ---
+
+![Streamline — serverless live streaming with 4-hour DVR on AWS](/assets/images/streamline-header.svg)
 
 AWS IVS gives you managed RTMP ingest, LL-HLS transcode, and a built-in 4-hour DVR window. CloudFront gives you a global CDN. Lambda gives you a cold-start-under-200ms API. Put them together with a bit of Terraform and you get a live streaming platform that costs nothing at rest, scales automatically, and lets viewers rewind up to four hours — no S3 recording bucket, no media server, no operational overhead.
 
@@ -53,6 +56,12 @@ There is no media server. There is no recording bucket. IVS handles ingest and t
 IVS STANDARD channels maintain a rolling 4-hour DVR window internally. There is no `recording_configuration_arn`, no S3 bucket, no retention policy. The HLS manifest IVS generates contains the full seekable range. Video.js reads it automatically when you set `liveui: true` — no special URL parameters or player configuration required beyond that flag.
 
 While a stream is live, a viewer can drag the progress bar all the way back to hour zero. Clicking the **LIVE** button snaps back to the live edge instantly. When the stream ends, the DVR segments are discarded — no storage cost, no retention policy to manage, no GDPR surface area for recorded content.
+
+![DVR timeline — drag to rewind up to 4 hours, LIVE button snaps back to the edge](/assets/images/streamline-dvr-timeline.svg)
+
+Configuring OBS is a two-field job: paste the `ingest_endpoint` Terraform output into Server, and the stream key (retrieved from Secrets Manager via the `retrieve_stream_key_command` output) into Stream Key.
+
+![OBS stream settings — Server and Stream Key fields](/assets/images/streamline-obs-settings.svg)
 
 ---
 

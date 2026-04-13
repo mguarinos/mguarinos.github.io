@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 280" width="700" height="280">
+  <!-- Background (OBS dark theme) -->
+  <rect width="700" height="280" rx="8" fill="#1c1c1c"/>
+
+  <!-- Window title bar -->
+  <rect width="700" height="32" rx="8" fill="#2d2d2d"/>
+  <rect y="20" width="700" height="12" fill="#2d2d2d"/>
+  <text x="350" y="21" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+        font-size="13" fill="#cccccc" text-anchor="middle">Settings — Stream</text>
+
+  <!-- Close / min / max dots -->
+  <circle cx="16" cy="16" r="6" fill="#ff5f57"/>
+  <circle cx="36" cy="16" r="6" fill="#febc2e"/>
+  <circle cx="56" cy="16" r="6" fill="#28c840"/>
+
+  <!-- Left nav (simplified) -->
+  <rect x="0" y="32" width="140" height="248" fill="#252525"/>
+  <rect x="0" y="32" width="140" height="248" rx="0" fill="#252525"/>
+
+  <g font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="13" fill="#888888">
+    <text x="20" y="68">General</text>
+    <text x="20" y="98">Broadcast</text>
+    <rect x="0" y="108" width="140" height="28" fill="#3a3a3a"/>
+    <text x="20" y="127" fill="#ffffff">Stream</text>
+    <text x="20" y="158">Output</text>
+    <text x="20" y="188">Audio</text>
+    <text x="20" y="218">Video</text>
+    <text x="20" y="248">Advanced</text>
+  </g>
+
+  <!-- Content area -->
+  <g font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif">
+
+    <!-- Service row -->
+    <text x="162" y="70" font-size="13" fill="#aaaaaa">Service</text>
+    <rect x="280" y="53" width="380" height="26" rx="4" fill="#333333" stroke="#444444" stroke-width="1"/>
+    <text x="292" y="70" font-size="13" fill="#cccccc">Custom…</text>
+    <text x="648" y="70" font-size="13" fill="#666666">▾</text>
+
+    <!-- Server row -->
+    <text x="162" y="112" font-size="13" fill="#aaaaaa">Server</text>
+    <rect x="280" y="95" width="380" height="26" rx="4" fill="#333333" stroke="#444444" stroke-width="1"/>
+    <text x="292" y="112" font-size="12" fill="#4da6ff" font-family="monospace">rtmps://&lt;ingest_endpoint&gt;/app</text>
+
+    <!-- Stream Key row -->
+    <text x="162" y="155" font-size="13" fill="#aaaaaa">Stream Key</text>
+    <rect x="280" y="138" width="340" height="26" rx="4" fill="#333333" stroke="#444444" stroke-width="1"/>
+    <text x="292" y="155" font-size="12" fill="#666666" font-family="monospace">••••••••••••••••••••••••</text>
+    <rect x="624" y="138" width="36" height="26" rx="4" fill="#3d3d3d" stroke="#444444" stroke-width="1"/>
+    <text x="642" y="155" font-size="11" fill="#aaaaaa" text-anchor="middle">Show</text>
+
+    <!-- Hint text -->
+    <text x="280" y="195" font-size="11" fill="#555555">Paste the output of  terraform output retrieve_stream_key_command  into Stream Key</text>
+    <text x="280" y="212" font-size="11" fill="#555555">Server: use  terraform output ingest_endpoint</text>
+  </g>
+</svg>

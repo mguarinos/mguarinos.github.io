@@ -1,19 +1,12 @@
-<script type="module">
-  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
-
-  mermaid.initialize({
-    startOnLoad: false,
-    theme: 'dark',
-    securityLevel: 'loose'
-  });
-
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script>
   document.addEventListener('DOMContentLoaded', function () {
-    document.querySelectorAll('div.language-mermaid').forEach(function (el) {
-      const code = el.querySelector('code');
-      const container = document.createElement('div');
-      container.className = 'mermaid';
-      container.textContent = code ? code.textContent : el.textContent;
-      el.replaceWith(container);
+    mermaid.initialize({ startOnLoad: false, theme: 'dark', securityLevel: 'loose' });
+    document.querySelectorAll('pre > code.language-mermaid').forEach(function (el) {
+      var div = document.createElement('div');
+      div.className = 'mermaid';
+      div.textContent = el.textContent;
+      el.parentElement.replaceWith(div);
     });
     mermaid.run();
   });
