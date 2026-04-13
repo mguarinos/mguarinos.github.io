@@ -19,10 +19,7 @@ layout: default
         </span>
       {%- endif -%}
       {%- if page.tags.size > 0 -%}
-        &nbsp;·&nbsp;
-        {%- for tag in page.tags -%}
-          <span class="post-tag">{{ tag }}</span>{% unless forloop.last %} {% endunless %}
-        {%- endfor -%}
+        &nbsp;·&nbsp;{% for tag in page.tags %}<span class="post-tag">{{ tag }}</span> {% endfor %}
       {%- endif -%}
     </p>
   </header>
