@@ -1,0 +1,28 @@
+title: mguarinos
+description: Cloud engineering and SRE notes — AWS, serverless, infrastructure.
+url: "https://mguarinos.github.io"
+baseurl: ""
+author: mguarinos
+
+theme: minima
+minima:
+  skin: dark
+  social_links:
+    - { platform: github, user_url: "https://github.com/mguarinos" }
+
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+markdown: kramdown
+highlighter: rouge
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+permalink: /posts/:year/:month/:day/:title/
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - vendor/
