@@ -15,8 +15,8 @@ AWS IVS gives you managed RTMP ingest, LL-HLS transcode, and a built-in 4-hour D
 
 This post walks through the architecture of [Streamline](https://github.com/mguarinos/streamline), the design decisions behind it, and why certain pieces are wired together the way they are.
 
-![Streamline player with video quality selector](/assets/images/streamline-screenshot-player.jpg)
-![OBS broadcasting to RTMP server](/assets/images/streamline-screenshot-obs.jpg)
+![Streamline player with video quality selector](/assets/images/streamline-screenshot-player.png)
+![OBS broadcasting to RTMP server](/assets/images/streamline-screenshot-obs.png)
 
 ---
 
