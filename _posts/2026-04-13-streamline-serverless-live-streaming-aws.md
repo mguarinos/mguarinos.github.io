@@ -4,19 +4,26 @@ title: "Streamline: a serverless live streaming platform with 4-hour DVR on AWS"
 date: 2026-04-13
 categories: [aws, serverless, streaming]
 tags: [aws, ivs, cloudfront, lambda, terraform]
-image: /assets/images/streamline-header.svg
+image: /assets/images/streamline/header.svg
 toc: true
 description: "A fully serverless live streaming platform built on AWS IVS, CloudFront, and Lambda — with a built-in 4-hour DVR window, no recording bucket, and a cost near zero at rest."
 ---
 
-![Streamline — serverless live streaming with 4-hour DVR on AWS](/assets/images/streamline-header.svg)
+![Streamline — serverless live streaming with 4-hour DVR on AWS](/assets/images/streamline/header.svg)
 
 AWS IVS gives you managed RTMP ingest, LL-HLS transcode, and a built-in 4-hour DVR window. CloudFront gives you a global CDN. Lambda gives you a cold-start-under-200ms API. Put them together with a bit of Terraform and you get a live streaming platform that costs nothing at rest, scales automatically, and lets viewers rewind up to four hours — no S3 recording bucket, no media server, no operational overhead.
 
 This post walks through the architecture of [Streamline](https://github.com/mguarinos/streamline), the design decisions behind it, and why certain pieces are wired together the way they are.
 
-![Streamline player with video quality selector](/assets/images/streamline-screenshot-player.png)
-![OBS broadcasting to RTMP server](/assets/images/streamline-screenshot-obs.png)
+<figure>
+  <img src="/assets/images/streamline/screenshot-player.png" alt="Streamline player with video quality selector">
+  <figcaption>The Streamline player — Video.js with LL-HLS, quality selector, and a DVR scrubber that lets viewers rewind up to four hours.</figcaption>
+</figure>
+
+<figure>
+  <img src="/assets/images/streamline/screenshot-obs.png" alt="OBS Studio broadcasting to the Streamline RTMP endpoint">
+  <figcaption>OBS Studio configured with the IVS ingest endpoint and stream key — two fields, then you're live.</figcaption>
+</figure>
 
 ---
 
@@ -24,7 +31,7 @@ This post walks through the architecture of [Streamline](https://github.com/mgua
 
 The whole system fits in one diagram. A broadcaster pushes RTMP to IVS. Viewers hit a single CloudFront distribution that fans out to three origins depending on the URL path. A side channel — EventBridge → Lambda → SSM — keeps stream state without any polling.
 
-![Streamline architecture — broadcaster to viewer via IVS and CloudFront, with EventBridge/Lambda/SSM state side channel](/assets/images/streamline-architecture.svg)
+![Streamline architecture — broadcaster to viewer via IVS and CloudFront, with EventBridge/Lambda/SSM state side channel](/assets/images/streamline/architecture.svg)
 
 There is no media server. There is no recording bucket. IVS handles ingest and transcode entirely on its own infrastructure. CloudFront is the only public surface — the S3 bucket and Lambda function URL both reject requests that don't come through CloudFront.
 
@@ -36,11 +43,11 @@ IVS STANDARD channels maintain a rolling 4-hour DVR window internally. There is 
 
 While a stream is live, a viewer can drag the progress bar all the way back to hour zero. Clicking the **LIVE** button snaps back to the live edge instantly. When the stream ends, the DVR segments are discarded — no storage cost, no retention policy to manage, no GDPR surface area for recorded content.
 
-![DVR timeline — drag to rewind up to 4 hours, LIVE button snaps back to the edge](/assets/images/streamline-dvr-timeline.svg)
+![DVR timeline — drag to rewind up to 4 hours, LIVE button snaps back to the edge](/assets/images/streamline/dvr-timeline.svg)
 
 Configuring OBS is a two-field job: paste the `ingest_endpoint` Terraform output into Server, and the stream key (retrieved from Secrets Manager via the `retrieve_stream_key_command` output) into Stream Key.
 
-![OBS stream settings — Server and Stream Key fields](/assets/images/streamline-obs-settings.svg)
+![OBS stream settings — Server and Stream Key fields](/assets/images/streamline/obs-settings.svg)
 
 ---
 
@@ -48,7 +55,7 @@ Configuring OBS is a two-field job: paste the `ingest_endpoint` Terraform output
 
 A single CloudFront distribution handles three completely different types of traffic. The path prefix determines which origin receives the request:
 
-![Request routing — CloudFront fans out to S3 (player page), Lambda (status API), and IVS (HLS segments) based on path prefix](/assets/images/streamline-request-routing.svg)
+![Request routing — CloudFront fans out to S3 (player page), Lambda (status API), and IVS (HLS segments) based on path prefix](/assets/images/streamline/request-routing.svg)
 
 Each origin has its own cache policy:
 - **S3** (`/*`): `index.html` gets `must-revalidate` (always fresh); other assets get `immutable` (hash in filename, 1-year TTL)
@@ -61,7 +68,7 @@ Each origin has its own cache policy:
 
 The player needs to know whether a stream is live before it tries to load an HLS manifest. The naive approach — calling IVS `GetStream` on every API request — adds unnecessary latency and cost at scale. The approach here is event-driven:
 
-![Stream state machine — idle and live states driven by IVS events via EventBridge and Lambda](/assets/images/streamline-state-machine.svg)
+![Stream state machine — idle and live states driven by IVS events via EventBridge and Lambda](/assets/images/streamline/state-machine.svg)
 
 When a broadcaster goes live, IVS fires a `Stream Start` event to EventBridge. EventBridge invokes Lambda, which writes `{"status":"live","updatedAt":"..."}` to an SSM Parameter. When the stream ends or fails, the same path runs in reverse.
 

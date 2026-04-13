@@ -250,3 +250,61 @@ details[open] .toc-title::before {
   margin: 1.5rem 0;
   display: block;
 }
+
+figure {
+  margin: 1.75rem 0;
+}
+
+figure img {
+  margin: 0 !important;
+  width: 100%;
+}
+
+figcaption {
+  margin-top: 0.55rem;
+  font-size: 0.82rem;
+  color: #666666;
+  text-align: center;
+  font-style: italic;
+  line-height: 1.5;
+}
+
+// ── Tables ────────────────────────────────────────────────────────────────────
+
+.post-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.75rem 0;
+  font-size: 0.9rem;
+}
+
+.post-content thead tr {
+  border-bottom: 1px solid #3d7eff;
+}
+
+.post-content th {
+  padding: 0.55rem 0.9rem;
+  text-align: left;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #3d7eff;
+  font-weight: 600;
+}
+
+.post-content td {
+  padding: 0.6rem 0.9rem;
+  color: #aaaaaa;
+  border-bottom: 1px solid #1e1e1e;
+  vertical-align: top;
+}
+
+.post-content tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.post-content tbody tr:hover td {
+  background: #111111;
+  color: #cccccc;
+  transition: background 0.1s, color 0.1s;
+}
