@@ -5,6 +5,7 @@ date: 2026-04-13
 categories: [aws, serverless, streaming]
 tags: [aws, ivs, cloudfront, lambda, terraform]
 image: /assets/images/streamline-header.svg
+description: "A fully serverless live streaming platform built on AWS IVS, CloudFront, and Lambda — with a built-in 4-hour DVR window, no recording bucket, and a cost near zero at rest."
 ---
 
 ![Streamline — serverless live streaming with 4-hour DVR on AWS](/assets/images/streamline-header.svg)

@@ -32,8 +32,13 @@ layout: default
       <h3 class="post-card-title">
         <a class="post-link" href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
       </h3>
-      {%- if post.excerpt -%}
-        <p class="post-card-excerpt">{{ post.excerpt | strip_html | truncatewords: 150 }}</p>
+      {%- if post.description -%}
+        <p class="post-card-excerpt">{{ post.description | truncatewords: 150 }}</p>
+      {%- else -%}
+        {%- assign blurb = post.excerpt | strip_html | strip -%}
+        {%- if blurb != "" -%}
+          <p class="post-card-excerpt">{{ blurb | truncatewords: 150 }}</p>
+        {%- endif -%}
       {%- endif -%}
     </li>
     {%- endfor -%}
