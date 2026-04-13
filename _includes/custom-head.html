@@ -8,11 +8,12 @@
   });
 
   document.addEventListener('DOMContentLoaded', function () {
-    document.querySelectorAll('code.language-mermaid').forEach(function (el) {
+    document.querySelectorAll('div.language-mermaid').forEach(function (el) {
+      const code = el.querySelector('code');
       const container = document.createElement('div');
       container.className = 'mermaid';
-      container.textContent = el.textContent;
-      el.parentElement.replaceWith(container);
+      container.textContent = code ? code.textContent : el.textContent;
+      el.replaceWith(container);
     });
     mermaid.run();
   });
