@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 280" width="900" height="280">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,1 L9,5 L0,9 Z" fill="#cccccc"/>
+    </marker>
+    <marker id="arr-dim" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,1 L9,5 L0,9 Z" fill="#555555"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="280" fill="#111111"/>
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       ROW 1 — WITHOUT FINALIZER
+       ════════════════════════════════════════════════════════════════════════ -->
+  <text x="28" y="40" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="10" font-weight="600" fill="#666666" letter-spacing="1">WITHOUT FINALIZER</text>
+
+  <!-- Box: kubectl delete -->
+  <rect x="28" y="52" width="122" height="64" rx="6"
+        fill="#1a1a1a" stroke="#333333" stroke-width="1.5"/>
+  <text x="89" y="76" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="11" font-weight="600" fill="#cccccc" text-anchor="middle">kubectl delete</text>
+  <text x="89" y="92" font-family="monospace"
+        font-size="9" fill="#555555" text-anchor="middle">cfdr my-record</text>
+
+  <!-- Arrow → -->
+  <line x1="150" y1="84" x2="198" y2="84"
+        stroke="#cccccc" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Box: K8s – object removed instantly (red border) -->
+  <rect x="200" y="52" width="168" height="64" rx="6"
+        fill="#1a1a1a" stroke="#e63946" stroke-width="1.5"/>
+  <text x="284" y="74" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="11" font-weight="600" fill="#cccccc" text-anchor="middle">Kubernetes</text>
+  <text x="284" y="90" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="10" fill="#555555" text-anchor="middle">object removed</text>
+  <text x="284" y="105" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="10" fill="#e63946" text-anchor="middle">instantly</text>
+
+  <!-- Arrow → -->
+  <line x1="368" y1="84" x2="416" y2="84"
+        stroke="#cccccc" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Box: Cloudflare – orphaned (red border) -->
+  <rect x="418" y="52" width="186" height="64" rx="6"
+        fill="#1a1a1a" stroke="#e63946" stroke-width="1.5"/>
+  <text x="511" y="74" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="11" font-weight="600" fill="#cccccc" text-anchor="middle">Cloudflare</text>
+  <text x="511" y="90" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="10" fill="#555555" text-anchor="middle">DNS record</text>
+  <text x="511" y="105" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="10" fill="#e63946" text-anchor="middle">orphaned ⚠</text>
+
+  <!-- ── Divider ──────────────────────────────────────────────────────────── -->
+  <line x1="28" y1="140" x2="872" y2="140"
+        stroke="#222222" stroke-width="1"/>
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       ROW 2 — WITH FINALIZER
+       ════════════════════════════════════════════════════════════════════════ -->
+  <text x="28" y="164" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="10" font-weight="600" fill="#4caf50" letter-spacing="1">WITH FINALIZER</text>
+
+  <!-- Box: kubectl delete -->
+  <rect x="28" y="174" width="122" height="64" rx="6"
+        fill="#1a1a1a" stroke="#333333" stroke-width="1.5"/>
+  <text x="89" y="198" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="11" font-weight="600" fill="#cccccc" text-anchor="middle">kubectl delete</text>
+  <text x="89" y="214" font-family="monospace"
+        font-size="9" fill="#555555" text-anchor="middle">cfdr my-record</text>
+
+  <!-- Arrow → -->
+  <line x1="150" y1="206" x2="198" y2="206"
+        stroke="#cccccc" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Box: K8s – blocked -->
+  <rect x="200" y="174" width="168" height="64" rx="6"
+        fill="#1a1a1a" stroke="#555555" stroke-width="1.5"/>
+  <text x="284" y="196" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="11" font-weight="600" fill="#cccccc" text-anchor="middle">Kubernetes</text>
+  <text x="284" y="212" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="10" fill="#555555" text-anchor="middle">deletionTimestamp set</text>
+  <text x="284" y="227" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="10" fill="#555555" text-anchor="middle">object blocked</text>
+
+  <!-- Arrow → -->
+  <line x1="368" y1="206" x2="416" y2="206"
+        stroke="#cccccc" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Box: Operator (blue border = action) -->
+  <rect x="418" y="174" width="168" height="64" rx="6"
+        fill="#1a1a1a" stroke="#4da6ff" stroke-width="1.5"/>
+  <text x="502" y="196" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="11" font-weight="600" fill="#cccccc" text-anchor="middle">Operator</text>
+  <text x="502" y="212" font-family="monospace"
+        font-size="9" fill="#4da6ff" text-anchor="middle">dns.records.delete(id)</text>
+  <text x="502" y="227" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="9" fill="#555555" text-anchor="middle">retries every 30 s on error</text>
+
+  <!-- Arrow → -->
+  <line x1="586" y1="206" x2="634" y2="206"
+        stroke="#cccccc" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Box: K8s – finalizer removed, object gone (green border = success) -->
+  <rect x="636" y="174" width="192" height="64" rx="6"
+        fill="#1a1a1a" stroke="#4caf50" stroke-width="1.5"/>
+  <text x="732" y="196" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="11" font-weight="600" fill="#cccccc" text-anchor="middle">Kubernetes</text>
+  <text x="732" y="212" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="10" fill="#555555" text-anchor="middle">finalizer removed</text>
+  <text x="732" y="227" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="10" fill="#4caf50" text-anchor="middle">object deleted ✓</text>
+</svg>
