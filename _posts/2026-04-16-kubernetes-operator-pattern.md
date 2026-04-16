@@ -9,6 +9,8 @@ toc: true
 description: "Operators extend Kubernetes' reconciliation model beyond pods and services to anything - DNS records, database users, cloud resources. Here's the mental model, the mechanics, and a concrete DNS operator to make it tangible."
 ---
 
+![The Kubernetes Operator Pattern with the Cloudflare DNS operator](/assets/images/kubernetes-operator-pattern/header.svg)
+
 When you run `kubectl apply`, nothing executes your manifest directly. The API server writes your desired state to etcd, and a control loop running somewhere in the cluster notices the gap between what you asked for and what currently exists - then closes it. That loop is a controller. A Deployment is a controller. A ReplicaSet is a controller. The entire Kubernetes architecture is built on this pattern.
 
 An operator is what happens when you take that same pattern and point it at something you own: a database, a DNS record, an SSL certificate, a Slack channel. The operator extends Kubernetes' reconciliation model to resources that have nothing to do with running containers.
