@@ -123,13 +123,13 @@ kubectl get cfdr -n cf-operator
 
 ```text
 kubectl get cfdr -n cf-operator -o wide
-NAME                     NAME            TYPE   CONTENT        STATUS    LAST SYNC              AGE   ZONE ID                            RECORD ID                          TTL   PROXIED
-mguarinos-com-apex-a     mguarinos.com   A      1.1.1.1        Healthy   2026-04-15T22:02:55Z   12s   daeed8d03dd34a9923222a33e96986ff   c62658232a4663be7d9610f69b186572   1     false
-mguarinos-com-apex-txt   mguarinos.com   TXT    Hello world!   Healthy   2026-04-15T22:03:01Z   6s    daeed8d03dd34a9923222a33e96986ff   aafac48cbcc241ca882e1646e24098a8   300   false
+NAME                     NAME            TYPE   CONTENT        STATUS          LAST SYNC              AGE   ZONE ID                            RECORD ID                          TTL   PROXIED
+mguarinos-com-apex-a     mguarinos.com   A      1.1.1.1        RecordSynced    2026-04-15T22:02:55Z   12s   daeed8d03dd34a9923222a33e96986ff   c62658232a4663be7d9610f69b186572   1     false
+mguarinos-com-apex-txt   mguarinos.com   TXT    Hello world!   RecordSynced    2026-04-15T22:03:01Z   6s    daeed8d03dd34a9923222a33e96986ff   aafac48cbcc241ca882e1646e24098a8   300   false
 
 ```
 
-CRDs also define a `status` subresource, which is a separate write path from the spec. The operator uses it to record what it observed: the Cloudflare record ID it created, the last sync timestamp, and a `sync_status` field that can be `Healthy`, `Drift Detected`, or an error message. The subresource separation means the operator can patch status without triggering a reconciliation on the spec — there is no event loop between the two.
+CRDs also define a `status` subresource, which is a separate write path from the spec. The operator uses it to record what it observed: the Cloudflare record ID it created, the last sync timestamp, and a standard Kubernetes `conditions` array. The single condition (`type: Synced`) follows the `True`/`False` convention with a CamelCase `reason` token — `RecordSynced`, `DriftDetected`, or `SyncFailed` — and a human-readable `message` field. Using the standard conditions format means tools like `kubectl wait`, ArgoCD health checks, and other GitOps tooling understand the resource state without any custom logic. The subresource separation means the operator can patch status without triggering a reconciliation on the spec — there is no event loop between the two.
 
 ```text
 kubectl describe cfdr -n cf-operator mguarinos-com-apex-a
@@ -155,9 +155,14 @@ Spec:
   Type:     A
   zone_id:  daeed8d03dd34a9923222a33e96986ff
 Status:
+  Conditions:
+    Last Transition Time:  2026-04-15T22:32:48Z
+    Message:
+    Reason:                RecordSynced
+    Status:                True
+    Type:                  Synced
   last_sync:    2026-04-15T22:32:48Z
   record_id:    c6853b1fecfd4e3efbd263f835eb70fa
-  sync_status:  Healthy
 Events:         <none>
 ```
 
@@ -230,7 +235,7 @@ The timer handler is where the operator earns its keep.
 
 Kubernetes stores the desired state. Cloudflare holds the live state. These can diverge whenever a human edits a record directly in the Cloudflare dashboard. Without an operator, that divergence is silent — your IaC says one thing, your DNS actually does another.
 
-Every 60 seconds the operator fetches the record from Cloudflare and diffs `content`, `proxied`, and `ttl` against the spec. If anything differs, it logs the exact discrepancy and calls `cf.dns.records.update` to revert it. The status is patched to `Drift Detected` the moment divergence is found, and back to `Healthy` once the revert succeeds.
+Every 60 seconds the operator fetches the record from Cloudflare and diffs `content`, `proxied`, and `ttl` against the spec. If anything differs, it logs the exact discrepancy and calls `cf.dns.records.update` to revert it. The condition reason is set to `DriftDetected` the moment divergence is found, and back to `RecordSynced` once the revert succeeds.
 
 To see this in action: go to the Cloudflare dashboard and change the IP on `mguarinos.com` from `1.1.1.1` to `1.0.0.1`. Within 60 seconds the operator logs:
 
