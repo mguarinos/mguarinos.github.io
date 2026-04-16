@@ -4,6 +4,7 @@ title: "The Kubernetes Operator Pattern: teaching your cluster to manage anythin
 date: 2026-04-15
 categories: [kubernetes, infrastructure]
 tags: [kubernetes, operators, kopf, cloudflare, python, crd]
+image: /assets/images/kubernetes-operator-pattern/header.svg
 toc: true
 description: "Operators extend Kubernetes' reconciliation model beyond pods and services to anything - DNS records, database users, cloud resources. Here's the mental model, the mechanics, and a concrete DNS operator to make it tangible."
 ---
@@ -25,7 +26,7 @@ The traditional answer is automation outside the cluster: a CI pipeline that cal
 Operators bring external resources inside Kubernetes' reconciliation boundary. Once you have an operator, a DNS record is just another Kubernetes object.
 
 <figure>
-  <img src="/assets/images/operator/cloudflare-dns-console.png" alt="Cloudflare DNS dashboard showing a list of DNS records for a zone">
+  <img src="/assets/images/kubernetes-operator-pattern/cloudflare-dns-console.png" alt="Cloudflare DNS dashboard showing a list of DNS records for a zone">
   <figcaption>The Cloudflare DNS console - records that exist here are the live state. The operator's job is to keep this in sync with what Kubernetes says.</figcaption>
 </figure>
 
@@ -204,7 +205,7 @@ kubectl logs -n cf-operator cloudflare-dns-operator-6b55f8556d-5hw97
 Together these four handlers mean the operator never needs to be told what changed. It observes events and acts on them. If the operator crashes and restarts, the reconciliation loop catches up automatically - any pending creates become updates, any missed deletes are replayed.
 
 <figure>
-  <img src="/assets/images/operator/reconciliation-loop.svg" alt="The reconciliation loop: Watch → Compare → Reconcile → Patch Status, with a bypass arc for the 'matches' case and a feedback loop back to Watch">
+  <img src="/assets/images/kubernetes-operator-pattern/reconciliation-loop.svg" alt="The reconciliation loop: Watch → Compare → Reconcile → Patch Status, with a bypass arc for the 'matches' case and a feedback loop back to Watch">
   <figcaption>The four-step loop. When the live state matches the spec, the Reconcile step is skipped entirely (green arc). The loop repeats on every event and every 60-second timer tick.</figcaption>
 </figure>
 
@@ -221,7 +222,7 @@ The operator's delete handler calls `cf.dns.records.delete`. If that call succee
 The result: as long as the operator is running, it is impossible for a `kubectl delete` to leave an orphaned DNS record.
 
 <figure>
-  <img src="/assets/images/operator/finalizer.svg" alt="Without a finalizer: kubectl delete removes the object immediately, leaving the Cloudflare DNS record orphaned. With a finalizer: the object is blocked until the operator confirms the record is deleted from Cloudflare.">
+  <img src="/assets/images/kubernetes-operator-pattern/finalizer.svg" alt="Without a finalizer: kubectl delete removes the object immediately, leaving the Cloudflare DNS record orphaned. With a finalizer: the object is blocked until the operator confirms the record is deleted from Cloudflare.">
   <figcaption>Without a finalizer, the Kubernetes object disappears before anything cleans up Cloudflare. The finalizer inverts the order: the external resource is deleted first, then Kubernetes removes the object.</figcaption>
 </figure>
 

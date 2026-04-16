@@ -1,0 +1,288 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" width="1200" height="400">
+  <defs>
+    <linearGradient id="bg-b" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#0a0a0a"/>
+      <stop offset="100%" style="stop-color:#0a0a10"/>
+    </linearGradient>
+    <marker id="b-arr" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,1 L9,5 L0,9 Z" fill="#cccccc"/>
+    </marker>
+    <marker id="b-arr-blue" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,1 L9,5 L0,9 Z" fill="#4da6ff"/>
+    </marker>
+    <marker id="b-arr-orange" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,1 L9,5 L0,9 Z" fill="#f6821f"/>
+    </marker>
+    <clipPath id="left-clip">
+      <rect x="0" y="0" width="370" height="400"/>
+    </clipPath>
+    <clipPath id="right-clip">
+      <rect x="830" y="0" width="370" height="400"/>
+    </clipPath>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="400" fill="url(#bg-b)"/>
+
+  <!-- Subtle grid -->
+  <g stroke="#ffffff" stroke-opacity="0.02" stroke-width="1">
+    <line x1="0" y1="133" x2="1200" y2="133"/>
+    <line x1="0" y1="266" x2="1200" y2="266"/>
+    <line x1="200" y1="0" x2="200" y2="400"/>
+    <line x1="400" y1="0" x2="400" y2="400"/>
+    <line x1="600" y1="0" x2="600" y2="400"/>
+    <line x1="800" y1="0" x2="800" y2="400"/>
+    <line x1="1000" y1="0" x2="1000" y2="400"/>
+  </g>
+
+  <!-- ── LEFT PANEL: Kubernetes desired state (x=0–370) ─────────────────── -->
+
+  <!-- K8s blue left accent border -->
+  <rect x="0" y="0" width="3" height="400" fill="#326ce5"/>
+
+  <!-- "KUBERNETES" label -->
+  <text x="30" y="36"
+        font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="11" font-weight="600" fill="#326ce5" letter-spacing="2">KUBERNETES</text>
+
+  <!-- "kubectl apply" badge -->
+  <rect x="30" y="46" width="98" height="20" rx="3" fill="#1a2744"/>
+  <text x="79" y="60"
+        font-family="monospace" font-size="11" fill="#4da6ff" text-anchor="middle">kubectl apply</text>
+
+  <!-- Code block background -->
+  <rect x="30" y="76" width="320" height="182" rx="6"
+        fill="#0f0f0f" stroke="#222222" stroke-width="1"/>
+
+  <!-- YAML content — line height 22px, starting y=98 -->
+  <!-- Line 1: kind: CloudflareDNSRecord -->
+  <text x="46" y="98" font-family="monospace" font-size="12">
+    <tspan fill="#888888">kind: </tspan><tspan fill="#c9d1d9">CloudflareDNSRecord</tspan>
+  </text>
+  <!-- Line 2: spec: -->
+  <text x="46" y="120" font-family="monospace" font-size="12">
+    <tspan fill="#888888">spec:</tspan>
+  </text>
+  <!-- Line 3: name -->
+  <text x="46" y="142" font-family="monospace" font-size="12">
+    <tspan fill="#888888">  name: </tspan><tspan fill="#e0b04a">mguarinos.com</tspan>
+  </text>
+  <!-- Line 4: type -->
+  <text x="46" y="164" font-family="monospace" font-size="12">
+    <tspan fill="#888888">  type: </tspan><tspan fill="#4da6ff">A</tspan>
+  </text>
+  <!-- Line 5: content -->
+  <text x="46" y="186" font-family="monospace" font-size="12">
+    <tspan fill="#888888">  content: </tspan><tspan fill="#e0b04a">1.1.1.1</tspan>
+  </text>
+  <!-- Line 6: ttl -->
+  <text x="46" y="208" font-family="monospace" font-size="12">
+    <tspan fill="#888888">  ttl: </tspan><tspan fill="#79c0ff">1</tspan>
+  </text>
+  <!-- Line 7: proxied -->
+  <text x="46" y="230" font-family="monospace" font-size="12">
+    <tspan fill="#888888">  proxied: </tspan><tspan fill="#d2a8ff">false</tspan>
+  </text>
+
+  <!-- "desired state" label below code block -->
+  <text x="190" y="282"
+        font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="11" fill="#333333" text-anchor="middle" letter-spacing="1">desired state</text>
+
+  <!-- ── LEFT → CENTER ARROW (x=370–430) ──────────────────────────────────── -->
+  <line x1="358" y1="185" x2="428" y2="185"
+        stroke="#4da6ff" stroke-width="1.5" stroke-dasharray="4,3"
+        marker-end="url(#b-arr-blue)"/>
+  <text x="393" y="177"
+        font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="10" fill="#4da6ff" text-anchor="middle">spec</text>
+
+  <!-- ── CENTER PANEL: Operator reconciliation loop (x=430–770) ─────────── -->
+
+  <!-- Operator label -->
+  <text x="600" y="36"
+        font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="11" fill="#555555" text-anchor="middle" letter-spacing="0.3">
+    kubernetes-cloudflare-dns-operator
+  </text>
+
+  <!-- Title -->
+  <text x="600" y="62"
+        font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="13" fill="#444444" text-anchor="middle" letter-spacing="0.3">
+    Understanding the
+  </text>
+  <text x="600" y="90"
+        font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="22" font-weight="700" fill="#cccccc" text-anchor="middle" letter-spacing="-0.3">
+    Operator Reconciliation Loop
+  </text>
+
+  <!-- 2×2 box layout:
+       Box width=110, height=44, h-gap=26, v-gap=24
+       Total: 2*110+26=246 wide, 2*44+24=112 high
+       x center=600 → x start=600-123=477
+       Watch(TL): x=477, Compare(TR): x=613
+       PatchStatus(BL): x=477, Reconcile(BR): x=613
+       y top=154, y bottom=154+44+24=222 -->
+
+  <!-- Box: Watch (top-left) -->
+  <rect x="477" y="154" width="110" height="44" rx="5"
+        fill="#1a1a1a" stroke="#333333" stroke-width="1.5"/>
+  <text x="532" y="173"
+        font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="11" font-weight="600" fill="#cccccc" text-anchor="middle">Watch</text>
+  <text x="532" y="188"
+        font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="9" fill="#555555" text-anchor="middle">K8s events + timer</text>
+
+  <!-- Box: Compare (top-right) -->
+  <rect x="613" y="154" width="110" height="44" rx="5"
+        fill="#1a1a1a" stroke="#333333" stroke-width="1.5"/>
+  <text x="668" y="173"
+        font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="11" font-weight="600" fill="#cccccc" text-anchor="middle">Compare</text>
+  <text x="668" y="188"
+        font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="9" fill="#555555" text-anchor="middle">spec vs live</text>
+
+  <!-- Box: Reconcile (bottom-right, blue = action) -->
+  <rect x="613" y="222" width="110" height="44" rx="5"
+        fill="#1a1a1a" stroke="#4da6ff" stroke-width="1.5"/>
+  <text x="668" y="241"
+        font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="11" font-weight="600" fill="#cccccc" text-anchor="middle">Reconcile</text>
+  <text x="668" y="256"
+        font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="9" fill="#4da6ff" text-anchor="middle">Cloudflare API</text>
+
+  <!-- Box: Patch Status (bottom-left) -->
+  <rect x="477" y="222" width="110" height="44" rx="5"
+        fill="#1a1a1a" stroke="#333333" stroke-width="1.5"/>
+  <text x="532" y="241"
+        font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="11" font-weight="600" fill="#cccccc" text-anchor="middle">Patch Status</text>
+  <text x="532" y="256"
+        font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="9" fill="#555555" text-anchor="middle">Synced: True</text>
+
+  <!-- Clockwise arrows between boxes -->
+  <!-- Watch → Compare (right) -->
+  <line x1="588" y1="176" x2="612" y2="176"
+        stroke="#555555" stroke-width="1.2" marker-end="url(#b-arr)"/>
+  <!-- Compare → Reconcile (down) -->
+  <line x1="668" y1="199" x2="668" y2="221"
+        stroke="#555555" stroke-width="1.2" marker-end="url(#b-arr)"/>
+  <!-- Reconcile → Patch Status (left) -->
+  <line x1="612" y1="244" x2="588" y2="244"
+        stroke="#555555" stroke-width="1.2" marker-end="url(#b-arr)"/>
+  <!-- Patch Status → Watch (up) -->
+  <line x1="532" y1="221" x2="532" y2="199"
+        stroke="#555555" stroke-width="1.2" marker-end="url(#b-arr)"/>
+
+  <!-- Synced status badge below loop -->
+  <rect x="560" y="290" width="80" height="20" rx="10"
+        fill="#0d2e16" stroke="#2ea043" stroke-width="1"/>
+  <text x="600" y="304"
+        font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="10" fill="#3fb950" text-anchor="middle">● Synced: True</text>
+
+  <!-- ── CENTER → RIGHT ARROW (x=770–830) ─────────────────────────────────── -->
+  <line x1="772" y1="185" x2="828" y2="185"
+        stroke="#f6821f" stroke-width="1.5" stroke-dasharray="4,3"
+        marker-end="url(#b-arr-orange)"/>
+  <text x="800" y="177"
+        font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="10" fill="#f6821f" text-anchor="middle">sync</text>
+
+  <!-- ── RIGHT PANEL: Cloudflare live state (x=830–1200) ───────────────────── -->
+
+  <!-- Cloudflare orange top accent border -->
+  <rect x="830" y="0" width="370" height="3" fill="#f6821f"/>
+  <!-- Right accent border -->
+  <rect x="1197" y="0" width="3" height="400" fill="#f6821f" opacity="0.4"/>
+
+  <!-- "CLOUDFLARE" label -->
+  <text x="860" y="36"
+        font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="11" font-weight="600" fill="#f6821f" letter-spacing="2">CLOUDFLARE</text>
+
+  <!-- "DNS Records" heading -->
+  <text x="860" y="62"
+        font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="18" font-weight="700" fill="#ffffff">DNS Records</text>
+  <text x="860" y="80"
+        font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="11" fill="#555555">mguarinos.com</text>
+
+  <!-- Table panel background -->
+  <rect x="848" y="92" width="334" height="180" rx="6"
+        fill="#0f0f0f" stroke="#1e2028" stroke-width="1"/>
+
+  <!-- Table header row -->
+  <rect x="848" y="92" width="334" height="28" rx="6" fill="#141414"/>
+  <rect x="848" y="106" width="334" height="14" fill="#141414"/><!-- square bottom corners -->
+  <text x="868" y="111" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="10" fill="#555555" font-weight="600">Type</text>
+  <text x="918" y="111" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="10" fill="#555555" font-weight="600">Name</text>
+  <text x="1030" y="111" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="10" fill="#555555" font-weight="600">Content</text>
+  <text x="1130" y="111" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="10" fill="#555555" font-weight="600">TTL</text>
+
+  <!-- Row separator -->
+  <line x1="848" y1="120" x2="1182" y2="120" stroke="#1e2028" stroke-width="1"/>
+
+  <!-- Row 1: A record -->
+  <!-- Type badge -->
+  <rect x="858" y="128" width="24" height="16" rx="3" fill="#1a3050"/>
+  <text x="870" y="140" font-family="monospace" font-size="10" fill="#4da6ff" text-anchor="middle">A</text>
+  <!-- Name -->
+  <text x="918" y="140" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="11" fill="#cccccc">mguarinos.com</text>
+  <!-- Content -->
+  <text x="1030" y="140" font-family="monospace" font-size="11" fill="#e0b04a">1.1.1.1</text>
+  <!-- TTL -->
+  <text x="1130" y="140" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="11" fill="#666666">Auto</text>
+
+  <!-- Row separator -->
+  <line x1="848" y1="152" x2="1182" y2="152" stroke="#1a1a1a" stroke-width="1"/>
+
+  <!-- Row 2: TXT record -->
+  <!-- Type badge -->
+  <rect x="854" y="160" width="32" height="16" rx="3" fill="#1e1a30"/>
+  <text x="870" y="172" font-family="monospace" font-size="10" fill="#9b8dca" text-anchor="middle">TXT</text>
+  <!-- Name -->
+  <text x="918" y="172" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="11" fill="#cccccc">mguarinos.com</text>
+  <!-- Content -->
+  <text x="1030" y="172" font-family="monospace" font-size="11" fill="#888888">Hello world!</text>
+  <!-- TTL -->
+  <text x="1130" y="172" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="11" fill="#666666">5 min</text>
+
+  <!-- Row separator -->
+  <line x1="848" y1="184" x2="1182" y2="184" stroke="#1a1a1a" stroke-width="1"/>
+
+  <!-- Faded row 3 (suggests more records) -->
+  <rect x="854" y="192" width="24" height="16" rx="3" fill="#141414"/>
+  <text x="918" y="204" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="11" fill="#2a2a2a">···</text>
+
+  <!-- "live state" label -->
+  <text x="1015" y="296"
+        font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="11" fill="#333333" text-anchor="middle" letter-spacing="1">live state</text>
+
+  <!-- Drift warning note (small, bottom right) -->
+  <text x="860" y="356"
+        font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="10" fill="#333333">
+    External edits reverted within 60 s
+  </text>
+</svg>
