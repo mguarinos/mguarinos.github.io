@@ -5,14 +5,14 @@ date: 2026-04-15
 categories: [kubernetes, infrastructure]
 tags: [kubernetes, operators, kopf, cloudflare, python, crd]
 toc: true
-description: "Operators extend Kubernetes' reconciliation model beyond pods and services to anything — DNS records, database users, cloud resources. Here's the mental model, the mechanics, and a concrete DNS operator to make it tangible."
+description: "Operators extend Kubernetes' reconciliation model beyond pods and services to anything - DNS records, database users, cloud resources. Here's the mental model, the mechanics, and a concrete DNS operator to make it tangible."
 ---
 
-When you run `kubectl apply`, nothing executes your manifest directly. The API server writes your desired state to etcd, and a control loop running somewhere in the cluster notices the gap between what you asked for and what currently exists — then closes it. That loop is a controller. A Deployment is a controller. A ReplicaSet is a controller. The entire Kubernetes architecture is built on this pattern.
+When you run `kubectl apply`, nothing executes your manifest directly. The API server writes your desired state to etcd, and a control loop running somewhere in the cluster notices the gap between what you asked for and what currently exists - then closes it. That loop is a controller. A Deployment is a controller. A ReplicaSet is a controller. The entire Kubernetes architecture is built on this pattern.
 
 An operator is what happens when you take that same pattern and point it at something you own: a database, a DNS record, an SSL certificate, a Slack channel. The operator extends Kubernetes' reconciliation model to resources that have nothing to do with running containers.
 
-This post uses a Cloudflare DNS operator as the running example — an operator that watches `CloudflareDNSRecord` objects in the cluster and syncs them to the Cloudflare API. The source is [here](https://github.com/mguarinos/kubernetes-cloudflare-dns-operator).
+This post uses a Cloudflare DNS operator as the running example - an operator that watches `CloudflareDNSRecord` objects in the cluster and syncs them to the Cloudflare API. The source is [here](https://github.com/mguarinos/kubernetes-cloudflare-dns-operator).
 
 ---
 
@@ -26,16 +26,16 @@ Operators bring external resources inside Kubernetes' reconciliation boundary. O
 
 <figure>
   <img src="/assets/images/operator/cloudflare-dns-console.png" alt="Cloudflare DNS dashboard showing a list of DNS records for a zone">
-  <figcaption>The Cloudflare DNS console — records that exist here are the live state. The operator's job is to keep this in sync with what Kubernetes says.</figcaption>
+  <figcaption>The Cloudflare DNS console - records that exist here are the live state. The operator's job is to keep this in sync with what Kubernetes says.</figcaption>
 </figure>
 
 ---
 
 ## CRDs: giving Kubernetes new vocabulary
 
-Before you can write an operator, you need to teach Kubernetes what your resource type looks like. Custom Resource Definitions (CRDs) are the mechanism. A CRD is itself a Kubernetes manifest — you apply it once, and from that point on the API server accepts and stores objects of that type.
+Before you can write an operator, you need to teach Kubernetes what your resource type looks like. Custom Resource Definitions (CRDs) are the mechanism. A CRD is itself a Kubernetes manifest - you apply it once, and from that point on the API server accepts and stores objects of that type.
 
-The DNS operator's CRD registers the `CloudflareDNSRecord` kind under `dns.operator.io/v1`. The CRD is a manifest like any other — you `kubectl apply` it once and the API server learns the new type:
+The DNS operator's CRD registers the `CloudflareDNSRecord` kind under `dns.operator.io/v1`. The CRD is a manifest like any other - you `kubectl apply` it once and the API server learns the new type:
 
 ```yaml
 apiVersion: apiextensions.k8s.io/v1
@@ -54,7 +54,7 @@ spec:
     - name: v1
       served: true
       storage: true
-      # Status is a separate write path — the operator patches it without
+      # Status is a separate write path - the operator patches it without
       # triggering an on.update on the spec.
       subresources:
         status: {}
@@ -80,7 +80,7 @@ spec:
               x-kubernetes-preserve-unknown-fields: true
 ```
 
-With the CRD applied and the operator running, you can create records by applying ordinary manifests. Here are two — an A record and a TXT record:
+With the CRD applied and the operator running, you can create records by applying ordinary manifests. Here are two - an A record and a TXT record:
 
 ```yaml
 apiVersion: dns.operator.io/v1
@@ -129,7 +129,7 @@ mguarinos-com-apex-txt   mguarinos.com   TXT    Hello world!   RecordSynced    2
 
 ```
 
-CRDs also define a `status` subresource, which is a separate write path from the spec. The operator uses it to record what it observed: the Cloudflare record ID it created, the last sync timestamp, and a standard Kubernetes `conditions` array. The single condition (`type: Synced`) follows the `True`/`False` convention with a CamelCase `reason` token — `RecordSynced`, `DriftDetected`, or `SyncFailed` — and a human-readable `message` field. Using the standard conditions format means tools like `kubectl wait`, ArgoCD health checks, and other GitOps tooling understand the resource state without any custom logic. The subresource separation means the operator can patch status without triggering a reconciliation on the spec — there is no event loop between the two.
+CRDs also define a `status` subresource, which is a separate write path from the spec. The operator uses it to record what it observed: the Cloudflare record ID it created, the last sync timestamp, and a standard Kubernetes `conditions` array. The single condition (`type: Synced`) follows the `True`/`False` convention with a CamelCase `reason` token - `RecordSynced`, `DriftDetected`, or `SyncFailed` - and a human-readable `message` field. Using the standard conditions format means tools like `kubectl wait`, ArgoCD health checks, and other GitOps tooling understand the resource state without any custom logic. The subresource separation means the operator can patch status without triggering a reconciliation on the spec - there is no event loop between the two.
 
 ```text
 kubectl describe cfdr -n cf-operator mguarinos-com-apex-a
@@ -170,15 +170,15 @@ Events:         <none>
 
 ## The reconciliation loop
 
-An operator is a process — typically a pod in the cluster — that watches the Kubernetes API for events on its custom resource type and reacts to them. The core of the DNS operator is four handlers:
+An operator is a process - typically a pod in the cluster - that watches the Kubernetes API for events on its custom resource type and reacts to them. The core of the DNS operator is four handlers:
 
-**on.create** — when a `CloudflareDNSRecord` object appears, call `cf.dns.records.create`, then write the returned Cloudflare record ID into `.status.record_id`. That ID is the link between the Kubernetes object and the external resource. Without it, the operator cannot update or delete the record later.
+**on.create** - when a `CloudflareDNSRecord` object appears, call `cf.dns.records.create`, then write the returned Cloudflare record ID into `.status.record_id`. That ID is the link between the Kubernetes object and the external resource. Without it, the operator cannot update or delete the record later.
 
-**on.update** — when the spec changes, call `cf.dns.records.update` with the new values. If the status has no `record_id` (the operator was offline when the object was created), fall back to creating the record rather than failing.
+**on.update** - when the spec changes, call `cf.dns.records.update` with the new values. If the status has no `record_id` (the operator was offline when the object was created), fall back to creating the record rather than failing.
 
-**on.delete** — delete the Cloudflare record before allowing Kubernetes to remove the object. The finalizer (described below) is what makes this ordering possible.
+**on.delete** - delete the Cloudflare record before allowing Kubernetes to remove the object. The finalizer (described below) is what makes this ordering possible.
 
-**timer** — every 60 seconds, fetch the live record from Cloudflare and compare it to the spec. If they differ, revert Cloudflare to match Kubernetes.
+**timer** - every 60 seconds, fetch the live record from Cloudflare and compare it to the spec. If they differ, revert Cloudflare to match Kubernetes.
 
 When the operator pod starts you can see all of this initialising in the logs:
 
@@ -201,9 +201,7 @@ kubectl logs -n cf-operator cloudflare-dns-operator-6b55f8556d-5hw97
 [2026-04-15 21:59:48,153] kopf._cogs.clients.w [DEBUG   ] Starting the watch-stream for cloudflarednsrecords.v1.dns.operator.io cluster-wide.
 ```
 
-Together these four handlers mean the operator never needs to be told what changed. It observes events and acts on them. If the operator crashes and restarts, the reconciliation loop catches up automatically — any pending creates become updates, any missed deletes are replayed.
-
-This is the core promise of the operator pattern: **eventual consistency, not eventual hope**. You declare what you want and the operator drives toward it continuously.
+Together these four handlers mean the operator never needs to be told what changed. It observes events and acts on them. If the operator crashes and restarts, the reconciliation loop catches up automatically - any pending creates become updates, any missed deletes are replayed.
 
 <figure>
   <img src="/assets/images/operator/reconciliation-loop.svg" alt="The reconciliation loop: Watch → Compare → Reconcile → Patch Status, with a bypass arc for the 'matches' case and a feedback loop back to Watch">
@@ -216,11 +214,11 @@ This is the core promise of the operator pattern: **eventual consistency, not ev
 
 Without a finalizer, `kubectl delete` removes the Kubernetes object immediately and the Cloudflare record is left behind. Finalizers prevent that.
 
-When the operator starts, it registers the string `dns.operator.io/cloudflare-cleanup` as a finalizer on every object it manages. Kubernetes will not actually delete an object that has a finalizer on it — it only sets a `deletionTimestamp` and blocks. The API server then fires a delete event to the operator.
+When the operator starts, it registers the string `dns.operator.io/cloudflare-cleanup` as a finalizer on every object it manages. Kubernetes will not actually delete an object that has a finalizer on it - it only sets a `deletionTimestamp` and blocks. The API server then fires a delete event to the operator.
 
-The operator's delete handler calls `cf.dns.records.delete`. If that call succeeds, the handler returns and the operator removes the finalizer. Kubernetes sees the finalizer list is now empty and removes the object. If the Cloudflare call fails — a network blip, a rate limit — the handler raises a temporary error and the framework retries it every 30 seconds. The finalizer stays in place until the deletion is confirmed.
+The operator's delete handler calls `cf.dns.records.delete`. If that call succeeds, the handler returns and the operator removes the finalizer. Kubernetes sees the finalizer list is now empty and removes the object. If the Cloudflare call fails the handler raises a temporary error and the framework retries it every 30 seconds. The finalizer stays in place until the deletion is confirmed.
 
-The result: as long as the operator is running, it is impossible for a `kubectl delete` to leave an orphaned DNS record. The guarantee is structural, not procedural.
+The result: as long as the operator is running, it is impossible for a `kubectl delete` to leave an orphaned DNS record.
 
 <figure>
   <img src="/assets/images/operator/finalizer.svg" alt="Without a finalizer: kubectl delete removes the object immediately, leaving the Cloudflare DNS record orphaned. With a finalizer: the object is blocked until the operator confirms the record is deleted from Cloudflare.">
@@ -233,7 +231,7 @@ The result: as long as the operator is running, it is impossible for a `kubectl 
 
 The timer handler is where the operator earns its keep.
 
-Kubernetes stores the desired state. Cloudflare holds the live state. These can diverge whenever a human edits a record directly in the Cloudflare dashboard. Without an operator, that divergence is silent — your IaC says one thing, your DNS actually does another.
+Kubernetes stores the desired state. Cloudflare holds the live state. These can diverge whenever a human edits a record directly in the Cloudflare dashboard. Without an operator, that divergence is silent - your IaC says one thing, your DNS actually does another.
 
 Every 60 seconds the operator fetches the record from Cloudflare and diffs `content`, `proxied`, and `ttl` against the spec. If anything differs, it logs the exact discrepancy and calls `cf.dns.records.update` to revert it. The condition reason is set to `DriftDetected` the moment divergence is found, and back to `RecordSynced` once the revert succeeds.
 
@@ -251,11 +249,11 @@ This is what "Kubernetes is the source of truth" actually means in practice: not
 
 ## Choosing a framework
 
-Operators in Go using [kubebuilder](https://book.kubebuilder.io/) or the [Operator SDK](https://sdk.operatorframework.io/) are the production standard. You get generated boilerplate, built-in status conditions, strong typing, and the full ecosystem of controller-runtime tooling. The tradeoff is ceremony: before writing a single line of business logic you are wiring up schemes, registering types, and configuring manager options.
+Operators in Go using [kubebuilder](https://book.kubebuilder.io/) or the [Operator SDK](https://sdk.operatorframework.io/) are the production standard. You get generated boilerplate, built-in status conditions, strong typing, and the full ecosystem of controller-runtime tooling. The tradeoff is that before writing a single line of business logic you are wiring up schemes, registering types, and configuring manager options.
 
-[Kopf](https://kopf.readthedocs.io/) (Kubernetes Operator Pythonic Framework) flips that tradeoff. A handler is a decorated Python function. The framework handles watches, retries, status patching, finalizer registration, and leader-election. For an operator with a small surface area — a handful of handlers, one external API — the reduction in boilerplate is significant without giving up the important guarantees.
+[Kopf](https://kopf.readthedocs.io/) (Kubernetes Operator Pythonic Framework) flips that tradeoff. A handler is a decorated Python function. The framework handles watches, retries, status patching, finalizer registration, and leader-election. For an operator with a small surface area - a handful of handlers, one external API - the reduction in boilerplate is significant without giving up the important guarantees.
 
-The DNS operator uses kopf. The operator logic is split across three focused files: constants and configuration, shared helpers (K8s client, Cloudflare client, status utilities), and the kopf handlers themselves. For a team already fluent in Python and operating against well-understood Python SDKs (the Cloudflare client, boto3, the GitHub API), this is often the right call.
+The DNS operator uses kopf. The operator logic is split across three focused files: constants and configuration, shared helpers (K8s client, Cloudflare client, status utilities), and the kopf handlers themselves. For a team already fluent in Python and operating against well-understood Python SDKs (e.g. the Cloudflare client), this is often the right call.
 
 ---
 
@@ -264,9 +262,7 @@ The DNS operator uses kopf. The operator logic is split across three focused fil
 An operator is the right tool when:
 
 - You have an external resource with a lifecycle (create, update, delete) that needs to track Kubernetes objects.
-- You want drift detection — you need Kubernetes to be authoritative, not just a one-shot provisioner.
+- You want drift detection.
 - The resource type is long-lived and managed by multiple people, where a CI script or manual Terraform run is too fragile.
 
 An operator is overkill when you just need to run a job on deploy, transform a config value, or provision something once. A `Job`, a Helm hook, or an init container is simpler and easier to reason about.
-
-The Kubernetes API is remarkably good at storing and watching state. An operator is how you make that machinery work for resources Kubernetes was never designed to know about.
