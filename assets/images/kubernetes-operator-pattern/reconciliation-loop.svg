@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 260" width="900" height="260">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,1 L9,5 L0,9 Z" fill="#cccccc"/>
+    </marker>
+    <marker id="arr-g" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,1 L9,5 L0,9 Z" fill="#4caf50"/>
+    </marker>
+    <marker id="arr-dim" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,1 L9,5 L0,9 Z" fill="#444444"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="260" fill="#111111"/>
+
+  <!-- ── Box 1: Watch ──────────────────────────────────────────────────────── -->
+  <rect x="20" y="90" width="150" height="64" rx="6"
+        fill="#1a1a1a" stroke="#333333" stroke-width="1.5"/>
+  <text x="95" y="112" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="12" font-weight="600" fill="#cccccc" text-anchor="middle">Watch</text>
+  <text x="95" y="128" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="10" fill="#555555" text-anchor="middle">create / update / delete</text>
+  <text x="95" y="143" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="10" fill="#555555" text-anchor="middle">timer tick</text>
+
+  <!-- Arrow 1 → 2 -->
+  <line x1="170" y1="122" x2="233" y2="122"
+        stroke="#cccccc" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- ── Box 2: Compare ───────────────────────────────────────────────────── -->
+  <rect x="235" y="90" width="155" height="64" rx="6"
+        fill="#1a1a1a" stroke="#333333" stroke-width="1.5"/>
+  <text x="312" y="112" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="12" font-weight="600" fill="#cccccc" text-anchor="middle">Compare</text>
+  <text x="312" y="128" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="10" fill="#555555" text-anchor="middle">desired spec</text>
+  <text x="312" y="143" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="10" fill="#555555" text-anchor="middle">vs live state</text>
+
+  <!-- Arrow 2 → 3  (labeled "differs") -->
+  <line x1="390" y1="122" x2="458" y2="122"
+        stroke="#cccccc" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="424" y="114" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="10" fill="#666666" text-anchor="middle">differs</text>
+
+  <!-- ── Box 3: Reconcile  (blue border = action step) ────────────────────── -->
+  <rect x="460" y="90" width="165" height="64" rx="6"
+        fill="#1a1a1a" stroke="#4da6ff" stroke-width="1.5"/>
+  <text x="542" y="112" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="12" font-weight="600" fill="#cccccc" text-anchor="middle">Reconcile</text>
+  <text x="542" y="128" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="10" fill="#555555" text-anchor="middle">Cloudflare API</text>
+  <text x="542" y="143" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="10" fill="#4da6ff" text-anchor="middle">create · update · delete</text>
+
+  <!-- Arrow 3 → 4 -->
+  <line x1="625" y1="122" x2="698" y2="122"
+        stroke="#cccccc" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- ── Box 4: Patch Status ──────────────────────────────────────────────── -->
+  <rect x="700" y="90" width="160" height="64" rx="6"
+        fill="#1a1a1a" stroke="#333333" stroke-width="1.5"/>
+  <text x="780" y="112" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="12" font-weight="600" fill="#cccccc" text-anchor="middle">Patch Status</text>
+  <text x="780" y="128" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="10" fill="#555555" text-anchor="middle">sync_status: Healthy</text>
+  <text x="780" y="143" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="10" fill="#555555" text-anchor="middle">last_sync: timestamp</text>
+
+  <!-- ── "matches" bypass arc: Compare top → Status top, peaking at y=40 ─── -->
+  <path d="M 312,90 C 312,40 780,40 780,90"
+        fill="none" stroke="#4caf50" stroke-width="1.2" stroke-dasharray="5,3"
+        marker-end="url(#arr-g)"/>
+  <text x="546" y="28" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="10" fill="#4caf50" text-anchor="middle">matches — no action taken</text>
+
+  <!-- ── Feedback loop: Status bottom → Watch bottom, valley at y=218 ──────── -->
+  <path d="M 780,154 C 780,218 95,218 95,154"
+        fill="none" stroke="#444444" stroke-width="1.2" stroke-dasharray="4,3"
+        marker-end="url(#arr-dim)"/>
+  <text x="440" y="237" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="10" fill="#555555" text-anchor="middle">next event · 60 s timer</text>
+</svg>

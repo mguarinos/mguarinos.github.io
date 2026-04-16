@@ -39,18 +39,7 @@ layout: default
 
 </article>
 
-<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <script>
-  // ── Mermaid ────────────────────────────────────────────────────────────────
-  mermaid.initialize({ startOnLoad: false, theme: 'dark', securityLevel: 'loose' });
-  document.querySelectorAll('pre > code.language-mermaid').forEach(function (el) {
-    var div = document.createElement('div');
-    div.className = 'mermaid';
-    div.textContent = el.textContent;
-    el.parentElement.replaceWith(div);
-  });
-  mermaid.run();
-
   // ── Copy button ────────────────────────────────────────────────────────────
   document.querySelectorAll('div.highlight').forEach(function (block) {
     var btn = document.createElement('button');
