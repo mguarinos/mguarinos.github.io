@@ -5,11 +5,10 @@ date: 2026-04-13
 categories: [aws, serverless, streaming]
 tags: [aws, ivs, cloudfront, lambda, terraform]
 image: /assets/images/streamline/header.svg
+github: https://github.com/mguarinos/streamline
 toc: true
 description: "A fully serverless live streaming platform built on AWS IVS, CloudFront, and Lambda — with a built-in 4-hour DVR window, no recording bucket, and a cost near zero at rest."
 ---
-
-![Streamline — serverless live streaming with 4-hour DVR on AWS](/assets/images/streamline/header.svg)
 
 AWS IVS gives you managed RTMP ingest, LL-HLS transcode, and a built-in 4-hour DVR window. CloudFront gives you a global CDN. Lambda gives you a cold-start-under-200ms API. Put them together with a bit of Terraform and you get a live streaming platform that costs nothing at rest, scales automatically, and lets viewers rewind up to four hours - no S3 recording bucket, no media server, no operational overhead.
 

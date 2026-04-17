@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  {%- include head.html -%}
+  <body>
+    {%- include header.html -%}
+    <main id="main-content">{{ content }}</main>
+    {%- include footer.html -%}
+
+    <button id="back-to-top" aria-label="Back to top" title="Back to top">↑</button>
+
+    <div id="lightbox-overlay" role="dialog" aria-modal="true" aria-label="Image preview">
+      <button id="lightbox-close" aria-label="Close">✕</button>
+      <img id="lightbox-img" src="" alt="">
+    </div>
+
+    <script>
+      (function () {
+        // Mobile nav
+        var toggle = document.querySelector('.nav-toggle');
+        var nav = document.querySelector('.site-nav');
+        if (toggle && nav) {
+          toggle.addEventListener('click', function () {
+            var open = nav.classList.toggle('open');
+            toggle.classList.toggle('open', open);
+            toggle.setAttribute('aria-expanded', open);
+          });
+          document.addEventListener('click', function (e) {
+            if (!toggle.contains(e.target) && !nav.contains(e.target)) {
+              nav.classList.remove('open');
+              toggle.classList.remove('open');
+              toggle.setAttribute('aria-expanded', 'false');
+            }
+          });
+        }
+
+        // Theme toggle
+        var themeBtn = document.getElementById('theme-toggle');
+        if (themeBtn) {
+          themeBtn.addEventListener('click', function () {
+            var current = document.documentElement.getAttribute('data-theme');
+            var next = current === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+          });
+        }
+
+        // Back to top
+        var btt = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          btt.classList.toggle('visible', window.scrollY > 400);
+        }, { passive: true });
+        btt.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+
+        // Lightbox
+        var overlay = document.getElementById('lightbox-overlay');
+        var lbImg   = document.getElementById('lightbox-img');
+        var lbClose = document.getElementById('lightbox-close');
+
+        function openLightbox(src, alt) {
+          lbImg.src = src;
+          lbImg.alt = alt || '';
+          overlay.classList.add('open');
+          document.body.style.overflow = 'hidden';
+        }
+        function closeLightbox() {
+          overlay.classList.remove('open');
+          document.body.style.overflow = '';
+          lbImg.src = '';
+        }
+
+        document.querySelectorAll('.post-content img, .post-header-image').forEach(function (img) {
+          img.classList.add('lightbox-trigger');
+          img.addEventListener('click', function () { openLightbox(img.src, img.alt); });
+        });
+
+        lbClose.addEventListener('click', closeLightbox);
+        overlay.addEventListener('click', function (e) { if (e.target === overlay) closeLightbox(); });
+        document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeLightbox(); });
+
+        // Code block language labels
+        document.querySelectorAll('div.highlight').forEach(function (block) {
+          var code = block.querySelector('code');
+          if (!code) return;
+          var lang = Array.from(code.classList).find(function (c) { return c.startsWith('language-'); });
+          if (lang) block.setAttribute('data-lang', lang.replace('language-', ''));
+        });
+      })();
+    </script>
+  </body>
+</html>

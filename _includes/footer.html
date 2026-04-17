@@ -1,21 +1,14 @@
-<footer class="site-footer h-card">
-  <data class="u-url" href="{{ "/" | relative_url }}"></data>
-  <div class="wrapper">
-    <div class="footer-col-wrapper">
-      <div class="footer-col footer-col-1">
-        <ul class="contact-list">
-          <li class="p-name">{{ site.author | escape }}</li>
-          {%- if site.email -%}
-          <li><a class="u-email" href="mailto:{{ site.email }}">{{ site.email }}</a></li>
-          {%- endif -%}
-        </ul>
-      </div>
-      <div class="footer-col footer-col-2">
-        {%- include social.html -%}
-      </div>
-      <div class="footer-col footer-col-3">
-        <p>{{ site.description | escape }}</p>
-      </div>
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <p class="footer-copy">&copy; {{ 'now' | date: '%Y' }} {{ site.author | escape }}</p>
+    <div class="footer-links">
+      {%- if site.social.github -%}
+        <a href="https://github.com/{{ site.social.github | escape }}" rel="noopener" target="_blank">GitHub</a>
+      {%- endif -%}
+      {%- if site.social.linkedin -%}
+        <a href="https://linkedin.com/in/{{ site.social.linkedin | escape }}" rel="noopener" target="_blank">LinkedIn</a>
+      {%- endif -%}
+      <a href="{{ '/feed.xml' | relative_url }}">RSS</a>
     </div>
   </div>
 </footer>
