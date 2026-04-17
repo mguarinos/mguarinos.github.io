@@ -27,9 +27,29 @@ Most of what ends up here is hard-won: things that weren't obvious from the docs
   <li>AWS</li>
   <li>Terraform</li>
   <li>Node.js · Python</li>
-  <li>GitHub Actions · ArgoCD </li>
+  <li>GitHub Actions · ArgoCD</li>
   <li>Kubernetes</li>
   <li>PostgreSQL · Redis</li>
+</ul>
+</div>
+
+<div class="about-section">
+<h3>Certifications</h3>
+<ul>
+  <li>CKA: Certified Kubernetes Administrator</li>
+  <li>AWS Certified Solutions Architect – Professional</li>
+  <li>AWS Certified Solutions Architect – Associate</li>
+  <li>AWS Certified SysOps Administrator – Associate</li>
+  <li>AWS Certified Advanced Networking – Specialty</li>
+</ul>
+</div>
+
+<div class="about-section">
+<h3>Languages</h3>
+<ul>
+  <li>Spanish — native</li>
+  <li>English — C1/C2 · IELTS 8.0</li>
+  <li>French — C1 · Alliance Française</li>
 </ul>
 </div>
 
@@ -37,4 +57,4 @@ Most of what ends up here is hard-won: things that weren't obvious from the docs
 
 ---
 
-Find me on [GitHub](https://github.com/mguarinos) or [LinkedIn](https://www.linkedin.com/in/mguarinos/).
+Want to get in touch? Find me on [LinkedIn](https://www.linkedin.com/in/mguarinos/) or take a look at my [CV](/cv/).

@@ -1,0 +1,20 @@
+---
+layout: default
+---
+<div class="container portfolio-page">
+  <header class="page-header">
+    <h1>{{ page.title | escape }}</h1>
+    {%- if page.description -%}
+      <p class="page-description">{{ page.description }}</p>
+    {%- endif -%}
+  </header>
+  {%- if site.projects.size > 0 -%}
+    <div class="project-grid">
+      {%- for project in site.projects -%}
+        {%- include project-card.html project=project -%}
+      {%- endfor -%}
+    </div>
+  {%- else -%}
+    <p class="empty-state">Projects coming soon.</p>
+  {%- endif -%}
+</div>

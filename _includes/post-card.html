@@ -1,0 +1,33 @@
+{% assign p = include.post %}
+<article class="post-card">
+  {%- if p.image -%}
+    <a href="{{ p.url | relative_url }}" class="post-card-image-link" tabindex="-1" aria-hidden="true">
+      <img src="{{ p.image | relative_url }}" alt="{{ p.title | escape }}" class="post-card-image" loading="lazy">
+    </a>
+  {%- endif -%}
+  <div class="post-card-body">
+    {%- if p.categories.size > 0 -%}
+      <div class="post-card-cats">
+        {%- for cat in p.categories limit:3 -%}
+          <a href="{{ '/categories/#' | append: cat | relative_url }}" class="cat-pill">{{ cat }}</a>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+    <h2 class="post-card-title">
+      <a href="{{ p.url | relative_url }}">{{ p.title | escape }}</a>
+    </h2>
+    {%- if p.description -%}
+      <p class="post-card-excerpt">{{ p.description | truncatewords: 25 }}</p>
+    {%- endif -%}
+    <footer class="post-card-footer">
+      <time class="post-card-date" datetime="{{ p.date | date_to_xmlschema }}">{{ p.date | date: "%b %-d, %Y" }}</time>
+      <span class="post-card-readtime">{{ p.content | number_of_words | divided_by: 200 | at_least: 1 }} min read</span>
+      {%- if p.github -%}
+        <a href="{{ p.github }}" class="post-card-github" target="_blank" rel="noopener" title="View on GitHub">
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+          Access the code on GitHub
+        </a>
+      {%- endif -%}
+    </footer>
+  </div>
+</article>

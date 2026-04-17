@@ -1,24 +1,26 @@
 title: Manuel Guarinos
-description: Cloud engineering and SRE notes — AWS, serverless, infrastructure.
+description: Writing on cloud engineering and SRE — things that took iterations to get right, and a few that just worked.
 url: "https://mguarinos.github.io"
 baseurl: ""
 author: Manuel Guarinos
 
-theme: minima
-minima:
-  skin: dark
-  social_links:
-    github: mguarinos
-    linkedin: mguarinos
+social:
+  github: mguarinos
+  linkedin: mguarinos
+
+collections:
+  projects:
+    output: false
 
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
   - jekyll-toc
+  - jekyll-sitemap
 
 toc:
   min_level: 2
-  max_level: 3
+  max_level: 2
   ordered_list: false
 
 markdown: kramdown
@@ -28,6 +30,13 @@ kramdown:
   syntax_highlighter: rouge
 
 permalink: /posts/:year/:month/:day/:title/
+
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
 
 exclude:
   - Gemfile
