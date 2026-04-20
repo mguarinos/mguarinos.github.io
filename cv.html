@@ -387,6 +387,43 @@ permalink: /cv/
       page-break-before: always;
     }
 
+    /* ─── MOBILE ─── */
+    @media screen and (max-width: 600px) {
+      .cv-container {
+        padding: 20px 16px;
+        margin: 0 auto;
+      }
+
+      .header {
+        flex-direction: column-reverse;
+        align-items: center;
+        text-align: center;
+        gap: 14px;
+      }
+
+      .header-right {
+        margin-left: 0;
+      }
+
+      .contact-bar {
+        justify-content: center;
+        gap: 12px 18px;
+      }
+
+      .skills-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .entry-header {
+        flex-direction: column;
+        gap: 2px;
+      }
+
+      .entry-date {
+        white-space: normal;
+      }
+    }
+
     /* ─── PRINT ─── */
     @media print {
       body {
@@ -474,8 +511,8 @@ permalink: /cv/
           href="mailto:manuelguarinos@gmail.com">manuelguarinos@gmail.com</a></div>
       <div class="contact-item"><i class="fab fa-linkedin"></i> <a href="http://linkedin.com/in/mguarinos"
           target="_blank">linkedin.com/in/mguarinos</a></div>
-      <div class="contact-item"><i class="fas fa-globe"></i> <a href="https://mguarinos.github.io"
-          target="_blank">mguarinos.github.io</a></div>
+      <div class="contact-item"><i class="fas fa-globe"></i> <a href="https://mguarinos.com"
+          target="_blank">mguarinos.com</a></div>
     </div>
 
     <!-- ABOUT ME -->
