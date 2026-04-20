@@ -1515,6 +1515,12 @@ figcaption {
 
   .post-header-image-wrap { width: 100%; }
 
+  .post-content table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
   .cv-content { padding: 1.25rem; }
 }
 
