@@ -11,7 +11,7 @@ description: "Replace long-lived AWS credentials in GitHub secrets with short-li
 
 The default way people wire up GitHub Actions to AWS is to create an IAM user, generate an access key, and paste `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` into GitHub secrets. It works. It also means you have a long-lived credential sitting in your repository's secret store that never expires, needs manual rotation, and produces audit trails that say "IAM user `github-ci` did this" with no indication of which repository, branch, or workflow was responsible.
 
-OIDC federation eliminates the credential entirely. GitHub issues a short-lived signed JWT for each workflow run. AWS STS validates that JWT against a trust policy you control, checks that the claims match — which repository, which branch, which environment — and returns temporary credentials scoped to a specific IAM role. The credentials expire in one hour. There is nothing to rotate. There is no secret to leak. Every AWS CloudTrail event carries the full OIDC subject claim, so you know exactly what triggered it.
+OIDC federation eliminates the credential entirely. GitHub issues a short-lived signed JWT for each workflow run. AWS STS validates that JWT against a trust policy you control, checks that the claims match - which repository, which branch, which environment - and returns temporary credentials scoped to a specific IAM role. The credentials expire in one hour. There is nothing to rotate. There is no secret to leak. Every AWS CloudTrail event carries the full OIDC subject claim, so you know exactly what triggered it.
 
 This post covers the full setup: the trust model, how to wire it up with the AWS CLI, how to restrict access by branch and environment, multi-environment role design, and the compliance advantages you get without extra effort.
 
@@ -23,15 +23,15 @@ When a GitHub Actions workflow runs with `id-token: write` permission, GitHub mi
 
 | Claim | Example value | What it describes |
 |---|---|---|
-| `iss` | `https://token.actions.githubusercontent.com` | The issuer — GitHub's OIDC server |
+| `iss` | `https://token.actions.githubusercontent.com` | The issuer - GitHub's OIDC server |
 | `sub` | `repo:org/repo:ref:refs/heads/main` | Repository and trigger context |
 | `aud` | `sts.amazonaws.com` | Intended audience |
-| `exp` | `now + 5min` | Token lifetime — very short on purpose |
+| `exp` | `now + 5min` | Token lifetime - very short on purpose |
 | `repository` | `org/repo` | Repository full name |
 | `ref` | `refs/heads/main` | Git ref that triggered the run |
 | `environment` | `production` | GitHub Environment, if configured |
 
-The workflow then calls `aws-actions/configure-aws-credentials` with a role ARN. That action presents the JWT to AWS STS via `AssumeRoleWithWebIdentity`. STS validates the JWT signature (against GitHub's published JWKS), checks the `aud` claim equals `sts.amazonaws.com`, and evaluates your IAM role's trust policy conditions against the `sub` and other claims. If everything matches, STS returns temporary credentials. If anything fails — wrong repository, wrong branch, wrong environment — the call is rejected before any AWS action can occur.
+The workflow then calls `aws-actions/configure-aws-credentials` with a role ARN. That action presents the JWT to AWS STS via `AssumeRoleWithWebIdentity`. STS validates the JWT signature (against GitHub's published JWKS), checks the `aud` claim equals `sts.amazonaws.com`, and evaluates your IAM role's trust policy conditions against the `sub` and other claims. If everything matches, STS returns temporary credentials. If anything fails - wrong repository, wrong branch, wrong environment - the call is rejected before any AWS action can occur.
 
 ---
 
@@ -48,7 +48,7 @@ aws iam create-open-id-connect-provider \
 
 This is an account-level resource. One provider covers all roles in the account. If you manage multiple accounts (staging, production), run this once in each.
 
-The `client-id-list` value `sts.amazonaws.com` must match the `aud` claim GitHub puts in the token when the workflow uses `aws-actions/configure-aws-credentials`. This is a fixed agreement between the action and AWS — do not change it.
+The `client-id-list` value `sts.amazonaws.com` must match the `aud` claim GitHub puts in the token when the workflow uses `aws-actions/configure-aws-credentials`. This is a fixed agreement between the action and AWS - do not change it.
 
 ---
 
@@ -86,7 +86,7 @@ aws iam create-role \
 Two conditions, both must pass:
 
 - `aud` must equal `sts.amazonaws.com` — prevents tokens minted for other services from being used here.
-- `sub` must match your pattern — scopes the role to a specific repository and trigger context.
+- `sub` must match your pattern - scopes the role to a specific repository and trigger context.
 
 ---
 
@@ -135,8 +135,6 @@ aws iam put-role-policy \
   --policy-document file://deploy-policy.json
 ```
 
-Resist the temptation to use `"Resource": "*"` — every action above accepts a specific ARN. A compromised runner can only touch the resources you list here.
-
 ---
 
 ## Restricting by branch, tag, and environment
@@ -154,7 +152,7 @@ The `sub` claim is the primary restriction surface. Its format depends on what t
 
 A role that deploys to production should use the environment form, not the branch form. The difference matters: anyone can push to `main` if branch protection is misconfigured. A GitHub Environment with required reviewers cannot be bypassed without a human approval. The `sub` claim will contain `environment:production` only after that gate is cleared.
 
-For a role used by pull requests to run a plan or generate deployment diffs, the `pull_request` subject restricts it to read operations triggered from PRs — no direct pushes can assume it.
+For a role used by pull requests to run a plan or generate deployment diffs, the `pull_request` subject restricts it to read operations triggered from PRs - no direct pushes can assume it.
 
 ### Wildcards in `sub` conditions
 
@@ -166,7 +164,7 @@ When you need a role accessible from any branch in a repository (e.g., a shared 
 }
 ```
 
-Be deliberate about wildcards. `repo:your-org/*:*` would allow any repository in your org to assume the role — useful for a shared read-only role, dangerous for a deploy role.
+Be deliberate about wildcards. `repo:your-org/*:*` would allow any repository in your org to assume the role - useful for a shared read-only role, dangerous for a deploy role.
 
 ---
 
@@ -176,13 +174,13 @@ The right model is one role per environment per function, each with the minimum 
 
 <figure>
   <img src="/assets/images/github-aws-oidc-cicd/multi-env.svg" alt="Branch-to-role mapping: feature branches get no AWS access, develop maps to a staging role, main and tags map to a production role with an approval gate, pull requests map to a read-only role">
-  <figcaption>Each branch context maps to a dedicated IAM role. Production requires a GitHub Environment with a required reviewer — the OIDC subject claim for that environment is only issued after the gate passes.</figcaption>
+  <figcaption>Each branch context maps to a dedicated IAM role. Production requires a GitHub Environment with a required reviewer - the OIDC subject claim for that environment is only issued after the gate passes.</figcaption>
 </figure>
 
-The trust policy structure is the same as the one in the previous section — only the `sub` condition changes per role. For staging, scoped to the `develop` branch:
+The trust policy structure is the same as the one in the previous section - only the `sub` condition changes per role. For staging, scoped to the `develop` branch:
 
 ```bash
-# trust-policy-staging.json — sub: "repo:your-org/your-repo:ref:refs/heads/develop"
+# trust-policy-staging.json - sub: "repo:your-org/your-repo:ref:refs/heads/develop"
 aws iam create-role \
   --role-name github-staging-deploy \
   --assume-role-policy-document file://trust-policy-staging.json
@@ -195,14 +193,6 @@ For production, scoped to the GitHub Environment instead of a branch:
 aws iam create-role \
   --role-name github-prod-deploy \
   --assume-role-policy-document file://trust-policy-prod.json
-```
-
-Attach a permission boundary to each role to enforce a ceiling on what they can ever do, regardless of the policies attached later:
-
-```bash
-aws iam put-role-permissions-boundary \
-  --role-name github-prod-deploy \
-  --permissions-boundary arn:aws:iam::123456789012:policy/deploy-boundary
 ```
 
 ---
