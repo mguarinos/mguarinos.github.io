@@ -20,4 +20,8 @@
   </script>
   {%- feed_meta -%}
   {%- seo -%}
+  {%- assign _og_image = page.image | default: site.image.path -%}
+  {%- if _og_image -%}
+  <meta name="image" property="og:image" content="{{ _og_image | absolute_url }}">
+  {%- endif -%}
 </head>
