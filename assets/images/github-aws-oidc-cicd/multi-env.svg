@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 380" width="1000" height="380" font-family="'SF Mono', 'Fira Code', monospace">
+  <defs>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#58a6ff"/>
+    </marker>
+    <marker id="arr-g" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#3fb950"/>
+    </marker>
+    <marker id="arr-y" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#d29922"/>
+    </marker>
+  </defs>
+  <rect width="1000" height="380" fill="#0d1117" rx="8"/>
+
+  <!-- GitHub side -->
+  <rect x="20" y="20" width="270" height="340" rx="8" fill="#161b22" stroke="#30363d" stroke-width="1.5"/>
+  <text x="155" y="44" text-anchor="middle" fill="#8b949e" font-size="10" letter-spacing="2">GITHUB BRANCHES</text>
+
+  <!-- feature/* -->
+  <rect x="38" y="58" width="234" height="50" rx="5" fill="#0d1117" stroke="#30363d"/>
+  <text x="82" y="78" fill="#8b949e" font-size="10">feature/*</text>
+  <text x="82" y="96" fill="#8b949e" font-size="9">CI only — no deploy</text>
+  <circle cx="60" cy="83" r="5" fill="#8b949e" opacity="0.4"/>
+
+  <!-- develop -->
+  <rect x="38" y="120" width="234" height="60" rx="5" fill="#0d1117" stroke="#3fb950" stroke-width="1.2"/>
+  <text x="82" y="140" fill="#3fb950" font-size="10">develop</text>
+  <text x="82" y="157" fill="#8b949e" font-size="9">sub: ...ref:refs/heads/develop</text>
+  <text x="82" y="170" fill="#8b949e" font-size="9">→ staging role</text>
+  <circle cx="60" cy="150" r="5" fill="#3fb950"/>
+
+  <!-- main + tag -->
+  <rect x="38" y="194" width="234" height="70" rx="5" fill="#0d1117" stroke="#d29922" stroke-width="1.2"/>
+  <text x="82" y="214" fill="#d29922" font-size="10">main / tag v*</text>
+  <text x="82" y="231" fill="#8b949e" font-size="9">sub: ...env:production</text>
+  <text x="82" y="246" fill="#8b949e" font-size="9">required reviewer gate</text>
+  <text x="82" y="261" fill="#8b949e" font-size="9">→ production role</text>
+  <circle cx="60" cy="228" r="5" fill="#d29922"/>
+
+  <!-- pull_request -->
+  <rect x="38" y="278" width="234" height="60" rx="5" fill="#0d1117" stroke="#58a6ff" stroke-width="1.2"/>
+  <text x="82" y="298" fill="#58a6ff" font-size="10">pull_request</text>
+  <text x="82" y="315" fill="#8b949e" font-size="9">sub: ...pull_request</text>
+  <text x="82" y="330" fill="#8b949e" font-size="9">→ read-only role (plan/diff)</text>
+  <circle cx="60" cy="308" r="5" fill="#58a6ff"/>
+
+  <!-- AWS side -->
+  <rect x="710" y="20" width="270" height="340" rx="8" fill="#161b22" stroke="#30363d" stroke-width="1.5"/>
+  <text x="845" y="44" text-anchor="middle" fill="#8b949e" font-size="10" letter-spacing="2">AWS IAM ROLES</text>
+
+  <!-- No role -->
+  <rect x="728" y="58" width="234" height="50" rx="5" fill="#0d1117" stroke="#30363d"/>
+  <text x="845" y="78" text-anchor="middle" fill="#8b949e" font-size="10">no role assumed</text>
+  <text x="845" y="96" text-anchor="middle" fill="#8b949e" font-size="9">AWS not touched</text>
+
+  <!-- Staging role -->
+  <rect x="728" y="120" width="234" height="60" rx="5" fill="#0d1117" stroke="#3fb950" stroke-width="1.2"/>
+  <text x="845" y="140" text-anchor="middle" fill="#3fb950" font-size="10">github-staging-deploy</text>
+  <text x="845" y="157" text-anchor="middle" fill="#8b949e" font-size="9">S3: staging-bucket</text>
+  <text x="845" y="172" text-anchor="middle" fill="#8b949e" font-size="9">Lambda: *-staging</text>
+
+  <!-- Production role -->
+  <rect x="728" y="194" width="234" height="70" rx="5" fill="#0d1117" stroke="#d29922" stroke-width="1.2"/>
+  <text x="845" y="214" text-anchor="middle" fill="#d29922" font-size="10">github-prod-deploy</text>
+  <text x="845" y="231" text-anchor="middle" fill="#8b949e" font-size="9">S3: prod-bucket</text>
+  <text x="845" y="246" text-anchor="middle" fill="#8b949e" font-size="9">Lambda: *-prod</text>
+
+  <!-- Read-only role -->
+  <rect x="728" y="278" width="234" height="60" rx="5" fill="#0d1117" stroke="#58a6ff" stroke-width="1.2"/>
+  <text x="845" y="298" text-anchor="middle" fill="#58a6ff" font-size="10">github-readonly</text>
+  <text x="845" y="315" text-anchor="middle" fill="#8b949e" font-size="9">S3:GetObject, List</text>
+  <text x="845" y="330" text-anchor="middle" fill="#8b949e" font-size="9">no write permissions</text>
+
+  <!-- Arrows: no deploy -->
+  <line x1="290" y1="83" x2="708" y2="83" stroke="#30363d" stroke-width="1.5" stroke-dasharray="4,4"/>
+  <text x="500" y="78" text-anchor="middle" fill="#8b949e" font-size="9">blocked</text>
+
+  <!-- Staging arrow -->
+  <line x1="290" y1="150" x2="726" y2="150" stroke="#3fb950" stroke-width="1.5" marker-end="url(#arr-g)"/>
+
+  <!-- Prod arrow -->
+  <line x1="290" y1="229" x2="726" y2="229" stroke="#d29922" stroke-width="1.5" marker-end="url(#arr-y)"/>
+
+  <!-- PR arrow -->
+  <line x1="290" y1="308" x2="726" y2="308" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- STS in the middle — spans all valid workflows -->
+  <rect x="435" y="112" width="130" height="234" rx="6" fill="#16131f" stroke="#8957e5" stroke-width="1.5"/>
+  <text x="500" y="132" text-anchor="middle" fill="#8957e5" font-size="10" letter-spacing="1">AWS STS</text>
+  <line x1="443" y1="138" x2="557" y2="138" stroke="#8957e5" stroke-width="0.75" opacity="0.5"/>
+  <text x="500" y="156" text-anchor="middle" fill="#8b949e" font-size="8">validates</text>
+  <text x="500" y="169" text-anchor="middle" fill="#8b949e" font-size="8">sub claim</text>
+</svg>

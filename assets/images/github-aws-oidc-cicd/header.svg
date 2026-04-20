@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 506" width="900" height="506" font-family="'SF Mono', 'Fira Code', monospace">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0d1117"/>
+      <stop offset="100%" style="stop-color:#161b22"/>
+    </linearGradient>
+    <marker id="arr-blue" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#58a6ff"/>
+    </marker>
+    <marker id="arr-green" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#3fb950"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="506" fill="url(#bg)"/>
+
+  <!-- Subtle grid lines -->
+  <g opacity="0.05" stroke="#58a6ff" stroke-width="0.5">
+    <line x1="0" y1="100" x2="900" y2="100"/>
+    <line x1="0" y1="200" x2="900" y2="200"/>
+    <line x1="0" y1="300" x2="900" y2="300"/>
+    <line x1="0" y1="400" x2="900" y2="400"/>
+    <line x1="150" y1="0" x2="150" y2="506"/>
+    <line x1="300" y1="0" x2="300" y2="506"/>
+    <line x1="450" y1="0" x2="450" y2="506"/>
+    <line x1="600" y1="0" x2="600" y2="506"/>
+    <line x1="750" y1="0" x2="750" y2="506"/>
+  </g>
+
+  <!-- ── GitHub box ── -->
+  <rect x="40" y="150" width="185" height="200" rx="10" fill="#161b22" stroke="#30363d" stroke-width="1.5"/>
+  <text x="132" y="178" text-anchor="middle" fill="#8b949e" font-size="9" letter-spacing="2">GITHUB ACTIONS</text>
+  <!-- Octocat ring -->
+  <circle cx="132" cy="222" r="32" fill="none" stroke="#58a6ff" stroke-width="1.5" opacity="0.6"/>
+  <circle cx="132" cy="222" r="24" fill="#0d1117"/>
+  <text x="132" y="230" text-anchor="middle" fill="#58a6ff" font-size="26">⌥</text>
+  <text x="132" y="284" text-anchor="middle" fill="#c9d1d9" font-size="10">on: push</text>
+  <rect x="64" y="294" width="136" height="18" rx="4" fill="#0d1117" stroke="#30363d"/>
+  <text x="132" y="307" text-anchor="middle" fill="#3fb950" font-size="9">id-token: write</text>
+
+  <!-- ── JWT token card (centre) ── -->
+  <rect x="298" y="120" width="304" height="260" rx="10" fill="#0d1117" stroke="#58a6ff" stroke-width="1.5"/>
+  <text x="450" y="147" text-anchor="middle" fill="#58a6ff" font-size="9" letter-spacing="2">OIDC JWT</text>
+  <line x1="315" y1="155" x2="585" y2="155" stroke="#21262d" stroke-width="1"/>
+  <!-- Claims -->
+  <text x="322" y="174" fill="#8b949e" font-size="9">iss</text>
+  <text x="370" y="174" fill="#c9d1d9" font-size="9">token.actions.githubusercontent.com</text>
+  <text x="322" y="194" fill="#8b949e" font-size="9">sub</text>
+  <text x="370" y="194" fill="#e6b84c" font-size="9">repo:org/repo:environment:prod</text>
+  <text x="322" y="214" fill="#8b949e" font-size="9">aud</text>
+  <text x="370" y="214" fill="#c9d1d9" font-size="9">sts.amazonaws.com</text>
+  <text x="322" y="234" fill="#8b949e" font-size="9">exp</text>
+  <text x="370" y="234" fill="#3fb950" font-size="9">now + 5 min</text>
+  <text x="322" y="254" fill="#8b949e" font-size="9">ref</text>
+  <text x="370" y="254" fill="#c9d1d9" font-size="9">refs/heads/main</text>
+  <text x="322" y="274" fill="#8b949e" font-size="9">env</text>
+  <text x="370" y="274" fill="#c9d1d9" font-size="9">production</text>
+  <line x1="315" y1="285" x2="585" y2="285" stroke="#21262d" stroke-width="1"/>
+  <!-- STS label inside card -->
+  <text x="450" y="308" text-anchor="middle" fill="#ff9900" font-size="9" letter-spacing="1">AWS STS</text>
+  <text x="450" y="326" text-anchor="middle" fill="#8b949e" font-size="9">AssumeRoleWithWebIdentity</text>
+  <text x="450" y="344" text-anchor="middle" fill="#3fb950" font-size="9">→ credentials valid 1 hour</text>
+  <text x="450" y="362" text-anchor="middle" fill="#8b949e" font-size="8">validates sub · aud · signature</text>
+
+  <!-- ── AWS IAM Role box ── -->
+  <rect x="675" y="150" width="185" height="200" rx="10" fill="#161b22" stroke="#ff9900" stroke-width="1.5"/>
+  <text x="767" y="178" text-anchor="middle" fill="#8b949e" font-size="9" letter-spacing="2">AWS IAM ROLE</text>
+  <circle cx="767" cy="222" r="32" fill="none" stroke="#ff9900" stroke-width="1.5" opacity="0.6"/>
+  <circle cx="767" cy="222" r="24" fill="#0d1117"/>
+  <text x="767" y="230" text-anchor="middle" fill="#ff9900" font-size="24">⬡</text>
+  <text x="767" y="275" text-anchor="middle" fill="#c9d1d9" font-size="10">trust policy</text>
+  <rect x="699" y="284" width="136" height="18" rx="4" fill="#0d1117" stroke="#30363d"/>
+  <text x="767" y="297" text-anchor="middle" fill="#ff9900" font-size="9">StringEquals: sub</text>
+  <text x="767" y="320" text-anchor="middle" fill="#8b949e" font-size="9">S3 · Lambda · ECR</text>
+  <text x="767" y="337" text-anchor="middle" fill="#8b949e" font-size="9">scoped permissions</text>
+
+  <!-- ── Arrow 1: GitHub → JWT (request) ── -->
+  <line x1="226" y1="222" x2="296" y2="222" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#arr-blue)"/>
+  <text x="261" y="215" text-anchor="middle" fill="#58a6ff" font-size="8">1. request</text>
+
+  <!-- ── Arrow 2: JWT → IAM Role (present & validate) ── -->
+  <line x1="603" y1="222" x2="673" y2="222" stroke="#ff9900" stroke-width="1.5" marker-end="url(#arr-blue)"/>
+  <text x="638" y="215" text-anchor="middle" fill="#ff9900" font-size="8">2. validate</text>
+
+  <!-- ── Arrow 3: IAM Role → GitHub (return credentials, 90° angles below JWT card) ── -->
+  <path d="M 767 351 L 767 415 L 132 415 L 132 351" fill="none" stroke="#3fb950" stroke-width="1.5" marker-end="url(#arr-green)" stroke-dasharray="5,3"/>
+  <text x="450" y="410" text-anchor="middle" fill="#3fb950" font-size="9">3. temporary credentials (1h TTL)</text>
+
+  <!-- ── Title ── -->
+  <text x="450" y="468" text-anchor="middle" fill="#c9d1d9" font-size="20" font-weight="600" letter-spacing="-0.3">GitHub Actions → AWS via OIDC</text>
+  <text x="450" y="490" text-anchor="middle" fill="#8b949e" font-size="11">No stored credentials · Short-lived tokens · Scoped by branch and environment</text>
+</svg>
