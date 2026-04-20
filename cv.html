@@ -387,6 +387,43 @@ permalink: /cv/
       page-break-before: always;
     }
 
+    /* ─── MOBILE ─── */
+    @media screen and (max-width: 600px) {
+      .cv-container {
+        padding: 20px 16px;
+        margin: 0 auto;
+      }
+
+      .header {
+        flex-direction: column-reverse;
+        align-items: center;
+        text-align: center;
+        gap: 14px;
+      }
+
+      .header-right {
+        margin-left: 0;
+      }
+
+      .contact-bar {
+        justify-content: center;
+        gap: 12px 18px;
+      }
+
+      .skills-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .entry-header {
+        flex-direction: column;
+        gap: 2px;
+      }
+
+      .entry-date {
+        white-space: normal;
+      }
+    }
+
     /* ─── PRINT ─── */
     @media print {
       body {
