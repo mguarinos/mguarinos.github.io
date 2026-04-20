@@ -85,7 +85,7 @@ aws iam create-role \
 
 Two conditions, both must pass:
 
-- `aud` must equal `sts.amazonaws.com` — prevents tokens minted for other services from being used here.
+- `aud` must equal `sts.amazonaws.com` - prevents tokens minted for other services from being used here.
 - `sub` must match your pattern - scopes the role to a specific repository and trigger context.
 
 ---
@@ -189,7 +189,7 @@ aws iam create-role \
 For production, scoped to the GitHub Environment instead of a branch:
 
 ```bash
-# trust-policy-prod.json — sub: "repo:your-org/your-repo:environment:production"
+# trust-policy-prod.json - sub: "repo:your-org/your-repo:environment:production"
 aws iam create-role \
   --role-name github-prod-deploy \
   --assume-role-policy-document file://trust-policy-prod.json
@@ -206,7 +206,7 @@ jobs:
   prepare:
     runs-on: ubuntu-latest
     permissions:
-      contents: read          # no id-token here — this job doesn't touch AWS
+      contents: read          # no id-token here - this job doesn't touch AWS
 
   deploy-frontend:
     needs: prepare
@@ -231,9 +231,9 @@ jobs:
 
 Three things to notice:
 
-**`id-token: write` is job-scoped.** The `prepare` job reads the repository and detects what changed — it never touches AWS, so it doesn't request the OIDC permission. Only the jobs that call `configure-aws-credentials` need `id-token: write`. At the workflow level the default permission is `id-token: none`, which is correct.
+**`id-token: write` is job-scoped.** The `prepare` job reads the repository and detects what changed - it never touches AWS, so it doesn't request the OIDC permission. Only the jobs that call `configure-aws-credentials` need `id-token: write`. At the workflow level the default permission is `id-token: none`, which is correct.
 
-**`environment: production` is where the approval gate lives.** Set this on the job, not the workflow. GitHub will pause the job and require the designated reviewers to approve before the OIDC token is issued. The `sub` claim will contain `environment:production` only after approval — matching your IAM trust policy condition.
+**`environment: production` is where the approval gate lives.** Set this on the job, not the workflow. GitHub will pause the job and require the designated reviewers to approve before the OIDC token is issued. The `sub` claim will contain `environment:production` only after approval - matching your IAM trust policy condition.
 
 **`role-to-assume` accepts an ARN, not a key pair.** There is no `aws-access-key-id` or `aws-secret-access-key`. The action handles the full OIDC exchange internally and exports the standard `AWS_*` environment variables for subsequent steps.
 
@@ -255,16 +255,16 @@ Every `AssumeRoleWithWebIdentity` call creates a CloudTrail event. That event in
 - The source IP of the GitHub runner
 - The resulting session ARN
 
-Every subsequent AWS API call in that session carries the session ARN. You can trace any S3 put, Lambda invocation, or CloudFront invalidation back to the exact repository, branch, and workflow run that triggered it — without any tagging convention or log enrichment.
+Every subsequent AWS API call in that session carries the session ARN. You can trace any S3 put, Lambda invocation, or CloudFront invalidation back to the exact repository, branch, and workflow run that triggered it.
 
 <figure>
   <img src="/assets/images/github-aws-oidc-cicd/cloudtrail-screenshot.png" alt="AWS CloudTrail event showing UpdateFunctionCode triggered by GitHubActions with a temporary ASIA access key and the runner's source IP">
-  <figcaption>A real CloudTrail event from a Streamline deploy. The access key starts with <code>ASIA</code> — the STS temporary credential prefix, not a long-lived <code>AKIA</code> key. The username is the IAM role session name set by the workflow, and the source IP belongs to a GitHub-hosted runner.</figcaption>
+  <figcaption>A real CloudTrail event from a Streamline deploy. The access key starts with <code>ASIA</code> - the STS temporary credential prefix, not a long-lived <code>AKIA</code> key. The username is the IAM role session name set by the workflow, and the source IP belongs to a GitHub-hosted runner.</figcaption>
 </figure>
 
 ### SOC 2 and ISO 27001 alignment
 
-Both frameworks require demonstrable least-privilege access and evidence that access is scoped to need. The trust policy `sub` condition is machine-readable proof that production credentials can only be issued to workflows running against a specific environment after human approval. The IAM role configuration and the GitHub Environment settings together constitute an auditable, version-controlled access control — auditors can inspect both without relying on convention or documentation.
+Both frameworks require demonstrable least-privilege access and evidence that access is scoped to need. The trust policy `sub` condition is machine-readable proof that production credentials can only be issued to workflows running against a specific environment after human approval. The IAM role configuration and the GitHub Environment settings together constitute an auditable, version-controlled access control - auditors can inspect both without relying on convention or documentation.
 
 The absence of stored credentials also satisfies key management controls: there is no AWS credential in your secret store, so there is nothing to rotate, nothing that can be extracted from a compromised runner cache, and no access key age to report.
 
@@ -272,15 +272,13 @@ The absence of stored credentials also satisfies key management controls: there 
 
 ## What you might miss
 
-**The `aud` condition is not optional.** Without it, any JWT issued by `token.actions.githubusercontent.com` — from any organisation or repository on GitHub — could attempt to assume your role. The `sub` condition alone does not protect you if someone else's repository happens to have a matching subject pattern.
+**The `aud` condition is not optional.** Without it, any JWT issued by `token.actions.githubusercontent.com` - from any organisation or repository on GitHub - could attempt to assume your role. The `sub` condition alone does not protect you if someone else's repository happens to have a matching subject pattern.
 
-**`StringLike` vs `StringEquals` for wildcards.** Use `StringEquals` for exact matches — it's faster and leaves no room for misinterpretation. Use `StringLike` only when you need `*` or `?`. Do not use `StringLike` with an exact value; it works but signals that the intent was something more permissive.
+**`StringLike` vs `StringEquals` for wildcards.** Use `StringEquals` for exact matches - it's faster and leaves no room for misinterpretation. Use `StringLike` only when you need `*` or `?`. Do not use `StringLike` with an exact value; it works but signals that the intent was something more permissive.
 
-**Branch protection and environment protection are separate layers.** The OIDC trust policy restricts which context can assume a role. Branch protection rules prevent who can push to the branch in the first place. GitHub Environment required reviewers gate who can deploy. All three are independent — losing one does not compromise the others, but the strongest posture uses all three.
+**Branch protection and environment protection are separate layers.** The OIDC trust policy restricts which context can assume a role. Branch protection rules prevent who can push to the branch in the first place. GitHub Environment required reviewers gate who can deploy. All three are independent - losing one does not compromise the others, but the strongest posture uses all three.
 
-**Pull request workflows from forks.** A fork's pull request runs in the context of the fork, not the upstream repository. The `sub` claim for a fork's PR will be `repo:fork-owner/fork-name:pull_request`, which does not match your upstream-scoped trust policy. This is the correct behaviour — fork contributors should not be able to assume your deploy roles. Read-only roles that you do want accessible from fork PRs need explicit wildcard patterns or separate trust policies.
-
-**Session duration.** The default session for `AssumeRoleWithWebIdentity` is one hour, which is the maximum unless the role's `MaxSessionDuration` is extended. Deployments taking longer than an hour — rare but possible for large migrations or multi-region rollouts — will fail mid-run with expired credentials. Set `role-session-duration` in the action or extend the role's max session if needed.
+**Session duration.** The default session for `AssumeRoleWithWebIdentity` is one hour, which is the maximum unless the role's `MaxSessionDuration` is extended. Deployments taking longer than an hour will fail mid-run with expired credentials. Set `role-session-duration` in the action or extend the role's max session if needed.
 
 **IAM permission boundaries prevent privilege escalation.** If a deployment role has `iam:CreateRole` or `iam:AttachRolePolicy`, it can in theory create a new role with more permissions than it has. A permission boundary applied to all roles created by the deploy role caps what those child roles can ever do.
 
@@ -290,10 +288,10 @@ The absence of stored credentials also satisfies key management controls: there 
 
 The setup reduces to five things:
 
-1. **An IAM OIDC provider** — registered once per AWS account, pointing at `https://token.actions.githubusercontent.com`.
-2. **One IAM role per environment per access level** — each with a trust policy that `StringEquals` the `sub` claim to the exact context allowed.
-3. **A scoped permissions policy on each role** — listing only the specific resource ARNs the pipeline needs to touch.
-4. **A GitHub Environment** for each production-grade deployment target — with required reviewers and (optionally) a deployment wait timer.
+1. **An IAM OIDC provider** - registered once per AWS account, pointing at `https://token.actions.githubusercontent.com`.
+2. **One IAM role per environment per access level** - each with a trust policy that `StringEquals` the `sub` claim to the exact context allowed.
+3. **A scoped permissions policy on each role** - listing only the specific resource ARNs the pipeline needs to touch.
+4. **A GitHub Environment** for each production-grade deployment target - with required reviewers and (optionally) a deployment wait timer.
 5. **`permissions: id-token: write`** on the specific jobs that call `configure-aws-credentials`, and only those jobs.
 
-The resulting pipeline has no secrets to manage in GitHub, produces a full attribution chain in CloudTrail, and can only deploy to production after a human explicitly approves it through a gated GitHub Environment — all without any changes to how the actual deployment steps work.
+The resulting pipeline has no secrets to manage in GitHub, produces a full attribution chain in CloudTrail, and can only deploy to production after a human explicitly approves it through a gated GitHub Environment - all without any changes to how the actual deployment steps work.
