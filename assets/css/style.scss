@@ -373,16 +373,16 @@ a.cat-pill:hover {
    ============================================================ */
 
 .post-header-image-wrap {
-  width: 100%;
-  max-height: 500px;
-  overflow: hidden;
-  background: var(--bg-card);
+  max-width: 900px;
+  margin-inline: auto;
+  padding-inline: var(--gap);
+  padding-top: 2rem;
 }
 .post-header-image {
   width: 100%;
-  max-height: 500px;
-  object-fit: cover;
+  height: auto;
   display: block;
+  border-radius: 8px;
 }
 
 .post-container {
@@ -687,7 +687,16 @@ pre code,
   border-radius: var(--radius);
   margin: 1.5rem 0;
 }
-figure { margin: 1.75rem 0; }
+figure {
+  margin: 1.75rem 0;
+  width: 100%;
+}
+@media (min-width: 1200px) {
+  figure {
+    margin-inline: calc((var(--content) - var(--container)) / 2);
+    width: var(--container);
+  }
+}
 figure img { margin: 0 !important; width: 100%; border-radius: var(--radius); }
 figcaption {
   margin-top: .55rem;
@@ -696,6 +705,8 @@ figcaption {
   text-align: center;
   font-style: italic;
   line-height: 1.5;
+  max-width: var(--content);
+  margin-inline: auto;
 }
 
 /* Tables */
@@ -704,8 +715,6 @@ figcaption {
   border-collapse: collapse;
   margin: 1.75rem 0;
   font-size: .9rem;
-  display: block;
-  overflow-x: auto;
 }
 .post-content thead tr { border-bottom: 1px solid var(--accent); }
 .post-content th {
@@ -1184,7 +1193,7 @@ figcaption {
 #lightbox-overlay.open { display: flex; }
 
 #lightbox-img {
-  max-width: 100%;
+  width: 90vw;
   max-height: 90vh;
   object-fit: contain;
   border-radius: var(--radius);
@@ -1504,7 +1513,7 @@ figcaption {
 
   .about-grid { grid-template-columns: 1fr; }
 
-  .post-header-image-wrap { max-height: 280px; }
+  .post-header-image-wrap { width: 100%; }
 
   .cv-content { padding: 1.25rem; }
 }
