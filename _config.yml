@@ -4,6 +4,12 @@ url: "https://mguarinos.com"
 baseurl: ""
 author: Manuel Guarinos
 
+image:
+  path: /assets/images/og-default.png
+  width: 3840
+  height: 2016
+  alt: Manuel Guarinos — Cloud Engineering and SRE blog
+
 social:
   github: mguarinos
   linkedin: mguarinos
