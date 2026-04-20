@@ -106,29 +106,6 @@ layout: default
     {%- endif -%}
   </nav>
 
-  {%- assign related = "" | split: "" -%}
-  {%- for post in site.posts -%}
-    {%- if post.url != page.url -%}
-      {%- for cat in post.categories -%}
-        {%- if page.categories contains cat -%}
-          {%- unless related contains post -%}
-            {%- assign related = related | push: post -%}
-          {%- endunless -%}
-        {%- endif -%}
-      {%- endfor -%}
-    {%- endif -%}
-  {%- endfor -%}
-  {%- assign related = related | limit: 3 -%}
-  {%- if related.size > 0 -%}
-  <section class="related-posts">
-    <h2 class="section-label">Related posts</h2>
-    <div class="post-grid post-grid--sm">
-      {%- for rpost in related -%}
-        {%- include post-card.html post=rpost -%}
-      {%- endfor -%}
-    </div>
-  </section>
-  {%- endif -%}
 </div>
 
 <script>
