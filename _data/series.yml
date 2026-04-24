@@ -1,0 +1,5 @@
+- name: "Self-hosted AI Inference with Ollama"
+  slug: "ollama-infra-series"
+  date: "April 2026"
+  description: "Go from a bare server to a production-grade local AI inference stack. Each post adds one layer — runtime, reverse proxy, async queue, chat UI, voice interface, code assistant integration, and observability. By the end you have a complete, self-hosted setup you understand top to bottom."
+  image: /assets/images/ollama-infra-series/header.svg

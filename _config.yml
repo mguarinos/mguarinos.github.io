@@ -17,6 +17,9 @@ social:
 collections:
   projects:
     output: false
+  series:
+    output: true
+    permalink: /posts/:path/
 
 plugins:
   - jekyll-feed
@@ -35,6 +38,8 @@ kramdown:
   input: GFM
   syntax_highlighter: rouge
 
+future: true
+
 permalink: /posts/:year/:month/:day/:title/
 
 defaults:
@@ -43,6 +48,15 @@ defaults:
       type: posts
     values:
       layout: post
+  - scope:
+      path: "_series/ollama-infra-series"
+      type: series
+    values:
+      layout: post
+      date: "2026-04-27"
+      series: "Self-hosted AI Inference with Ollama"
+      categories: [ollama, infra, ai]
+      image: /assets/images/ollama-infra-series/header.svg
 
 exclude:
   - Gemfile
