@@ -3,6 +3,46 @@ layout: default
 ---
 <div id="progress-bar" role="progressbar" aria-label="Reading progress"></div>
 
+{%- if page.title -%}
+{%- assign rb_series = site.series | where: "series", page.series | sort: "series_part" -%}
+{%- if rb_series.size == 0 and page.series -%}
+  {%- assign rb_series = site.posts | where: "series", page.series | sort: "series_part" -%}
+{%- endif -%}
+<div class="post-reading-bar" id="post-reading-bar">
+  <div class="container post-reading-bar-inner">
+    <span class="post-reading-title">{{ page.title | escape }}</span>
+    {%- if page.series and rb_series.size > 1 -%}
+    <div class="post-reading-series">
+      <button class="post-reading-series-btn" id="reading-series-btn" aria-expanded="false">
+        <span>Part {{ page.series_part }}</span>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="post-reading-series-panel" id="reading-series-panel" hidden>
+        <p class="reading-series-name">{{ page.series | escape }}</p>
+        <ol class="reading-series-list">
+          {%- for sp in rb_series -%}
+          <li>
+            {%- if sp.url == page.url -%}
+            <span class="reading-series-current">
+              <span class="reading-series-num">{{ sp.series_part }}.</span>
+              {{ sp.title | escape }}
+            </span>
+            {%- else -%}
+            <a href="{{ sp.url | relative_url }}" class="reading-series-link">
+              <span class="reading-series-num">{{ sp.series_part }}.</span>
+              {{ sp.title | escape }}
+            </a>
+            {%- endif -%}
+          </li>
+          {%- endfor -%}
+        </ol>
+      </div>
+    </div>
+    {%- endif -%}
+  </div>
+</div>
+{%- endif -%}
+
 {%- if page.image -%}
 <div class="post-header-image-wrap">
   <img src="{{ page.image | relative_url }}" alt="{{ page.title | escape }}" class="post-header-image">
@@ -38,33 +78,6 @@ layout: default
     </a>
     {%- endif -%}
 
-    {%- if page.series -%}
-      {%- assign series_posts = site.posts | where: "series", page.series | sort: "date" -%}
-      {%- if series_posts.size > 1 -%}
-      <div class="post-series">
-        <p class="post-series-label">Series</p>
-        <p class="post-series-title">{{ page.series }}</p>
-        <ol class="post-series-list">
-          {%- for sp in series_posts -%}
-            <li>
-              {%- if sp.url == page.url -%}
-                <span class="series-current">
-                  <span class="series-num">{{ forloop.index }}.</span>
-                  {{ sp.title | escape }}
-                </span>
-              {%- else -%}
-                <a href="{{ sp.url | relative_url }}">
-                  <span class="series-num">{{ forloop.index }}.</span>
-                  {{ sp.title | escape }}
-                </a>
-              {%- endif -%}
-            </li>
-          {%- endfor -%}
-        </ol>
-      </div>
-      {%- endif -%}
-    {%- endif -%}
-
     {%- if page.toc -%}
     <details class="toc-container" open>
       <summary class="toc-title">Contents</summary>
@@ -89,19 +102,40 @@ layout: default
 
   </article>
 
+  {%- assign nav_prev = nil -%}
+  {%- assign nav_next = nil -%}
+  {%- if page.collection == "series" and page.series -%}
+    {%- assign s_all = site.series | where: "series", page.series | sort: "series_part" -%}
+    {%- for sp in s_all -%}
+      {%- if sp.url == page.url -%}
+        {%- unless forloop.first -%}
+          {%- assign prev_idx = forloop.index0 | minus: 1 -%}
+          {%- assign nav_prev = s_all[prev_idx] -%}
+        {%- endunless -%}
+        {%- unless forloop.last -%}
+          {%- assign next_idx = forloop.index0 | plus: 1 -%}
+          {%- assign nav_next = s_all[next_idx] -%}
+        {%- endunless -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- else -%}
+    {%- assign nav_prev = page.previous -%}
+    {%- assign nav_next = page.next -%}
+  {%- endif -%}
+
   <nav class="post-nav" aria-label="Post navigation">
-    {%- if page.previous -%}
-      <a href="{{ page.previous.url | relative_url }}" class="post-nav-item post-nav-prev">
+    {%- if nav_prev -%}
+      <a href="{{ nav_prev.url | relative_url }}" class="post-nav-item post-nav-prev">
         <span class="post-nav-label">← Previous</span>
-        <span class="post-nav-title">{{ page.previous.title | escape }}</span>
+        <span class="post-nav-title">{{ nav_prev.title | escape }}</span>
       </a>
     {%- else -%}
       <span class="post-nav-item post-nav-placeholder"></span>
     {%- endif -%}
-    {%- if page.next -%}
-      <a href="{{ page.next.url | relative_url }}" class="post-nav-item post-nav-next">
+    {%- if nav_next -%}
+      <a href="{{ nav_next.url | relative_url }}" class="post-nav-item post-nav-next">
         <span class="post-nav-label">Next →</span>
-        <span class="post-nav-title">{{ page.next.title | escape }}</span>
+        <span class="post-nav-title">{{ nav_next.title | escape }}</span>
       </a>
     {%- endif -%}
   </nav>
@@ -109,6 +143,40 @@ layout: default
 </div>
 
 <script>
+  document.body.classList.add('is-post');
+
+  // Reading bar: appears when post title scrolls out of view (all viewports)
+  (function () {
+    var readingBar = document.getElementById('post-reading-bar');
+    var postTitle  = document.querySelector('.post-title');
+    if (!readingBar || !postTitle) return;
+    var io = new IntersectionObserver(function (entries) {
+      readingBar.classList.toggle('visible', !entries[0].isIntersecting);
+    }, { threshold: 0 });
+    io.observe(postTitle);
+  })();
+
+  // Series dropdown in reading bar
+  (function () {
+    var btn   = document.getElementById('reading-series-btn');
+    var panel = document.getElementById('reading-series-panel');
+    var btt   = document.getElementById('back-to-top');
+    if (!btn || !panel) return;
+    btn.addEventListener('click', function () {
+      var open = panel.hidden;
+      panel.hidden = !open;
+      btn.setAttribute('aria-expanded', String(open));
+      if (btt) btt.style.visibility = open ? 'hidden' : '';
+    });
+    document.addEventListener('click', function (e) {
+      if (!btn.contains(e.target) && !panel.contains(e.target)) {
+        panel.hidden = true;
+        btn.setAttribute('aria-expanded', 'false');
+        if (btt) btt.style.visibility = '';
+      }
+    });
+  })();
+
   (function () {
     var bar = document.getElementById('progress-bar');
     if (!bar) return;
