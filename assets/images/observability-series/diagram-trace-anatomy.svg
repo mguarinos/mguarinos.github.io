@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 310">
+  <defs>
+    <marker id="a" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M0 0L8 4L0 8z" fill="#9ca3af"/>
+    </marker>
+  </defs>
+
+  <!-- ── Legend / labels column ── -->
+  <!-- Service name labels (left side) -->
+  <text x="0" y="52"  font-family="Inter, system-ui, sans-serif" font-size="10" fill="#f97316" font-weight="600" dominant-baseline="central">order-service</text>
+  <text x="0" y="75"  font-family="Inter, system-ui, sans-serif" font-size="10" fill="#f97316" dominant-baseline="central">order-service</text>
+  <text x="0" y="98"  font-family="Inter, system-ui, sans-serif" font-size="10" fill="#f97316" dominant-baseline="central">order-service</text>
+  <text x="0" y="121" font-family="Inter, system-ui, sans-serif" font-size="10" fill="#3b82f6" dominant-baseline="central">inventory</text>
+  <text x="0" y="144" font-family="Inter, system-ui, sans-serif" font-size="10" fill="#f97316" dominant-baseline="central">order-service</text>
+  <text x="0" y="167" font-family="Inter, system-ui, sans-serif" font-size="10" fill="#3b82f6" dominant-baseline="central">inventory</text>
+  <text x="0" y="190" font-family="Inter, system-ui, sans-serif" font-size="10" fill="#3b82f6" dominant-baseline="central">inventory</text>
+  <text x="0" y="213" font-family="Inter, system-ui, sans-serif" font-size="10" fill="#10b981" dominant-baseline="central">payment</text>
+  <text x="0" y="236" font-family="Inter, system-ui, sans-serif" font-size="10" fill="#8b5cf6" dominant-baseline="central">notification</text>
+
+  <!-- ── Span bars ── -->
+  <!-- Timeline starts at x=130, ends at x=666, total width=536 -->
+  <!-- Total trace duration: ~1050ms (slow trace, quantity>5) -->
+  <!-- Scale: 536px / 1050ms ≈ 0.51 px/ms -->
+
+  <!-- Row 1: POST /orders  (0–1050ms) -->
+  <rect x="130" y="42" width="536" height="18" rx="2" fill="#fed7aa" stroke="#f97316" stroke-width="1"/>
+  <text x="133" y="51" font-family="Inter, system-ui, sans-serif" font-size="9" fill="#9a3412" dominant-baseline="central" font-weight="500">POST /orders</text>
+
+  <!-- Row 2: process_order  (1–1050ms) -->
+  <rect x="131" y="65" width="534" height="18" rx="2" fill="#ffedd5" stroke="#fb923c" stroke-width="1"/>
+  <text x="134" y="74" font-family="Inter, system-ui, sans-serif" font-size="9" fill="#9a3412" dominant-baseline="central">process_order</text>
+
+  <!-- Row 3: validate_order  (2–6ms) ≈ 2px -->
+  <rect x="132" y="88" width="4" height="18" rx="1" fill="#ffedd5" stroke="#fb923c" stroke-width="1"/>
+  <!-- check_inventory  (10–28ms) ≈ 9px wide, starts at 10ms = 130+5 -->
+  <rect x="135" y="88" width="9" height="18" rx="1" fill="#ffedd5" stroke="#fb923c" stroke-width="1"/>
+  <!-- reserve_inventory  (30–1040ms) ≈ 514px wide, starts at 15px -->
+  <rect x="145" y="88" width="514" height="18" rx="2" fill="#ffedd5" stroke="#fb923c" stroke-width="1"/>
+  <!-- charge_payment  (after reserve ~1042ms) ≈ 8px, narrow -->
+  <!-- send_notification  (1045ms) ≈ 3px -->
+  <text x="148" y="97" font-family="Inter, system-ui, sans-serif" font-size="9" fill="#9a3412" dominant-baseline="central">validate · check_inventory · reserve_inventory · charge · notify</text>
+
+  <!-- Row 4: inventory GET /stock/{item}  (12–26ms) -->
+  <!-- starts at 130 + 12*0.51 ≈ 136, width 14ms ≈ 7px -->
+  <rect x="136" y="111" width="7" height="18" rx="1" fill="#dbeafe" stroke="#3b82f6" stroke-width="1"/>
+  <text x="138" y="120" font-family="Inter, system-ui, sans-serif" font-size="8" fill="#1e40af" dominant-baseline="central">GET /stock</text>
+
+  <!-- Row 5: reserve_inventory span (30–1040ms) -->
+  <!-- starts at 130+15≈145, width 514px -->
+  <rect x="145" y="134" width="514" height="18" rx="2" fill="#ffedd5" stroke="#fb923c" stroke-width="1"/>
+  <text x="148" y="143" font-family="Inter, system-ui, sans-serif" font-size="9" fill="#9a3412" dominant-baseline="central">reserve_inventory</text>
+
+  <!-- Row 6: inventory POST /stock/{item}/reserve  (31–1039ms) ≈ 513px -->
+  <rect x="146" y="157" width="512" height="18" rx="2" fill="#dbeafe" stroke="#3b82f6" stroke-width="1"/>
+  <text x="149" y="166" font-family="Inter, system-ui, sans-serif" font-size="9" fill="#1e40af" dominant-baseline="central">POST /stock/{item}/reserve</text>
+
+  <!-- Row 7: reserve_stock + slow_lookup  (32–1038ms) ≈ 511px -->
+  <rect x="147" y="180" width="510" height="18" rx="2" fill="#bfdbfe" stroke="#2563eb" stroke-width="1"/>
+  <text x="150" y="189" font-family="Inter, system-ui, sans-serif" font-size="9" fill="#1e40af" dominant-baseline="central" font-weight="500">slow_lookup  ← 1003 ms  [inventory.demand=high]</text>
+
+  <!-- Row 8: charge_payment / POST /charges  (narrow, ~8ms, at ~1042ms) -->
+  <!-- x = 130 + 1042*0.51 ≈ 661 — too far right. Let me fake a shorter trace for cleaner layout -->
+  <!-- Actually let me just place charge_payment small at right end -->
+  <rect x="661" y="203" width="5" height="18" rx="1" fill="#d1fae5" stroke="#10b981" stroke-width="1"/>
+
+  <!-- Row 9: notification  -->
+  <rect x="667" y="226" width="3" height="18" rx="1" fill="#ede9fe" stroke="#8b5cf6" stroke-width="1"/>
+
+  <!-- ── Timeline axis ── -->
+  <line x1="130" y1="258" x2="666" y2="258" stroke="#d1d5db" stroke-width="1" marker-end="url(#a)"/>
+  <!-- Tick marks: 0, 250ms, 500ms, 750ms, 1000ms -->
+  <line x1="130" y1="255" x2="130" y2="261" stroke="#9ca3af" stroke-width="1"/>
+  <line x1="267" y1="255" x2="267" y2="261" stroke="#9ca3af" stroke-width="1"/>
+  <line x1="404" y1="255" x2="404" y2="261" stroke="#9ca3af" stroke-width="1"/>
+  <line x1="541" y1="255" x2="541" y2="261" stroke="#9ca3af" stroke-width="1"/>
+  <line x1="666" y1="255" x2="666" y2="261" stroke="#9ca3af" stroke-width="1"/>
+  <!-- Tick labels -->
+  <text x="130" y="271" font-family="Inter, system-ui, sans-serif" font-size="9" fill="#9ca3af" text-anchor="middle">0</text>
+  <text x="267" y="271" font-family="Inter, system-ui, sans-serif" font-size="9" fill="#9ca3af" text-anchor="middle">250ms</text>
+  <text x="404" y="271" font-family="Inter, system-ui, sans-serif" font-size="9" fill="#9ca3af" text-anchor="middle">500ms</text>
+  <text x="541" y="271" font-family="Inter, system-ui, sans-serif" font-size="9" fill="#9ca3af" text-anchor="middle">750ms</text>
+  <text x="666" y="271" font-family="Inter, system-ui, sans-serif" font-size="9" fill="#9ca3af" text-anchor="middle">1050ms</text>
+
+  <!-- ── Trace ID label ── -->
+  <text x="130" y="292" font-family="Inter, system-ui, sans-serif" font-size="9" fill="#9ca3af">
+    trace_id: a3b7c9d2e1f04567  —  4 services, 9 spans, shared context propagated via W3C traceparent header
+  </text>
+
+  <!-- ── Legend (service colours) ── -->
+  <rect x="130" y="12" width="10" height="10" rx="1" fill="#fed7aa" stroke="#f97316" stroke-width="1"/>
+  <text x="144" y="17" font-family="Inter, system-ui, sans-serif" font-size="9" fill="#374151" dominant-baseline="central">order-service</text>
+  <rect x="218" y="12" width="10" height="10" rx="1" fill="#dbeafe" stroke="#3b82f6" stroke-width="1"/>
+  <text x="232" y="17" font-family="Inter, system-ui, sans-serif" font-size="9" fill="#374151" dominant-baseline="central">inventory-service</text>
+  <rect x="322" y="12" width="10" height="10" rx="1" fill="#d1fae5" stroke="#10b981" stroke-width="1"/>
+  <text x="336" y="17" font-family="Inter, system-ui, sans-serif" font-size="9" fill="#374151" dominant-baseline="central">payment-service</text>
+  <rect x="416" y="12" width="10" height="10" rx="1" fill="#ede9fe" stroke="#8b5cf6" stroke-width="1"/>
+  <text x="430" y="17" font-family="Inter, system-ui, sans-serif" font-size="9" fill="#374151" dominant-baseline="central">notification-service</text>
+</svg>

@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 168">
+  <defs>
+    <marker id="a" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M0 0L8 4L0 8z" fill="#9ca3af"/>
+    </marker>
+  </defs>
+
+  <!-- ─── Step 1: Alert ─── -->
+  <rect x="10" y="22" width="160" height="132" rx="4" fill="#fffbeb" stroke="#fbbf24" stroke-width="1.5"/>
+  <text x="90" y="13" font-family="Inter, system-ui, sans-serif" font-size="8.5" fill="#f59e0b" text-anchor="middle" font-weight="600" letter-spacing="0.5">1 · ALERT</text>
+  <text x="90" y="46" font-family="Inter, system-ui, sans-serif" font-size="12" fill="#374151" text-anchor="middle" dominant-baseline="central" font-weight="500">Alert fires</text>
+  <text x="90" y="62" font-family="Inter, system-ui, sans-serif" font-size="9" fill="#9ca3af" text-anchor="middle" dominant-baseline="central">Alertmanager → Slack</text>
+  <text x="90" y="85" font-family="Inter, system-ui, sans-serif" font-size="10" fill="#6b7280" text-anchor="middle" dominant-baseline="central">Fast error budget burn</text>
+  <text x="90" y="98" font-family="Inter, system-ui, sans-serif" font-size="10" fill="#6b7280" text-anchor="middle" dominant-baseline="central">on order-service</text>
+  <text x="90" y="111" font-family="Inter, system-ui, sans-serif" font-size="10" fill="#6b7280" text-anchor="middle" dominant-baseline="central">2-hr burn rate exceeded</text>
+  <text x="90" y="139" font-family="Inter, system-ui, sans-serif" font-size="9" fill="#d97706" text-anchor="middle" dominant-baseline="central" font-style="italic">you are on call</text>
+
+  <!-- Arrow 1 → 2 -->
+  <line x1="170" y1="88" x2="188" y2="88" stroke="#9ca3af" stroke-width="1.5" marker-end="url(#a)"/>
+
+  <!-- ─── Step 2: Metrics ─── -->
+  <rect x="190" y="22" width="160" height="132" rx="4" fill="#eff6ff" stroke="#60a5fa" stroke-width="1.5"/>
+  <text x="270" y="13" font-family="Inter, system-ui, sans-serif" font-size="8.5" fill="#3b82f6" text-anchor="middle" font-weight="600" letter-spacing="0.5">2 · METRICS</text>
+  <text x="270" y="46" font-family="Inter, system-ui, sans-serif" font-size="12" fill="#374151" text-anchor="middle" dominant-baseline="central" font-weight="500">Scope</text>
+  <text x="270" y="62" font-family="Inter, system-ui, sans-serif" font-size="9" fill="#9ca3af" text-anchor="middle" dominant-baseline="central">Grafana dashboard · PromQL</text>
+  <text x="270" y="85" font-family="Inter, system-ui, sans-serif" font-size="10" fill="#6b7280" text-anchor="middle" dominant-baseline="central">error rate: 5.73%</text>
+  <text x="270" y="98" font-family="Inter, system-ui, sans-serif" font-size="10" fill="#6b7280" text-anchor="middle" dominant-baseline="central">order-service p99: 2.38s</text>
+  <text x="270" y="111" font-family="Inter, system-ui, sans-serif" font-size="10" fill="#6b7280" text-anchor="middle" dominant-baseline="central">inventory reserve: 495ms</text>
+  <text x="270" y="139" font-family="Inter, system-ui, sans-serif" font-size="9" fill="#3b82f6" text-anchor="middle" dominant-baseline="central" font-style="italic">downstream issue?</text>
+
+  <!-- Arrow 2 → 3 -->
+  <line x1="350" y1="88" x2="368" y2="88" stroke="#9ca3af" stroke-width="1.5" marker-end="url(#a)"/>
+
+  <!-- ─── Step 3: Logs ─── -->
+  <rect x="370" y="22" width="160" height="132" rx="4" fill="#f5f3ff" stroke="#a78bfa" stroke-width="1.5"/>
+  <text x="450" y="13" font-family="Inter, system-ui, sans-serif" font-size="8.5" fill="#8b5cf6" text-anchor="middle" font-weight="600" letter-spacing="0.5">3 · LOGS</text>
+  <text x="450" y="46" font-family="Inter, system-ui, sans-serif" font-size="12" fill="#374151" text-anchor="middle" dominant-baseline="central" font-weight="500">Examples</text>
+  <text x="450" y="62" font-family="Inter, system-ui, sans-serif" font-size="9" fill="#9ca3af" text-anchor="middle" dominant-baseline="central">Loki Explore · LogQL</text>
+  <text x="450" y="85" font-family="Inter, system-ui, sans-serif" font-size="10" fill="#6b7280" text-anchor="middle" dominant-baseline="central">order-svc: payment failed</text>
+  <text x="450" y="98" font-family="Inter, system-ui, sans-serif" font-size="10" fill="#6b7280" text-anchor="middle" dominant-baseline="central">quantity: 9 — misleading</text>
+  <text x="450" y="111" font-family="Inter, system-ui, sans-serif" font-size="10" fill="#6b7280" text-anchor="middle" dominant-baseline="central">inventory-svc: no errors</text>
+  <text x="450" y="139" font-family="Inter, system-ui, sans-serif" font-size="9" fill="#8b5cf6" text-anchor="middle" dominant-baseline="central" font-style="italic">trace_id → open in Tempo</text>
+
+  <!-- Arrow 3 → 4 -->
+  <line x1="530" y1="88" x2="548" y2="88" stroke="#9ca3af" stroke-width="1.5" marker-end="url(#a)"/>
+
+  <!-- ─── Step 4: Traces ─── -->
+  <rect x="550" y="22" width="160" height="132" rx="4" fill="#ecfdf5" stroke="#34d399" stroke-width="1.5"/>
+  <text x="630" y="13" font-family="Inter, system-ui, sans-serif" font-size="8.5" fill="#10b981" text-anchor="middle" font-weight="600" letter-spacing="0.5">4 · TRACES</text>
+  <text x="630" y="46" font-family="Inter, system-ui, sans-serif" font-size="12" fill="#374151" text-anchor="middle" dominant-baseline="central" font-weight="500">Causation</text>
+  <text x="630" y="62" font-family="Inter, system-ui, sans-serif" font-size="9" fill="#9ca3af" text-anchor="middle" dominant-baseline="central">Tempo · Exemplars</text>
+  <text x="630" y="85" font-family="Inter, system-ui, sans-serif" font-size="10" fill="#6b7280" text-anchor="middle" dominant-baseline="central">slow_lookup: 298ms / 622ms</text>
+  <text x="630" y="98" font-family="Inter, system-ui, sans-serif" font-size="10" fill="#6b7280" text-anchor="middle" dominant-baseline="central">inventory.demand=high</text>
+  <text x="630" y="111" font-family="Inter, system-ui, sans-serif" font-size="10" fill="#6b7280" text-anchor="middle" dominant-baseline="central">payment call: 15ms (502)</text>
+  <text x="630" y="139" font-family="Inter, system-ui, sans-serif" font-size="9" fill="#10b981" text-anchor="middle" dominant-baseline="central" font-style="italic">not in payment-service</text>
+
+  <!-- Arrow 4 → 5 -->
+  <line x1="710" y1="88" x2="728" y2="88" stroke="#9ca3af" stroke-width="1.5" marker-end="url(#a)"/>
+
+  <!-- ─── Step 5: Root cause ─── -->
+  <rect x="730" y="22" width="160" height="132" rx="4" fill="#fff7ed" stroke="#f97316" stroke-width="1.5"/>
+  <text x="810" y="46" font-family="Inter, system-ui, sans-serif" font-size="12" fill="#111827" text-anchor="middle" dominant-baseline="central" font-weight="500">Root cause</text>
+  <text x="810" y="70" font-family="Inter, system-ui, sans-serif" font-size="10" fill="#374151" text-anchor="middle" dominant-baseline="central">Latency: slow_lookup</text>
+  <text x="810" y="83" font-family="Inter, system-ui, sans-serif" font-size="10" fill="#374151" text-anchor="middle" dominant-baseline="central">inventory qty &gt; 5 · 298ms</text>
+  <text x="810" y="100" font-family="Inter, system-ui, sans-serif" font-size="10" fill="#374151" text-anchor="middle" dominant-baseline="central">Errors: payment-svc 5%</text>
+  <text x="810" y="119" font-family="Inter, system-ui, sans-serif" font-size="10" fill="#374151" text-anchor="middle" dominant-baseline="central">Fix: remove slow path in</text>
+  <text x="810" y="132" font-family="Inter, system-ui, sans-serif" font-size="10" fill="#374151" text-anchor="middle" dominant-baseline="central">inventory-service</text>
+</svg>

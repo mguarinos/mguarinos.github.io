@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 340">
+  <style>text { font-family: Inter, system-ui, sans-serif; }</style>
+  <defs>
+    <marker id="arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M0 0L8 4L0 8z" fill="#9ca3af"/>
+    </marker>
+  </defs>
+
+  <!-- ── Lane divider ── -->
+  <line x1="360" y1="0" x2="360" y2="340" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="4 3"/>
+
+  <!-- ── Lane headers ── -->
+  <text x="180" y="22" font-size="12" font-weight="600" fill="#374151" text-anchor="middle">order-service</text>
+  <text x="540" y="22" font-size="12" font-weight="600" fill="#374151" text-anchor="middle">inventory-service</text>
+
+  <!-- ── order-service spans ── -->
+
+  <!-- Root span: POST /orders (orange — entry point) -->
+  <rect x="20" y="36" width="318" height="56" rx="4" fill="#fff7ed" stroke="#f97316" stroke-width="1.5"/>
+  <text x="179" y="56" font-size="11" font-weight="600" fill="#374151" text-anchor="middle" dominant-baseline="central">span: POST /orders</text>
+  <text x="179" y="76" font-size="9" fill="#6b7280" text-anchor="middle" dominant-baseline="central">trace_id=a3b7c9…  ·  span_id=0001</text>
+
+  <!-- Child: process_order (indented 20px) -->
+  <rect x="40" y="106" width="278" height="40" rx="4" fill="#f9fafb" stroke="#d1d5db" stroke-width="1.5"/>
+  <text x="179" y="126" font-size="11" fill="#374151" text-anchor="middle" dominant-baseline="central">span: process_order</text>
+
+  <!-- Child: reserve_inventory — outgoing HTTP call (indented 40px) -->
+  <rect x="60" y="164" width="258" height="40" rx="4" fill="#f9fafb" stroke="#d1d5db" stroke-width="1.5"/>
+  <text x="189" y="184" font-size="11" fill="#374151" text-anchor="middle" dominant-baseline="central">span: reserve_inventory</text>
+
+  <!-- traceparent header — the W3C header injected into the outgoing request -->
+  <rect x="60" y="214" width="258" height="52" rx="4" fill="#f8fafc" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4 2"/>
+  <text x="189" y="232" font-family="'JetBrains Mono','Fira Code',monospace" font-size="10" fill="#475569" text-anchor="middle" dominant-baseline="central">traceparent:</text>
+  <text x="189" y="252" font-family="'JetBrains Mono','Fira Code',monospace" font-size="10" fill="#475569" text-anchor="middle" dominant-baseline="central">00-a3b7c9…-0001-01</text>
+
+  <!-- ── inventory-service spans ── -->
+
+  <!-- Root span: receives HTTP request, extracts context (2 lines — shows same trace_id) -->
+  <rect x="362" y="164" width="336" height="60" rx="4" fill="#f9fafb" stroke="#d1d5db" stroke-width="1.5"/>
+  <text x="530" y="184" font-size="11" font-weight="600" fill="#374151" text-anchor="middle" dominant-baseline="central">span: POST /stock/{item}/reserve</text>
+  <text x="530" y="204" font-size="9" fill="#6b7280" text-anchor="middle" dominant-baseline="central">trace_id=a3b7c9…  ·  parent_span_id=0001</text>
+
+  <!-- Child: reserve_stock (indented 20px) -->
+  <rect x="382" y="236" width="296" height="40" rx="4" fill="#f9fafb" stroke="#d1d5db" stroke-width="1.5"/>
+  <text x="530" y="256" font-size="11" fill="#374151" text-anchor="middle" dominant-baseline="central">span: reserve_stock</text>
+
+  <!-- Child: slow_lookup (indented 40px, orange — high-latency span) -->
+  <rect x="402" y="290" width="276" height="40" rx="4" fill="#fff7ed" stroke="#f97316" stroke-width="1.5"/>
+  <text x="540" y="310" font-size="11" fill="#374151" text-anchor="middle" dominant-baseline="central">span: slow_lookup  ← 270ms</text>
+
+  <!-- ── HTTP call arrow (solid) ── -->
+  <line x1="318" y1="184" x2="362" y2="184" stroke="#9ca3af" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- HTTP request label — sits in gap between process_order and reserve_inventory -->
+  <rect x="271" y="147" width="178" height="16" rx="3" fill="white" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="360" y="155" font-size="9" fill="#374151" text-anchor="middle" dominant-baseline="central">POST /stock/{item}/reserve</text>
+
+  <!-- ── traceparent propagation arrow (dashed diagonal) ── -->
+  <line x1="318" y1="240" x2="362" y2="194" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4 2" marker-end="url(#arr)"/>
+</svg>

@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 268">
+  <defs>
+    <marker id="a" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M0 0L8 4L0 8z" fill="#9ca3af"/>
+    </marker>
+  </defs>
+
+  <!-- client -->
+  <rect x="16" y="115" width="88" height="36" rx="4" fill="#f9fafb" stroke="#d1d5db" stroke-width="1.5"/>
+  <text x="60" y="133" font-family="Inter, system-ui, sans-serif" font-size="13" fill="#374151" text-anchor="middle" dominant-baseline="central">client</text>
+
+  <!-- order-service -->
+  <rect x="156" y="84" width="152" height="98" rx="4" fill="#fff7ed" stroke="#f97316" stroke-width="1.5"/>
+  <text x="232" y="125" font-family="Inter, system-ui, sans-serif" font-size="13" fill="#111827" text-anchor="middle" dominant-baseline="central" font-weight="500">order-service</text>
+  <text x="232" y="143" font-family="Inter, system-ui, sans-serif" font-size="11" fill="#6b7280" text-anchor="middle" dominant-baseline="central">:8001</text>
+
+  <!-- inventory-service -->
+  <rect x="432" y="32" width="208" height="36" rx="4" fill="#f9fafb" stroke="#d1d5db" stroke-width="1.5"/>
+  <text x="536" y="43" font-family="Inter, system-ui, sans-serif" font-size="13" fill="#374151" text-anchor="middle" dominant-baseline="central">inventory-service</text>
+  <text x="536" y="59" font-family="Inter, system-ui, sans-serif" font-size="11" fill="#6b7280" text-anchor="middle" dominant-baseline="central">:8002</text>
+
+  <!-- payment-service -->
+  <rect x="432" y="115" width="208" height="36" rx="4" fill="#f9fafb" stroke="#d1d5db" stroke-width="1.5"/>
+  <text x="536" y="126" font-family="Inter, system-ui, sans-serif" font-size="13" fill="#374151" text-anchor="middle" dominant-baseline="central">payment-service</text>
+  <text x="536" y="142" font-family="Inter, system-ui, sans-serif" font-size="11" fill="#6b7280" text-anchor="middle" dominant-baseline="central">:8003</text>
+
+  <!-- notification-service -->
+  <rect x="432" y="198" width="208" height="36" rx="4" fill="#f9fafb" stroke="#d1d5db" stroke-width="1.5"/>
+  <text x="536" y="209" font-family="Inter, system-ui, sans-serif" font-size="13" fill="#374151" text-anchor="middle" dominant-baseline="central">notification-service</text>
+  <text x="536" y="225" font-family="Inter, system-ui, sans-serif" font-size="11" fill="#6b7280" text-anchor="middle" dominant-baseline="central">:8004</text>
+
+  <!-- arrow: client → order-service -->
+  <line x1="104" y1="133" x2="155" y2="133" stroke="#9ca3af" stroke-width="1.5" marker-end="url(#a)"/>
+  <text x="130" y="125" font-family="Inter, system-ui, sans-serif" font-size="10" fill="#6b7280" text-anchor="middle">POST /orders</text>
+
+  <!-- arrow: order-service → inventory-service (curve up) -->
+  <path d="M308,108 C368,108 368,50 432,50" stroke="#9ca3af" stroke-width="1.5" fill="none" marker-end="url(#a)"/>
+  <!-- labels placed above the curve (curve peaks at y≈79 at x=368) -->
+  <text x="368" y="57" font-family="Inter, system-ui, sans-serif" font-size="10" fill="#6b7280" text-anchor="middle">GET /stock/{item}</text>
+  <text x="368" y="70" font-family="Inter, system-ui, sans-serif" font-size="10" fill="#6b7280" text-anchor="middle">POST .../reserve</text>
+
+  <!-- arrow: order-service → payment-service -->
+  <line x1="308" y1="133" x2="431" y2="133" stroke="#9ca3af" stroke-width="1.5" marker-end="url(#a)"/>
+  <text x="368" y="125" font-family="Inter, system-ui, sans-serif" font-size="10" fill="#6b7280" text-anchor="middle">POST /charges</text>
+
+  <!-- arrow: order-service → notification-service (dashed, curve down) -->
+  <path d="M308,158 C368,158 368,216 432,216" stroke="#9ca3af" stroke-width="1.5" fill="none" stroke-dasharray="4 3" marker-end="url(#a)"/>
+  <!-- labels placed above the curve (curve valley at y≈187 at x=368) -->
+  <text x="368" y="162" font-family="Inter, system-ui, sans-serif" font-size="10" fill="#6b7280" text-anchor="middle">POST /notify</text>
+  <text x="368" y="175" font-family="Inter, system-ui, sans-serif" font-size="10" fill="#6b7280" text-anchor="middle">(fire-and-forget)</text>
+</svg>

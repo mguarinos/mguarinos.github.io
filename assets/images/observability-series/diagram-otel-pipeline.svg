@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 450">
+  <style>text { font-family: Inter, system-ui, sans-serif; }</style>
+  <defs>
+    <marker id="arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M0 0L8 4L0 8z" fill="#9ca3af"/>
+    </marker>
+    <marker id="arr-b" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M0 0L8 4L0 8z" fill="#3b82f6"/>
+    </marker>
+  </defs>
+
+  <!-- ── Row 1: Application Services ── -->
+  <rect x="8" y="8" width="704" height="82" rx="6" fill="#fff7ed" stroke="#f97316" stroke-width="1.5" stroke-dasharray="6 3"/>
+  <text x="20" y="24" font-size="9" font-weight="600" fill="#ea580c" letter-spacing="0.5">APPLICATION SERVICES — OTel SDK instrumented</text>
+
+  <rect x="20"  y="32" width="148" height="44" rx="4" fill="#fff" stroke="#f97316" stroke-width="1.5"/>
+  <text x="94"  y="54" font-size="11" font-weight="600" fill="#111827" text-anchor="middle" dominant-baseline="central">order-service</text>
+
+  <rect x="184" y="32" width="148" height="44" rx="4" fill="#fff" stroke="#fdba74" stroke-width="1.2"/>
+  <text x="258" y="54" font-size="11" fill="#374151" text-anchor="middle" dominant-baseline="central">inventory-service</text>
+
+  <rect x="348" y="32" width="148" height="44" rx="4" fill="#fff" stroke="#fdba74" stroke-width="1.2"/>
+  <text x="422" y="54" font-size="11" fill="#374151" text-anchor="middle" dominant-baseline="central">payment-service</text>
+
+  <rect x="512" y="32" width="196" height="44" rx="4" fill="#fff" stroke="#fdba74" stroke-width="1.2"/>
+  <text x="610" y="54" font-size="11" fill="#374151" text-anchor="middle" dominant-baseline="central">notification-service</text>
+
+  <!-- ── Row 2: Collectors ── -->
+  <rect x="210" y="148" width="200" height="60" rx="5" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="310" y="171" font-size="12" font-weight="600" fill="#1e40af" text-anchor="middle" dominant-baseline="central">OTel Collector</text>
+  <text x="310" y="191" font-size="10" fill="#6b7280" text-anchor="middle" dominant-baseline="central">receive · process · export</text>
+
+  <rect x="490" y="148" width="180" height="60" rx="5" fill="#f9fafb" stroke="#d1d5db" stroke-width="1.5"/>
+  <text x="580" y="171" font-size="12" font-weight="600" fill="#374151" text-anchor="middle" dominant-baseline="central">Promtail</text>
+  <text x="580" y="191" font-size="10" fill="#6b7280" text-anchor="middle" dominant-baseline="central">Docker SD · relabelling</text>
+
+  <!-- ── Row 3: Storage Backends ── -->
+  <rect x="30"  y="268" width="160" height="60" rx="5" fill="#f9fafb" stroke="#d1d5db" stroke-width="1.5"/>
+  <text x="110" y="291" font-size="12" font-weight="600" fill="#374151" text-anchor="middle" dominant-baseline="central">Prometheus</text>
+  <text x="110" y="311" font-size="10" fill="#6b7280" text-anchor="middle" dominant-baseline="central">time series · scrape</text>
+
+  <rect x="260" y="268" width="200" height="60" rx="5" fill="#f9fafb" stroke="#d1d5db" stroke-width="1.5"/>
+  <text x="360" y="291" font-size="12" font-weight="600" fill="#374151" text-anchor="middle" dominant-baseline="central">Tempo</text>
+  <text x="360" y="311" font-size="10" fill="#6b7280" text-anchor="middle" dominant-baseline="central">distributed traces</text>
+
+  <rect x="530" y="268" width="160" height="60" rx="5" fill="#f9fafb" stroke="#d1d5db" stroke-width="1.5"/>
+  <text x="610" y="291" font-size="12" font-weight="600" fill="#374151" text-anchor="middle" dominant-baseline="central">Loki</text>
+  <text x="610" y="311" font-size="10" fill="#6b7280" text-anchor="middle" dominant-baseline="central">log aggregation</text>
+
+  <!-- ── Row 4: Grafana ── -->
+  <rect x="180" y="376" width="360" height="60" rx="5" fill="#1f2937" stroke="#374151" stroke-width="1.5"/>
+  <text x="360" y="399" font-size="13" font-weight="600" fill="#f9fafb" text-anchor="middle" dominant-baseline="central">Grafana</text>
+  <text x="360" y="419" font-size="10" fill="#9ca3af" text-anchor="middle" dominant-baseline="central">PromQL · TraceQL · LogQL</text>
+
+  <!-- ── Arrows ── -->
+
+  <!-- 1. All services → OTel Collector (OTLP spans via gRPC, blue) -->
+  <path d="M310 90 V148" stroke="#3b82f6" stroke-width="1.5" fill="none" marker-end="url(#arr-b)"/>
+  <rect x="256" y="111" width="108" height="16" rx="3" fill="white" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="310" y="119" font-size="9" fill="#1e40af" text-anchor="middle" dominant-baseline="central">OTLP spans (gRPC)</text>
+
+  <!-- 2. Prometheus scrapes services (pull, dashed) — arrow up = Prometheus initiates -->
+  <line x1="94" y1="268" x2="94" y2="90" stroke="#9ca3af" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#arr)"/>
+  <rect x="50" y="107" width="88" height="28" rx="3" fill="white" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="94" y="116" font-size="9" fill="#6b7280" text-anchor="middle" dominant-baseline="central">scrape</text>
+  <text x="94" y="128" font-size="9" fill="#6b7280" text-anchor="middle" dominant-baseline="central">/metrics</text>
+
+  <!-- 3. Services → Promtail (container logs via Docker, dashed) -->
+  <path d="M580 90 V148" stroke="#9ca3af" stroke-width="1.5" stroke-dasharray="5 3" fill="none" marker-end="url(#arr)"/>
+  <rect x="534" y="111" width="92" height="16" rx="3" fill="white" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="580" y="119" font-size="9" fill="#6b7280" text-anchor="middle" dominant-baseline="central">container logs</text>
+
+  <!-- 4. OTel Collector → Tempo (traces) -->
+  <path d="M310 208 V238 H360 V268" stroke="#9ca3af" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+  <rect x="300" y="229" width="50" height="16" rx="3" fill="white" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="325" y="237" font-size="9" fill="#6b7280" text-anchor="middle" dominant-baseline="central">traces</text>
+
+  <!-- 5. Promtail → Loki (log streams) -->
+  <path d="M580 208 V238 H610 V268" stroke="#9ca3af" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+  <rect x="563" y="229" width="72" height="16" rx="3" fill="white" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="599" y="237" font-size="9" fill="#6b7280" text-anchor="middle" dominant-baseline="central">log streams</text>
+
+  <!-- 6. Tempo → Prometheus (service graph metrics, dashed) -->
+  <line x1="260" y1="298" x2="190" y2="298" stroke="#9ca3af" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#arr)"/>
+  <rect x="191" y="283" width="68" height="28" rx="3" fill="white" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="225" y="292" font-size="9" fill="#6b7280" text-anchor="middle" dominant-baseline="central">service graph</text>
+  <text x="225" y="304" font-size="9" fill="#6b7280" text-anchor="middle" dominant-baseline="central">metrics</text>
+
+  <!-- 7. Grafana → Prometheus (PromQL) -->
+  <path d="M250 376 V356 H110 V328" stroke="#9ca3af" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+  <rect x="156" y="347" width="48" height="16" rx="3" fill="white" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="180" y="355" font-size="9" fill="#6b7280" text-anchor="middle" dominant-baseline="central">PromQL</text>
+
+  <!-- 8. Grafana → Tempo (TraceQL) -->
+  <line x1="360" y1="376" x2="360" y2="328" stroke="#9ca3af" stroke-width="1.5" marker-end="url(#arr)"/>
+  <rect x="330" y="347" width="60" height="16" rx="3" fill="white" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="360" y="355" font-size="9" fill="#6b7280" text-anchor="middle" dominant-baseline="central">TraceQL</text>
+
+  <!-- 9. Grafana → Loki (LogQL) -->
+  <path d="M470 376 V356 H610 V328" stroke="#9ca3af" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+  <rect x="516" y="347" width="48" height="16" rx="3" fill="white" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="540" y="355" font-size="9" fill="#6b7280" text-anchor="middle" dominant-baseline="central">LogQL</text>
+</svg>
