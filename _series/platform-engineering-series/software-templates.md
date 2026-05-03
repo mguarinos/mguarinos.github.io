@@ -16,7 +16,7 @@ A Software Template is a Backstage entity that combines three things: a form the
 
 The developer sees a wizard. The platform team defines what happens. The output is a production-ready starting point, not a blank repo.
 
-<!-- screenshot: the Backstage scaffolder wizard — step 1 of the form with "Service name" and "Owning team" fields filled in -->
+> 📷 **Screenshot** — The scaffolder wizard, step 1: "Service name" and "Owning team" fields filled in, "Next" button visible.
 
 ---
 
@@ -116,7 +116,7 @@ skeleton/
     └── index.js
 ```
 
-<!-- diagram: flow showing skeleton directory → template rendering with values → output repo structure — three boxes left to right with file icons -->
+<figure><img src="/assets/images/platform-engineering-series/diagram-template-rendering.svg" alt="The skeleton/ directory with template variables is rendered with form values to produce the output repository."></figure>
 
 Every file in the skeleton is rendered with the values the developer provided. The output is a repo that compiles, passes lint, and has a working pipeline from commit one.
 
@@ -143,7 +143,7 @@ spec:
 
 After registering the template in the catalog, developers find it under **Create** in the Backstage sidebar. They fill in the form, review the step log as actions execute, and get links to the new repo and catalog entry when it completes.
 
-<!-- screenshot: the scaffolder execution log — steps completing with green checkmarks, "Repository", "Open in catalog" links shown at the end -->
+> 📷 **Screenshot** — Scaffolder execution log with all steps showing green checkmarks, and the "Repository" and "Open in catalog" links at the bottom.
 
 ---
 

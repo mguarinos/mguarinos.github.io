@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 165" width="900" height="165"
+     font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
+
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,1 L9,5 L0,9 Z" fill="#adb5bd"/>
+    </marker>
+  </defs>
+
+  <rect width="900" height="165" fill="#f8f9fa"/>
+
+  <!-- Box 1: skeleton/ -->
+  <rect x="20" y="12" width="265" height="140" rx="6" fill="#fff" stroke="#ced4da" stroke-width="1.5"/>
+  <rect x="20" y="12" width="265" height="30" rx="6" fill="#f1f3f5" stroke="#ced4da" stroke-width="1.5"/>
+  <rect x="20" y="28" width="265" height="14" fill="#f1f3f5"/>
+  <line x1="20" y1="42" x2="285" y2="42" stroke="#ced4da" stroke-width="1.5"/>
+  <text x="36" y="32" font-size="11" font-weight="600" fill="#495057" font-family="monospace">skeleton/</text>
+  <text x="36" y="58"  font-size="10" fill="#adb5bd" font-family="monospace">├── catalog-info.yaml</text>
+  <text x="36" y="74"  font-size="10" fill="#adb5bd" font-family="monospace">├── package.json</text>
+  <text x="36" y="90"  font-size="10" fill="#adb5bd" font-family="monospace">├── Dockerfile</text>
+  <text x="36" y="106" font-size="10" fill="#adb5bd" font-family="monospace">└── .github/workflows/ci.yml</text>
+  <text x="36" y="126" font-size="9" fill="#339af0" font-family="monospace">name: $&#123;&#123; values.name &#125;&#125;</text>
+  <text x="36" y="142" font-size="9" fill="#339af0" font-family="monospace">owner: $&#123;&#123; values.owner &#125;&#125;</text>
+
+  <!-- Arrow + values label -->
+  <line x1="285" y1="82" x2="455" y2="82" stroke="#adb5bd" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Values label above arrow -->
+  <rect x="320" y="42" width="125" height="34" rx="5" fill="#fff8e1" stroke="#fab005" stroke-width="1.2"/>
+  <text x="382" y="56" text-anchor="middle" font-size="9" font-weight="600" fill="#e67700">form values</text>
+  <text x="382" y="70" text-anchor="middle" font-size="8" fill="#f08c00" font-family="monospace">name · owner · type</text>
+
+  <!-- Box 2: output repo/ -->
+  <rect x="458" y="12" width="265" height="140" rx="6" fill="#fff" stroke="#40c057" stroke-width="1.5"/>
+  <rect x="458" y="12" width="265" height="30" rx="6" fill="#ebfbee" stroke="#40c057" stroke-width="1.5"/>
+  <rect x="458" y="28" width="265" height="14" fill="#ebfbee"/>
+  <line x1="458" y1="42" x2="723" y2="42" stroke="#40c057" stroke-width="1.5"/>
+  <text x="474" y="32" font-size="11" font-weight="600" fill="#2f9e44" font-family="monospace">payments-service/</text>
+  <text x="474" y="58"  font-size="10" fill="#adb5bd" font-family="monospace">├── catalog-info.yaml</text>
+  <text x="474" y="74"  font-size="10" fill="#adb5bd" font-family="monospace">├── package.json</text>
+  <text x="474" y="90"  font-size="10" fill="#adb5bd" font-family="monospace">├── Dockerfile</text>
+  <text x="474" y="106" font-size="10" fill="#adb5bd" font-family="monospace">└── .github/workflows/ci.yml</text>
+  <text x="474" y="126" font-size="9" fill="#2f9e44" font-family="monospace">name: payments-service</text>
+  <text x="474" y="142" font-size="9" fill="#2f9e44" font-family="monospace">owner: payments-team</text>
+
+  <!-- Right side label -->
+  <text x="770" y="76" font-size="10" fill="#868e96">production-ready</text>
+  <text x="770" y="91" font-size="10" fill="#868e96">from commit one</text>
+
+</svg>

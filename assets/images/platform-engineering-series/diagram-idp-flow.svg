@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 180" width="900" height="180"
+     font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
+
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,1 L9,5 L0,9 Z" fill="#adb5bd"/>
+    </marker>
+    <marker id="arr-b" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,1 L9,5 L0,9 Z" fill="#339af0"/>
+    </marker>
+  </defs>
+
+  <rect width="900" height="180" fill="#f8f9fa"/>
+
+  <!-- Developer -->
+  <rect x="25" y="62" width="130" height="56" rx="6" fill="#fff" stroke="#ced4da" stroke-width="1.5"/>
+  <text x="90" y="84" text-anchor="middle" font-size="12" font-weight="600" fill="#212529">Developer</text>
+  <text x="90" y="101" text-anchor="middle" font-size="9" fill="#adb5bd">fills in a form</text>
+  <text x="90" y="114" text-anchor="middle" font-size="9" fill="#adb5bd">"new Node.js service"</text>
+
+  <!-- Arrow: developer → IDP -->
+  <line x1="155" y1="90" x2="225" y2="90" stroke="#adb5bd" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Backstage IDP box (blue, prominent) -->
+  <rect x="225" y="32" width="175" height="116" rx="8" fill="#e7f5ff" stroke="#339af0" stroke-width="1.5"/>
+  <text x="312" y="78" text-anchor="middle" font-size="13" font-weight="600" fill="#1971c2">Backstage</text>
+  <text x="312" y="98" text-anchor="middle" font-size="10" fill="#339af0">Internal Developer Platform</text>
+  <text x="312" y="118" text-anchor="middle" font-size="9" fill="#1c7ed6" font-family="monospace">Software Templates</text>
+  <text x="312" y="134" text-anchor="middle" font-size="9" fill="#1c7ed6" font-family="monospace">Actions · Catalog · TechDocs</text>
+
+  <!-- Fan arrows: IDP → outputs -->
+  <line x1="400" y1="55"  x2="468" y2="25"  stroke="#339af0" stroke-width="1.2" marker-end="url(#arr-b)"/>
+  <line x1="400" y1="78"  x2="468" y2="70"  stroke="#339af0" stroke-width="1.2" marker-end="url(#arr-b)"/>
+  <line x1="400" y1="102" x2="468" y2="115" stroke="#339af0" stroke-width="1.2" marker-end="url(#arr-b)"/>
+  <line x1="400" y1="125" x2="468" y2="158" stroke="#339af0" stroke-width="1.2" marker-end="url(#arr-b)"/>
+
+  <!-- Output boxes (stacked, right side) -->
+  <!-- Repo -->
+  <rect x="470" y="8"   width="160" height="36" rx="5" fill="#fff" stroke="#ced4da" stroke-width="1.5"/>
+  <text x="550" y="26"  text-anchor="middle" font-size="10" font-weight="600" fill="#212529">GitHub repo created</text>
+  <text x="550" y="39"  text-anchor="middle" font-size="8" fill="#adb5bd">branch protection · CI wired</text>
+
+  <!-- CI/CD -->
+  <rect x="470" y="52"  width="160" height="36" rx="5" fill="#fff" stroke="#ced4da" stroke-width="1.5"/>
+  <text x="550" y="70"  text-anchor="middle" font-size="10" font-weight="600" fill="#212529">Pipeline running</text>
+  <text x="550" y="83"  text-anchor="middle" font-size="8" fill="#adb5bd">build · test · lint on day one</text>
+
+  <!-- Catalog entry -->
+  <rect x="470" y="97"  width="160" height="36" rx="5" fill="#fff" stroke="#ced4da" stroke-width="1.5"/>
+  <text x="550" y="115" text-anchor="middle" font-size="10" font-weight="600" fill="#212529">Catalog entry</text>
+  <text x="550" y="128" text-anchor="middle" font-size="8" fill="#adb5bd">owner · system · docs linked</text>
+
+  <!-- Infra -->
+  <rect x="470" y="141" width="160" height="36" rx="5" fill="#fff" stroke="#ced4da" stroke-width="1.5"/>
+  <text x="550" y="159" text-anchor="middle" font-size="10" font-weight="600" fill="#212529">Infra provisioned</text>
+  <text x="550" y="172" text-anchor="middle" font-size="8" fill="#adb5bd">DB · IAM · secrets via Terraform</text>
+
+  <!-- Time label -->
+  <text x="720" y="93" text-anchor="middle" font-size="11" fill="#868e96" font-style="italic">under 2 minutes</text>
+
+</svg>

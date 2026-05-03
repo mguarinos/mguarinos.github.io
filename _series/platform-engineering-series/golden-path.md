@@ -26,7 +26,7 @@ A golden path is the opinionated, pre-approved way to do the common things: crea
 
 The concept comes from Spotify's engineering culture. Their [2020 post on platform thinking](https://engineering.atspotify.com/2020/08/how-we-use-golden-paths-to-solve-fragmentation-in-our-software-ecosystem/) describes it well: developers should not have to choose between freedom and paved roads. A golden path narrows the decision space for undifferentiated work — repo scaffolding, pipeline wiring, observability setup — so engineers can spend their cognitive budget on the problems that actually matter.
 
-<!-- diagram: two-column contrast — "without golden path" (each team doing setup independently, diverging conventions) vs "with golden path" (one template, consistent output across all services) -->
+<figure><img src="/assets/images/platform-engineering-series/diagram-without-with.svg" alt="Without a golden path, each team has diverging conventions. With one, a single template produces consistent services."></figure>
 
 ---
 
@@ -34,7 +34,7 @@ The concept comes from Spotify's engineering culture. Their [2020 post on platfo
 
 An Internal Developer Platform (IDP) is the infrastructure that delivers the golden path. It is not a wiki, a runbook, or a Slack channel. It is a system that can execute: given a developer's intent ("I want a new Node.js microservice"), it provisions the outcome — repo created, CI wired, secrets injected, service registered — with no manual steps.
 
-<!-- diagram: flow from developer intent → IDP → provisioned artifacts (repo, pipeline, catalog entry, infra) — simple left-to-right arrow diagram -->
+<figure><img src="/assets/images/platform-engineering-series/diagram-idp-flow.svg" alt="Developer fills in a form, Backstage executes: repo created, pipeline running, catalog entry registered, infra provisioned."></figure>
 
 [Backstage](https://backstage.io) is the most widely adopted open-source foundation for building an IDP. It was created at Spotify, open-sourced in 2020, and is now a [CNCF incubating project](https://www.cncf.io/projects/backstage/) with adoption at American Airlines, Zalando, Expedia, and hundreds of other engineering organisations.
 

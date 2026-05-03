@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 308" width="900" height="308"
+     font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
+
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,1 L9,5 L0,9 Z" fill="#adb5bd"/>
+    </marker>
+  </defs>
+
+  <rect width="900" height="308" fill="#f8f9fa"/>
+
+  <!-- Row 1: Domain -->
+  <rect x="300" y="14" width="300" height="38" rx="6" fill="#f1f3f5" stroke="#adb5bd" stroke-width="1.5"/>
+  <text x="340" y="29" font-size="10" fill="#868e96">Domain</text>
+  <text x="450" y="38" text-anchor="middle" font-size="12" font-weight="600" fill="#495057">e-commerce</text>
+
+  <!-- Domain → Systems arrows -->
+  <line x1="390" y1="52" x2="248" y2="97" stroke="#ced4da" stroke-width="1.2" marker-end="url(#arr)"/>
+  <line x1="510" y1="52" x2="652" y2="97" stroke="#ced4da" stroke-width="1.2" marker-end="url(#arr)"/>
+  <text x="295" y="76" text-anchor="middle" font-size="8" fill="#adb5bd">contains</text>
+  <text x="605" y="76" text-anchor="middle" font-size="8" fill="#adb5bd">contains</text>
+
+  <!-- Row 2: Systems -->
+  <rect x="113" y="99" width="270" height="38" rx="6" fill="#fff" stroke="#ced4da" stroke-width="1.5"/>
+  <text x="135" y="114" font-size="10" fill="#868e96">System</text>
+  <text x="248" y="123" text-anchor="middle" font-size="12" font-weight="600" fill="#212529">checkout-platform</text>
+
+  <rect x="517" y="99" width="270" height="38" rx="6" fill="#fff" stroke="#ced4da" stroke-width="1.5"/>
+  <text x="539" y="114" font-size="10" fill="#868e96">System</text>
+  <text x="652" y="123" text-anchor="middle" font-size="12" font-weight="600" fill="#212529">payments-platform</text>
+
+  <!-- Systems → Components arrows -->
+  <line x1="200" y1="137" x2="163" y2="182" stroke="#ced4da" stroke-width="1.2" marker-end="url(#arr)"/>
+  <line x1="296" y1="137" x2="333" y2="182" stroke="#ced4da" stroke-width="1.2" marker-end="url(#arr)"/>
+  <line x1="652" y1="137" x2="652" y2="182" stroke="#ced4da" stroke-width="1.2" marker-end="url(#arr)"/>
+  <text x="156" y="163" text-anchor="middle" font-size="8" fill="#adb5bd">contains</text>
+  <text x="340" y="163" text-anchor="middle" font-size="8" fill="#adb5bd">contains</text>
+  <text x="668" y="163" text-anchor="middle" font-size="8" fill="#adb5bd">contains</text>
+
+  <!-- Row 3: Components (blue) -->
+  <rect x="65" y="184" width="195" height="38" rx="6" fill="#e7f5ff" stroke="#339af0" stroke-width="1.5"/>
+  <text x="87" y="199" font-size="10" fill="#1c7ed6">Component</text>
+  <text x="162" y="208" text-anchor="middle" font-size="12" font-weight="600" fill="#1971c2">orders-service</text>
+
+  <rect x="280" y="184" width="195" height="38" rx="6" fill="#e7f5ff" stroke="#339af0" stroke-width="1.5"/>
+  <text x="302" y="199" font-size="10" fill="#1c7ed6">Component</text>
+  <text x="377" y="208" text-anchor="middle" font-size="12" font-weight="600" fill="#1971c2">cart-service</text>
+
+  <rect x="554" y="184" width="195" height="38" rx="6" fill="#e7f5ff" stroke="#339af0" stroke-width="1.5"/>
+  <text x="576" y="199" font-size="10" fill="#1c7ed6">Component</text>
+  <text x="651" y="208" text-anchor="middle" font-size="12" font-weight="600" fill="#1971c2">payments-service</text>
+
+  <!-- Components → Resources/APIs arrows -->
+  <line x1="162" y1="222" x2="135" y2="266" stroke="#ced4da" stroke-width="1.2" marker-end="url(#arr)"/>
+  <line x1="615" y1="222" x2="590" y2="266" stroke="#ced4da" stroke-width="1.2" marker-end="url(#arr)"/>
+  <line x1="687" y1="222" x2="760" y2="266" stroke="#ced4da" stroke-width="1.2" marker-end="url(#arr)"/>
+  <text x="118" y="247" text-anchor="middle" font-size="8" fill="#adb5bd">dependsOn</text>
+  <text x="560" y="247" text-anchor="middle" font-size="8" fill="#adb5bd">dependsOn</text>
+  <text x="745" y="247" text-anchor="middle" font-size="8" fill="#adb5bd">providesApis</text>
+
+  <!-- Row 4: Resources + API -->
+  <rect x="45" y="268" width="180" height="35" rx="6" fill="#fff" stroke="#ced4da" stroke-width="1.5"/>
+  <text x="67" y="282" font-size="10" fill="#868e96">Resource</text>
+  <text x="135" y="291" text-anchor="middle" font-size="11" font-weight="600" fill="#495057">orders-db</text>
+
+  <rect x="490" y="268" width="195" height="35" rx="6" fill="#fff" stroke="#ced4da" stroke-width="1.5"/>
+  <text x="512" y="282" font-size="10" fill="#868e96">Resource</text>
+  <text x="587" y="291" text-anchor="middle" font-size="11" font-weight="600" fill="#495057">payments-db</text>
+
+  <rect x="700" y="268" width="155" height="35" rx="6" fill="#fff" stroke="#748ffc" stroke-width="1.5"/>
+  <text x="722" y="282" font-size="10" fill="#748ffc">API</text>
+  <text x="777" y="291" text-anchor="middle" font-size="11" font-weight="600" fill="#495057">payments-api</text>
+
+</svg>

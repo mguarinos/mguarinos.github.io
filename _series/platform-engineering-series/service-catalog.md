@@ -16,7 +16,7 @@ In most organisations, the answer to "who owns this service?" is a Slack message
 
 The Backstage catalog is a machine-readable inventory of your entire software estate. Every service, library, API, pipeline, and team is an entity. Entities are linked — a component has an owner, depends on APIs, is part of a system. The result is a graph you can query without opening GitHub or asking anyone.
 
-<!-- screenshot: the Backstage catalog list view — several components with owner, lifecycle, and type columns visible -->
+> 📷 **Screenshot** — The catalog list view with several components, showing owner, lifecycle, and type columns.
 
 ---
 
@@ -69,7 +69,7 @@ The catalog models your estate with a small set of kinds:
 
 The relationships between these kinds — `dependsOn`, `partOf`, `ownedBy` — are what makes the catalog a graph rather than a list.
 
-<!-- diagram: entity graph showing a Domain containing two Systems, each System containing Components that depend on Resources and expose APIs — nodes and directed edges, no colour needed, clean and minimal -->
+<figure><img src="/assets/images/platform-engineering-series/diagram-entity-graph.svg" alt="Entity graph: Domain contains Systems, Systems contain Components, Components depend on Resources and expose APIs."></figure>
 
 ---
 
@@ -103,7 +103,7 @@ catalog:
 
 Once a service is in the catalog, its page becomes the single source of truth for that service — ownership, lifecycle, dependencies, API specs, TechDocs, and pipeline status all in one place.
 
-<!-- screenshot: a component page in the catalog — tabs visible (Overview, CI/CD, Docs, Dependencies), the "About" card showing owner, lifecycle, system, and tags -->
+> 📷 **Screenshot** — A component page: tabs (Overview, CI/CD, Docs, Dependencies) and the "About" card showing owner, lifecycle, system, and tags.
 
 ---
 

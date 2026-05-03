@@ -36,7 +36,7 @@ annotations:
 
 Backstage will render `docs/` on every catalog page load. This is fine for local development, but for production you want to pre-build and publish to an S3 bucket (or GCS) using the [TechDocs CLI](https://backstage.io/docs/features/techdocs/cli) in CI. That way the portal serves pre-built static files instead of building on demand, which is both faster and more reliable.
 
-<!-- screenshot: the Docs tab on a catalog component page — rendered markdown with a left-hand nav showing "Home", "Runbook", "Architecture" sections -->
+> 📷 **Screenshot** — The Docs tab on a component page: rendered markdown content with the left-hand nav showing "Home", "Runbook", "Architecture" sections.
 
 ### What to put in TechDocs
 
@@ -72,7 +72,7 @@ import { EntityGithubActionsContent, isGithubActionsAvailable } from '@backstage
 
 The `github.com/project-slug` annotation on the `catalog-info.yaml` drives which repo's workflows are shown — which is already there if your services were scaffolded with the template from part 3.
 
-<!-- screenshot: the CI/CD tab on a component page — a list of recent workflow runs with status badges (green/red), branch, commit SHA, and duration -->
+> 📷 **Screenshot** — The CI/CD tab on a component page: recent workflow runs with green/red status badges, branch name, commit SHA, and duration.
 
 ---
 

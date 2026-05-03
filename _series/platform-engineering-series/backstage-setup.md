@@ -40,7 +40,7 @@ yarn dev
 
 Open `http://localhost:3000`. You'll see the Backstage home screen with an empty catalog.
 
-<!-- screenshot: Backstage home screen after first run — empty catalog, sidebar visible with Catalog, Create, Docs nav items -->
+> 📷 **Screenshot** — Backstage home screen after `yarn dev`, showing the empty catalog and the left sidebar (Catalog, Create, Docs).
 
 > **A note on versions**: Backstage releases new versions every two weeks. The `create-app` CLI always scaffolds the latest. Pin the version in `package.json` once you have a working setup — upgrading between versions is manageable but requires following the [changelog](https://backstage.io/docs/releases/v1-versioning-policy) carefully.
 
@@ -48,7 +48,7 @@ Open `http://localhost:3000`. You'll see the Backstage home screen with an empty
 
 ## The architecture in three layers
 
-<!-- diagram: three horizontal layers — Core (bottom, grey), Plugins (middle, blue), Your App (top, green) — with arrows showing your app configures which plugins to load, and plugins extend the core -->
+<figure><img src="/assets/images/platform-engineering-series/diagram-backstage-layers.svg" alt="Backstage in three layers: Your App on top, Plugins in the middle, Core at the foundation."></figure>
 
 Backstage is built in three layers that are worth understanding before you start customising.
 
