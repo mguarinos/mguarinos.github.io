@@ -57,6 +57,7 @@ defaults:
       series: "Production Observability"
       categories: [observability, prometheus, grafana, python]
       image: /assets/images/observability-series/header.svg
+      github: https://github.com/mguarinos/observability-demo
 
   - scope:
       path: "_series/ollama-infra-series"

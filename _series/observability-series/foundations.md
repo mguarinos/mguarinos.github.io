@@ -1,9 +1,3 @@
-##TODO:
-
-1. <figure><img src="/assets/images/observability-series/diagram-stack-overview.svg" alt="Full observability stack"></figure>
-2. get rid of WSL things
-
-
 ---
 title: "The three pillars, four golden signals, RED and USE"
 tags: [observability, prometheus, monitoring, sre, metrics, logs, traces]
@@ -131,7 +125,7 @@ This call graph is intentionally small but real enough to demonstrate every obse
 The system has two planted defects that we will detect and diagnose in later posts:
 
 - `payment-service` has a ~5% random failure rate on charge requests
-- `inventory-service` has a slow path: stock checks for items with high demand (`quantity > 5`) query a simulated slow lookup, adding 250ms+ to those requests — invisible in `order-service` metrics but immediately visible in a trace
+- `inventory-service` has a slow path: stock checks for items with high demand (`quantity > 5`) query a simulated slow lookup, adding 270ms+ to those requests — invisible in `order-service` metrics but immediately visible in a trace
 
 ---
 

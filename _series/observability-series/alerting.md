@@ -34,9 +34,9 @@ groups:
 
       - alert: ErrorBudgetBurnFast
         expr: |
-          job:slo_availability:ratio_rate5m < (1 - 14 * 0.001)
+          job:slo_availability:ratio_rate5m < (1 - 14.4 * 0.001)
           and
-          job:slo_availability:ratio_rate1h < (1 - 14 * 0.001)
+          job:slo_availability:ratio_rate1h < (1 - 14.4 * 0.001)
         for: 2m
         labels:
           severity: critical
@@ -46,18 +46,47 @@ groups:
           description: "Availability SLI is {{ $value | humanizePercentage }}. At this rate the monthly budget is exhausted in ~2 hours."
           runbook: "https://github.com/mguarinos/observability-demo/wiki/runbooks/error-budget-burn"
 
+      - alert: ErrorBudgetBurnMedium
+        expr: |
+          job:slo_availability:ratio_rate30m < (1 - 6 * 0.001)
+          and
+          job:slo_availability:ratio_rate6h < (1 - 6 * 0.001)
+        for: 15m
+        labels:
+          severity: critical
+          slo: availability
+        annotations:
+          summary: "Sustained error budget burn on order-service"
+          description: "Availability SLI is {{ $value | humanizePercentage }} over 6h. Monthly budget exhausted in ~5 days at this rate."
+          runbook: "https://github.com/mguarinos/observability-demo/wiki/runbooks/error-budget-burn"
+
       - alert: ErrorBudgetBurnSlow
         expr: |
-          job:slo_availability:ratio_rate1h < (1 - 5 * 0.001)
+          job:slo_availability:ratio_rate6h < (1 - 3 * 0.001)
           and
-          job:slo_availability:ratio_rate6h < (1 - 5 * 0.001)
-        for: 15m
+          job:slo_availability:ratio_rate3d < (1 - 3 * 0.001)
+        for: 1h
         labels:
           severity: warning
           slo: availability
         annotations:
           summary: "Slow error budget burn on order-service"
-          description: "Availability SLI is {{ $value | humanizePercentage }} over 6h. Monthly budget exhausted in ~3 days at this rate."
+          description: "Availability SLI is {{ $value | humanizePercentage }} over 3d. Monthly budget exhausted in ~10 days at this rate."
+          runbook: "https://github.com/mguarinos/observability-demo/wiki/runbooks/error-budget-burn"
+
+      - alert: ErrorBudgetAtRisk
+        expr: |
+          job:slo_availability:ratio_rate6h < (1 - 1 * 0.001)
+          and
+          job:slo_availability:ratio_rate3d < (1 - 1 * 0.001)
+        for: 3h
+        labels:
+          severity: warning
+          slo: availability
+        annotations:
+          summary: "Error budget at risk on order-service"
+          description: "Availability SLI is {{ $value | humanizePercentage }} over 3d. Budget will exhaust by end of window at this rate."
+          runbook: "https://github.com/mguarinos/observability-demo/wiki/runbooks/error-budget-burn"
 
       - alert: HighP99Latency
         expr: |

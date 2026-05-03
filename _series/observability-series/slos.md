@@ -110,7 +110,16 @@ Record the SLI as a time series so you can track it over time and use it in both
             sum(rate(http_requests_total{job="order-service"}[5m]))
           )
 
-      # Availability SLI: 1-hour window (for slow burn detection)
+      # Availability SLI: 30-minute window (for medium burn detection)
+      - record: job:slo_availability:ratio_rate30m
+        expr: |
+          1 - (
+            sum(rate(http_requests_total{job="order-service", status=~"5.."}[30m]))
+            /
+            sum(rate(http_requests_total{job="order-service"}[30m]))
+          )
+
+      # Availability SLI: 1-hour window
       - record: job:slo_availability:ratio_rate1h
         expr: |
           1 - (
@@ -126,6 +135,15 @@ Record the SLI as a time series so you can track it over time and use it in both
             sum(rate(http_requests_total{job="order-service", status=~"5.."}[6h]))
             /
             sum(rate(http_requests_total{job="order-service"}[6h]))
+          )
+
+      # Availability SLI: 3-day window (for slow burn detection)
+      - record: job:slo_availability:ratio_rate3d
+        expr: |
+          1 - (
+            sum(rate(http_requests_total{job="order-service", status=~"5.."}[3d]))
+            /
+            sum(rate(http_requests_total{job="order-service"}[3d]))
           )
 ```
 
@@ -146,7 +164,7 @@ Multi-window, multi-burn-rate alerting addresses both.
 
 For a 99.9% SLO (0.1% error budget), the sustainable burn rate is 1×. At 1× burn rate, the error budget is exactly exhausted at the end of the 30-day window. At 14.4× burn rate, the monthly budget is exhausted in 2 hours.
 
-### The four alert levels
+### The alert levels
 
 Google's [SRE Workbook](https://sre.google/workbook/alerting-on-slos/) (Chapter 5) defines four alert levels for a 30-day SLO window:
 
@@ -162,14 +180,10 @@ Google's [SRE Workbook](https://sre.google/workbook/alerting-on-slos/) (Chapter 
   <figcaption>Error budget depletion curves at each burn rate over a 30-day window. Solid lines are the primary alerts; dashed lines are the secondary alerts at the same severity. All four lines start at 100% budget on day 0 — the steeper the slope, the less time you have to respond.</figcaption>
 </figure>
 
-Levels 1 and 2 are paging alerts. The service is burning budget fast enough that, left unchecked, it will be exhausted within hours. Someone needs to act now. Level 2 is not redundant with level 1 — it catches medium-severity outages (a 3% error rate instead of a 10% one) that level 1's higher threshold would miss entirely.
-
-Levels 3 and 4 are ticket alerts. No one should be woken up, but the degradation is real and accumulating. At 3× burn, 10% of the monthly budget disappears every three days. At 1× burn, the service is right on the edge — it will just barely exhaust the budget by month end. Teams miss level 4 constantly because no single window looks alarming. Without a slow-burn alert, you discover the budget is gone when it matters most: at the start of a release week.
-
-The implementation below covers levels 1, 2, and 3. For a production setup, add levels 3 and 4 as warning-severity alerts routed to a ticketing system rather than an on-call channel.
+Level 1 is the paging alert. The service is burning budget fast enough that, left unchecked, it will be exhausted within hours. Level 4 is the silent killer — no single window looks alarming, but at the end of the month the budget is gone. Without a slow-burn alert, you discover this when it matters most: at the start of a release week.
 
 ```yaml
-# Level 1: 14.4× burn — 2% of monthly budget in 1 hour
+# Level 1: 14.4× burn — pages immediately
 - alert: ErrorBudgetBurnFast
   expr: |
     job:slo_availability:ratio_rate5m < (1 - 14.4 * 0.001)
@@ -178,13 +192,15 @@ The implementation below covers levels 1, 2, and 3. For a production setup, add 
   for: 2m
   labels:
     severity: critical
+    slo: availability
   annotations:
     summary: "Fast error budget burn on order-service"
     description: |
       Availability SLI is {{ $value | humanizePercentage }}.
       At this rate, the monthly error budget will be exhausted in ~2 hours.
+    runbook: "https://github.com/mguarinos/observability-demo/wiki/runbooks/error-budget-burn"
 
-# Level 2: 6× burn — 5% of monthly budget in 6 hours
+# Level 2: 6× burn — pages immediately
 - alert: ErrorBudgetBurnMedium
   expr: |
     job:slo_availability:ratio_rate30m < (1 - 6 * 0.001)
@@ -193,26 +209,47 @@ The implementation below covers levels 1, 2, and 3. For a production setup, add 
   for: 15m
   labels:
     severity: critical
+    slo: availability
   annotations:
     summary: "Sustained error budget burn on order-service"
     description: |
       Availability SLI is {{ $value | humanizePercentage }} over 6h.
       At this rate, the monthly error budget will be exhausted in ~5 days.
+    runbook: "https://github.com/mguarinos/observability-demo/wiki/runbooks/error-budget-burn"
 
-# Level 3: 3× burn — 10% of monthly budget in 3 days
+# Level 3: 3× burn — ticket, no page
 - alert: ErrorBudgetBurnSlow
   expr: |
     job:slo_availability:ratio_rate6h < (1 - 3 * 0.001)
     and
-    job:slo_availability:ratio_rate6h < (1 - 3 * 0.001)
+    job:slo_availability:ratio_rate3d < (1 - 3 * 0.001)
   for: 1h
   labels:
     severity: warning
+    slo: availability
   annotations:
     summary: "Slow error budget burn on order-service"
     description: |
-      Availability SLI is {{ $value | humanizePercentage }} over 6h.
+      Availability SLI is {{ $value | humanizePercentage }} over 3d.
       At this rate, the monthly error budget will be exhausted in ~10 days.
+    runbook: "https://github.com/mguarinos/observability-demo/wiki/runbooks/error-budget-burn"
+
+# Level 4: 1× burn — ticket, no page
+- alert: ErrorBudgetAtRisk
+  expr: |
+    job:slo_availability:ratio_rate6h < (1 - 1 * 0.001)
+    and
+    job:slo_availability:ratio_rate3d < (1 - 1 * 0.001)
+  for: 3h
+  labels:
+    severity: warning
+    slo: availability
+  annotations:
+    summary: "Error budget at risk on order-service"
+    description: |
+      Availability SLI is {{ $value | humanizePercentage }} over 3d.
+      Budget is being consumed at the edge of the sustainable rate — will exhaust by end of window.
+    runbook: "https://github.com/mguarinos/observability-demo/wiki/runbooks/error-budget-burn"
 ```
 
 The threshold math: `1 - (burn_rate × error_budget_fraction)`. For a 99.9% SLO (error budget = 0.001), a 14.4× burn rate threshold is `1 - 14.4 × 0.001 = 0.9856`. If the SLI drops below that — more than 1.44% of requests failing — the fast-burn alert fires.
