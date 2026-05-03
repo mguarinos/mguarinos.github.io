@@ -10,3 +10,9 @@
   date: "April 2026"
   description: "Go from a bare server to a production-grade local AI inference stack. Each post adds one layer — runtime, reverse proxy, async queue, chat UI, voice interface, code assistant integration, and observability. By the end you have a complete, self-hosted setup you understand top to bottom."
   image: /assets/images/ollama-infra-series/header.svg
+
+- name: "Building a Golden Path with Backstage"
+  slug: "platform-engineering-series"
+  date: "July 2026"
+  description: "Platform engineering in practice: build an Internal Developer Platform with Backstage. Covers the golden path concept, local setup, Software Templates that scaffold production-ready services in one click, the service catalog, and TechDocs with GitHub Actions integration."
+  image: /assets/images/platform-engineering-series/header.svg
