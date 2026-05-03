@@ -124,13 +124,11 @@ integrations:
 
 ---
 
-## Where to go from here
+## What's next in this series
 
-This series covered the core Backstage loop: the problem, local setup, Software Templates, the service catalog, and TechDocs with CI/CD integration. A few directions worth exploring next:
+The remaining posts move from concepts to a working implementation in the [companion repository](https://github.com/mguarinos/backstage-golden-path):
 
-- **Authentication and SSO**: Backstage ships with no auth by default. For production, wire up [GitHub OAuth, Google, or Okta](https://backstage.io/docs/auth/) so catalog ownership maps to real users and groups.
-- **Custom plugins**: if your organisation has internal tooling — a cost dashboard, a feature flag UI, a deployment approval flow — [Backstage plugins](https://backstage.io/docs/plugins/create-a-plugin) bring them into the same surface.
-- **Kubernetes plugin**: the [`@backstage/plugin-kubernetes`](https://backstage.io/docs/features/kubernetes/) plugin surfaces pod health, resource usage, and deployment status directly on catalog pages.
-- **Metrics and SLOs**: combined with the [observability stack from this blog's earlier series](/series/#observability-series), you can surface SLO burn rates on catalog pages — reliability visible without context switching.
-
-The catalog, the templates, and TechDocs are a viable starting point for most teams. Deploy it, import your most critical services first, and build from there.
+- **Part 6 — Service skeletons**: the Python and Node.js skeletons in detail — graceful shutdown, liveness vs readiness probes, OTel instrumentation, structured logging with trace IDs, and multi-stage Dockerfiles.
+- **Part 7 — Infrastructure templates**: Terraform modules for service infrastructure (ECR, ECS, IAM) and a full AWS account baseline provisioned from a Backstage form.
+- **Part 8 — API contracts and the dependency graph**: defining `API` kind entities, OpenAPI specs in the skeleton, `providesApis` / `consumesApis` relationships, and contract testing in CI.
+- **Part 9 — Production Backstage**: switching to PostgreSQL, GitHub OAuth, syncing org teams to catalog groups, and pre-building TechDocs to S3.
