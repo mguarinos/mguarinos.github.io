@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 506" width="900" height="506" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
+
+  <rect width="900" height="506" fill="#f8f9fa"/>
+
+  <!-- git object store -->
+  <rect x="300" y="51" width="300" height="60" rx="8" fill="#fff" stroke="#ced4da" stroke-width="1.5"/>
+  <text x="450" y="77" text-anchor="middle" font-size="13" font-weight="600" fill="#212529">git object store</text>
+  <text x="450" y="97" text-anchor="middle" font-size="11" fill="#868e96">commits · refs · config · stash</text>
+
+  <!-- connectors -->
+  <line x1="375" y1="111" x2="155" y2="175" stroke="#ced4da" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <line x1="450" y1="111" x2="450" y2="175" stroke="#ced4da" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <line x1="525" y1="111" x2="745" y2="175" stroke="#ced4da" stroke-width="1.5" stroke-dasharray="5,3"/>
+
+  <!-- WORKTREE 1: main -->
+  <rect x="30" y="177" width="250" height="192" rx="8" fill="#fff"/>
+  <rect x="30" y="177" width="250" height="34" rx="8" fill="#f1f3f5"/>
+  <rect x="30" y="197" width="250" height="14" fill="#f1f3f5"/>
+  <line x1="30" y1="211" x2="280" y2="211" stroke="#ced4da" stroke-width="1.5"/>
+  <text x="46" y="201" font-size="11" fill="#495057">branch</text>
+  <text x="102" y="201" font-size="11" font-weight="600" fill="#212529">main</text>
+  <text x="46" y="231" font-size="10" fill="#ced4da" font-family="monospace">~/project/</text>
+  <text x="46" y="250" font-size="11" fill="#868e96" font-family="monospace">src/</text>
+  <text x="46" y="268" font-size="11" fill="#868e96" font-family="monospace">tests/</text>
+  <text x="46" y="286" font-size="11" fill="#868e96" font-family="monospace">package.json</text>
+  <text x="46" y="304" font-size="11" fill="#868e96" font-family="monospace">README.md</text>
+  <rect x="46" y="325" width="120" height="22" rx="4" fill="#f1f3f5" stroke="#ced4da" stroke-width="1.5"/>
+  <text x="106" y="340" text-anchor="middle" font-size="10" fill="#868e96">your session</text>
+  <text x="46" y="361" font-size="9" fill="#adb5bd">contains .git/ directory</text>
+  <rect x="30" y="177" width="250" height="192" rx="8" fill="none" stroke="#ced4da" stroke-width="1.5"/>
+
+  <!-- WORKTREE 2: feat/auth -->
+  <rect x="325" y="177" width="250" height="192" rx="8" fill="#fff"/>
+  <rect x="325" y="177" width="250" height="34" rx="8" fill="#e7f5ff"/>
+  <rect x="325" y="197" width="250" height="14" fill="#e7f5ff"/>
+  <line x1="325" y1="211" x2="575" y2="211" stroke="#1c7ed6" stroke-width="1.5"/>
+  <text x="341" y="201" font-size="11" fill="#1c7ed6">branch</text>
+  <text x="397" y="201" font-size="11" font-weight="600" fill="#1c7ed6">feat/auth</text>
+  <text x="341" y="231" font-size="10" fill="#ced4da" font-family="monospace">~/project-auth/</text>
+  <text x="341" y="250" font-size="11" fill="#868e96" font-family="monospace">src/</text>
+  <text x="341" y="268" font-size="11" fill="#868e96" font-family="monospace">tests/</text>
+  <text x="341" y="286" font-size="11" fill="#1c7ed6" font-family="monospace">src/auth/jwt.ts  +</text>
+  <text x="341" y="304" font-size="11" fill="#1c7ed6" font-family="monospace">src/auth/session.ts  +</text>
+  <rect x="341" y="325" width="120" height="22" rx="4" fill="#e7f5ff" stroke="#1c7ed6" stroke-width="1.5"/>
+  <text x="401" y="340" text-anchor="middle" font-size="10" fill="#1c7ed6">agent running</text>
+  <text x="341" y="361" font-size="9" fill="#adb5bd">.git file → shared store</text>
+  <rect x="325" y="177" width="250" height="192" rx="8" fill="none" stroke="#1c7ed6" stroke-width="1.5"/>
+
+  <!-- WORKTREE 3: fix/payments -->
+  <rect x="620" y="177" width="250" height="192" rx="8" fill="#fff"/>
+  <rect x="620" y="177" width="250" height="34" rx="8" fill="#ebfbee"/>
+  <rect x="620" y="197" width="250" height="14" fill="#ebfbee"/>
+  <line x1="620" y1="211" x2="870" y2="211" stroke="#2f9e44" stroke-width="1.5"/>
+  <text x="636" y="201" font-size="11" fill="#2f9e44">branch</text>
+  <text x="692" y="201" font-size="11" font-weight="600" fill="#2f9e44">fix/payments</text>
+  <text x="636" y="231" font-size="10" fill="#ced4da" font-family="monospace">~/project-fix/</text>
+  <text x="636" y="250" font-size="11" fill="#868e96" font-family="monospace">src/</text>
+  <text x="636" y="268" font-size="11" fill="#868e96" font-family="monospace">tests/</text>
+  <text x="636" y="286" font-size="11" fill="#2f9e44" font-family="monospace">src/payments/calc.ts  ~</text>
+  <text x="636" y="304" font-size="11" fill="#2f9e44" font-family="monospace">tests/payments/  ~</text>
+  <rect x="636" y="325" width="120" height="22" rx="4" fill="#ebfbee" stroke="#2f9e44" stroke-width="1.5"/>
+  <text x="696" y="340" text-anchor="middle" font-size="10" fill="#2f9e44">agent running</text>
+  <text x="636" y="361" font-size="9" fill="#adb5bd">.git file → shared store</text>
+  <rect x="620" y="177" width="250" height="192" rx="8" fill="none" stroke="#2f9e44" stroke-width="1.5"/>
+
+  <!-- labels -->
+  <text x="155" y="385" text-anchor="middle" font-size="10" fill="#868e96">main checkout</text>
+  <text x="450" y="385" text-anchor="middle" font-size="10" fill="#1c7ed6">linked worktree</text>
+  <text x="745" y="385" text-anchor="middle" font-size="10" fill="#2f9e44">linked worktree</text>
+
+  <!-- title -->
+  <text x="450" y="429" text-anchor="middle" font-size="22" font-weight="700" fill="#212529" letter-spacing="-0.5">Git worktrees + AI coding agents</text>
+  <text x="450" y="455" text-anchor="middle" font-size="12" fill="#868e96">Parallel sessions · Isolated directories · Zero interference</text>
+
+</svg>
