@@ -49,6 +49,17 @@ defaults:
     values:
       layout: post
   - scope:
+      path: "_series/observability-series"
+      type: series
+    values:
+      layout: post
+      date: "2026-05-01"
+      series: "Production Observability"
+      categories: [observability, prometheus, grafana, python]
+      image: /assets/images/observability-series/header.svg
+      github: https://github.com/mguarinos/observability-demo
+
+  - scope:
       path: "_series/ollama-infra-series"
       type: series
     values:

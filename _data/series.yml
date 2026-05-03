@@ -1,3 +1,10 @@
+- name: "Production Observability"
+  slug: "observability-series"
+  date: "May 2026"
+  description: "Build a complete observability stack from scratch. Learn the theory behind metrics, logs, and traces — then implement it with Prometheus, Loki, Tempo, and Grafana. Instrument a Python service, define SLOs, write alert rules, and practice root-cause analysis by correlating all three signals through a simulated incident."
+  image: /assets/images/observability-series/header.svg
+  github: https://github.com/mguarinos/observability-demo
+
 - name: "Self-hosted AI Inference with Ollama"
   slug: "ollama-infra-series"
   date: "April 2026"
