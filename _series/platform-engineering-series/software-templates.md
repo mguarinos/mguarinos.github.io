@@ -12,19 +12,21 @@ This is part 3 of the [Building a Golden Path with Backstage series](/series/#pl
 
 ## What a Software Template does
 
-A Software Template is a Backstage entity that combines three things: a form the developer fills out, a Cookiecutter-style file template, and a sequence of actions that execute when the form is submitted — creating a GitHub repo, registering the service in the catalog, triggering a first pipeline run.
+A Software Template is a Backstage entity that combines three things: a form the developer fills out, a file template rendered with the form values, and a sequence of actions that execute on submission — creating a GitHub repo, registering the service in the catalog, triggering a first pipeline run.
 
 The developer sees a wizard. The platform team defines what happens. The output is a production-ready starting point, not a blank repo.
+
+<!-- screenshot: the Backstage scaffolder wizard — step 1 of the form with "Service name" and "Owning team" fields filled in -->
 
 ---
 
 ## Template anatomy
 
-A template is a YAML file with the `Template` kind. It has three sections:
+A template is a YAML file with the `Template` kind, registered in the catalog like any other entity. It has three sections:
 
-**`parameters`** defines the form fields — strings, dropdowns, checkboxes. Each field maps to a variable available in the steps.
+**`parameters`** defines the form fields — strings, dropdowns, checkboxes. Each field maps to a variable available in the steps. Backstage uses [react-jsonschema-form](https://rjsf-team.github.io/react-jsonschema-form/) under the hood, so any JSON Schema constraint works.
 
-**`steps`** is the action sequence. Backstage ships built-in actions for fetching a template directory, publishing to GitHub, registering in the catalog, and triggering webhooks. You can write custom actions for anything else.
+**`steps`** is the action sequence. Backstage ships [built-in actions](https://backstage.io/docs/features/software-templates/builtin-actions) for fetching a template directory, publishing to GitHub, registering in the catalog, and triggering webhooks. You can write custom actions for anything else.
 
 **`output`** defines what links to surface to the developer when the template finishes — the new repo URL, the catalog entry, the first pipeline run.
 
@@ -114,7 +116,34 @@ skeleton/
     └── index.js
 ```
 
+<!-- diagram: flow showing skeleton directory → template rendering with values → output repo structure — three boxes left to right with file icons -->
+
 Every file in the skeleton is rendered with the values the developer provided. The output is a repo that compiles, passes lint, and has a working pipeline from commit one.
+
+A short skeleton `catalog-info.yaml` that uses the template values:
+
+```yaml
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: ${{ values.name }}
+  description: ${{ values.description }}
+  annotations:
+    github.com/project-slug: your-org/${{ values.name }}
+    backstage.io/techdocs-ref: dir:.
+spec:
+  type: service
+  lifecycle: production
+  owner: ${{ values.owner }}
+```
+
+---
+
+## Running the template
+
+After registering the template in the catalog, developers find it under **Create** in the Backstage sidebar. They fill in the form, review the step log as actions execute, and get links to the new repo and catalog entry when it completes.
+
+<!-- screenshot: the scaffolder execution log — steps completing with green checkmarks, "Repository", "Open in catalog" links shown at the end -->
 
 ---
 

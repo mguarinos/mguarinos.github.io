@@ -13,8 +13,8 @@ This is part 2 of the [Building a Golden Path with Backstage series](/series/#pl
 ## Prerequisites
 
 - Node.js 18+ and Yarn
-- Docker (for the PostgreSQL backend in later posts; SQLite works locally)
-- A GitHub account and a personal access token with `repo` and `read:org` scopes
+- Docker (for PostgreSQL in later posts; SQLite works locally and needs no setup)
+- A GitHub account and a [personal access token](https://github.com/settings/tokens/new) with `repo` and `read:org` scopes
 
 ---
 
@@ -40,15 +40,21 @@ yarn dev
 
 Open `http://localhost:3000`. You'll see the Backstage home screen with an empty catalog.
 
+<!-- screenshot: Backstage home screen after first run — empty catalog, sidebar visible with Catalog, Create, Docs nav items -->
+
+> **A note on versions**: Backstage releases new versions every two weeks. The `create-app` CLI always scaffolds the latest. Pin the version in `package.json` once you have a working setup — upgrading between versions is manageable but requires following the [changelog](https://backstage.io/docs/releases/v1-versioning-policy) carefully.
+
 ---
 
 ## The architecture in three layers
+
+<!-- diagram: three horizontal layers — Core (bottom, grey), Plugins (middle, blue), Your App (top, green) — with arrows showing your app configures which plugins to load, and plugins extend the core -->
 
 Backstage is built in three layers that are worth understanding before you start customising.
 
 **The core** is maintained by the Backstage project. It provides the plugin framework, routing, authentication, and the catalog engine. You don't touch this.
 
-**Plugins** are the units of functionality — the catalog, the scaffolder (templates), TechDocs, and any integrations. Each plugin is a separate npm package. The CLI installs a curated set by default; you add more as you need them.
+**Plugins** are the units of functionality — the catalog, the scaffolder (templates), TechDocs, and any integrations. Each plugin is a separate npm package. The CLI installs a curated set by default; you add more as you need them. The [plugin marketplace](https://backstage.io/plugins) lists several hundred community and official plugins.
 
 **Your app** is the configuration layer — which plugins to enable, how they're wired together, your organisation's branding, and the `app-config.yaml` that controls runtime behaviour. This is the code you own and commit.
 
@@ -72,7 +78,15 @@ export GITHUB_TOKEN=your_pat_here
 yarn dev
 ```
 
-With this in place, Backstage can read catalog files from your GitHub repositories, which is the foundation for the service catalog in part 4.
+This is enough for local development. For production, replace the PAT with a [GitHub App](https://backstage.io/docs/integrations/github/github-apps) — the PAT is tied to your personal account, hits the 5,000 req/hr user rate limit, and breaks if you ever leave the org. A GitHub App authenticates as the app itself, gets 15,000 req/hr, and has no owner dependency. The setup takes about ten minutes: create the app in your org settings, generate a private key, and configure the `appId`, `clientId`, `clientSecret`, and `privateKey` in `app-config.yaml`. The Backstage docs walk through it step by step.
+
+---
+
+## Config files: local vs production
+
+`app-config.yaml` is the base config checked into git. Sensitive values and environment-specific overrides go in `app-config.local.yaml` (gitignored) for local development, and `app-config.production.yaml` for production. Backstage merges them at startup — later files override earlier ones.
+
+Keep secrets out of `app-config.yaml`. Use environment variable substitution (`${VAR}`) everywhere a secret appears.
 
 ---
 

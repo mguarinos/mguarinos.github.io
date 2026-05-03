@@ -16,6 +16,8 @@ In most organisations, the answer to "who owns this service?" is a Slack message
 
 The Backstage catalog is a machine-readable inventory of your entire software estate. Every service, library, API, pipeline, and team is an entity. Entities are linked — a component has an owner, depends on APIs, is part of a system. The result is a graph you can query without opening GitHub or asking anyone.
 
+<!-- screenshot: the Backstage catalog list view — several components with owner, lifecycle, and type columns visible -->
+
 ---
 
 ## The `catalog-info.yaml` file
@@ -47,7 +49,7 @@ spec:
     - payments-api
 ```
 
-Backstage ingests this file and builds the graph. Change the file and the catalog updates automatically.
+Backstage ingests this file and builds the graph. Change the file and the catalog updates automatically on the next sync cycle. The full spec for each kind is in the [Backstage descriptor format reference](https://backstage.io/docs/features/software-catalog/descriptor-format).
 
 ---
 
@@ -67,6 +69,8 @@ The catalog models your estate with a small set of kinds:
 
 The relationships between these kinds — `dependsOn`, `partOf`, `ownedBy` — are what makes the catalog a graph rather than a list.
 
+<!-- diagram: entity graph showing a Domain containing two Systems, each System containing Components that depend on Resources and expose APIs — nodes and directed edges, no colour needed, clean and minimal -->
+
 ---
 
 ## Populating the catalog
@@ -78,6 +82,10 @@ There are two approaches.
 ```yaml
 catalog:
   providers:
+    githubOrg:
+      id: github
+      githubUrl: https://github.com
+      orgs: [your-org]
     github:
       my-org:
         organization: your-org
@@ -87,7 +95,15 @@ catalog:
           timeout: { minutes: 3 }
 ```
 
-**Manual registration**: for existing services, engineers visit the catalog UI and paste a GitHub URL. Backstage fetches and registers the file.
+**Manual registration**: for existing services, engineers visit the catalog UI, click **Register Existing Component**, and paste a GitHub URL to the `catalog-info.yaml`. Backstage fetches and registers the file. This is the right approach for a migration — start with your most critical services, not a big-bang import.
+
+---
+
+## The component page
+
+Once a service is in the catalog, its page becomes the single source of truth for that service — ownership, lifecycle, dependencies, API specs, TechDocs, and pipeline status all in one place.
+
+<!-- screenshot: a component page in the catalog — tabs visible (Overview, CI/CD, Docs, Dependencies), the "About" card showing owner, lifecycle, system, and tags -->
 
 ---
 
@@ -100,4 +116,4 @@ Once populated, the catalog lets anyone answer questions that previously require
 - What depends on this database?
 - Show me all services in the checkout platform that are in production.
 
-Part 5 shows how TechDocs brings the runbooks, ADRs, and documentation for each service into the same portal — so the catalog entry and the docs live together.
+Part 5 shows how TechDocs brings the runbooks, ADRs, and documentation for each service into the same portal — and how to surface GitHub Actions pipeline status directly on the catalog page.

@@ -24,7 +24,9 @@ The symptoms are recognisable: teams take a week to get a new service to product
 
 A golden path is the opinionated, pre-approved way to do the common things: create a new service, set up CI/CD, configure observability, provision infrastructure. It is not the only way — it is the way your organisation has decided works, encoded so anyone can follow it without asking for help.
 
-The concept comes from Spotify's engineering culture. Their insight was that developers should not have to choose between freedom and paved roads. A golden path narrows the decision space for undifferentiated work — repo scaffolding, pipeline wiring, observability setup — so engineers can spend their cognitive budget on the problems that actually matter.
+The concept comes from Spotify's engineering culture. Their [2020 post on platform thinking](https://engineering.atspotify.com/2020/08/how-we-use-golden-paths-to-solve-fragmentation-in-our-software-ecosystem/) describes it well: developers should not have to choose between freedom and paved roads. A golden path narrows the decision space for undifferentiated work — repo scaffolding, pipeline wiring, observability setup — so engineers can spend their cognitive budget on the problems that actually matter.
+
+<!-- diagram: two-column contrast — "without golden path" (each team doing setup independently, diverging conventions) vs "with golden path" (one template, consistent output across all services) -->
 
 ---
 
@@ -32,6 +34,8 @@ The concept comes from Spotify's engineering culture. Their insight was that dev
 
 An Internal Developer Platform (IDP) is the infrastructure that delivers the golden path. It is not a wiki, a runbook, or a Slack channel. It is a system that can execute: given a developer's intent ("I want a new Node.js microservice"), it provisions the outcome — repo created, CI wired, secrets injected, service registered — with no manual steps.
 
-Backstage is the most widely adopted open-source foundation for building an IDP. It was created at Spotify, open-sourced in 2020, and is now a CNCF incubating project with adoption at American Airlines, Zalando, Expedia, and hundreds of other engineering organisations.
+<!-- diagram: flow from developer intent → IDP → provisioned artifacts (repo, pipeline, catalog entry, infra) — simple left-to-right arrow diagram -->
+
+[Backstage](https://backstage.io) is the most widely adopted open-source foundation for building an IDP. It was created at Spotify, open-sourced in 2020, and is now a [CNCF incubating project](https://www.cncf.io/projects/backstage/) with adoption at American Airlines, Zalando, Expedia, and hundreds of other engineering organisations.
 
 The next post sets up Backstage locally so you can see the pieces before we start building.
