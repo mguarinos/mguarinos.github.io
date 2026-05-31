@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 320">
+  <style>text { font-family: Inter, system-ui, sans-serif; }</style>
+  <defs>
+    <marker id="ao" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M0 0L8 4L0 8z" fill="#9ca3af"/>
+    </marker>
+  </defs>
+
+  <rect width="700" height="320" fill="#f8f9fa"/>
+
+  <!-- root Application -->
+  <rect x="270" y="22" width="160" height="50" rx="6" fill="#fff7ed" stroke="#f97316" stroke-width="1.8"/>
+  <text x="350" y="42" font-size="12" font-weight="600" fill="#9a3412" text-anchor="middle">root Application</text>
+  <text x="350" y="59" font-size="9.5" fill="#b45309" text-anchor="middle">syncs path: apps/</text>
+
+  <!-- child Applications -->
+  <!-- ingress -->
+  <rect x="40" y="120" width="180" height="46" rx="6" fill="#fff" stroke="#d1d5db" stroke-width="1.5"/>
+  <text x="130" y="139" font-size="11" font-weight="500" fill="#374151" text-anchor="middle">Application: ingress</text>
+  <text x="130" y="155" font-size="9" fill="#6b7280" text-anchor="middle">→ apps/ingress/</text>
+
+  <!-- monitoring -->
+  <rect x="260" y="120" width="180" height="46" rx="6" fill="#fff" stroke="#d1d5db" stroke-width="1.5"/>
+  <text x="350" y="139" font-size="11" font-weight="500" fill="#374151" text-anchor="middle">Application: monitoring</text>
+  <text x="350" y="155" font-size="9" fill="#6b7280" text-anchor="middle">→ apps/monitoring/</text>
+
+  <!-- backend -->
+  <rect x="480" y="120" width="180" height="46" rx="6" fill="#fff" stroke="#d1d5db" stroke-width="1.5"/>
+  <text x="570" y="139" font-size="11" font-weight="500" fill="#374151" text-anchor="middle">Application: backend</text>
+  <text x="570" y="155" font-size="9" fill="#6b7280" text-anchor="middle">→ apps/backend/</text>
+
+  <!-- root -> children -->
+  <path d="M310,72 C250,90 160,100 130,119" stroke="#9ca3af" stroke-width="1.5" fill="none" marker-end="url(#ao)"/>
+  <line x1="350" y1="72" x2="350" y2="118" stroke="#9ca3af" stroke-width="1.5" marker-end="url(#ao)"/>
+  <path d="M390,72 C450,90 540,100 570,119" stroke="#9ca3af" stroke-width="1.5" fill="none" marker-end="url(#ao)"/>
+
+  <!-- caption drawn last so it sits above the arrows it crosses -->
+  <rect x="222" y="84" width="256" height="13" rx="3" fill="#f8f9fa" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="350" y="91" font-size="9" fill="#9ca3af" text-anchor="middle" dominant-baseline="central">each file in apps/ is itself an Application manifest</text>
+
+  <!-- workloads row -->
+  <!-- under ingress -->
+  <rect x="70" y="232" width="120" height="40" rx="5" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1.2"/>
+  <text x="130" y="249" font-size="9.5" fill="#1e40af" text-anchor="middle">Deployment · Service</text>
+  <text x="130" y="263" font-size="9" fill="#6b7280" text-anchor="middle">Ingress · ConfigMap</text>
+
+  <rect x="290" y="232" width="120" height="40" rx="5" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1.2"/>
+  <text x="350" y="249" font-size="9.5" fill="#1e40af" text-anchor="middle">Prometheus · Grafana</text>
+  <text x="350" y="263" font-size="9" fill="#6b7280" text-anchor="middle">ServiceMonitors</text>
+
+  <rect x="510" y="232" width="120" height="40" rx="5" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1.2"/>
+  <text x="570" y="249" font-size="9.5" fill="#1e40af" text-anchor="middle">Deployment · HPA</text>
+  <text x="570" y="263" font-size="9" fill="#6b7280" text-anchor="middle">Service · Secret</text>
+
+  <line x1="130" y1="166" x2="130" y2="230" stroke="#9ca3af" stroke-width="1.5" marker-end="url(#ao)"/>
+  <line x1="350" y1="166" x2="350" y2="230" stroke="#9ca3af" stroke-width="1.5" marker-end="url(#ao)"/>
+  <line x1="570" y1="166" x2="570" y2="230" stroke="#9ca3af" stroke-width="1.5" marker-end="url(#ao)"/>
+
+  <text x="350" y="296" font-size="9" fill="#9ca3af" text-anchor="middle">Kubernetes resources reconciled per child app</text>
+</svg>
