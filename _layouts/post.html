@@ -11,6 +11,19 @@ layout: default
 <div class="post-reading-bar" id="post-reading-bar">
   <div class="container post-reading-bar-inner">
     <span class="post-reading-title">{{ page.title | escape }}</span>
+    {%- if page.toc -%}
+    <div class="post-reading-toc" id="reading-toc" hidden>
+      <button class="post-reading-toc-btn" id="reading-toc-btn" aria-expanded="false" aria-label="Jump to section">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+        <span class="post-reading-toc-label" id="reading-toc-label">Contents</span>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="post-reading-toc-panel" id="reading-toc-panel" hidden>
+        <p class="reading-toc-heading">On this page</p>
+        <ol class="reading-toc-list" id="reading-toc-list"></ol>
+      </div>
+    </div>
+    {%- endif -%}
     {%- if page.series and rb_series.size > 1 -%}
     <div class="post-reading-series">
       <button class="post-reading-series-btn" id="reading-series-btn" aria-expanded="false">
@@ -177,6 +190,28 @@ layout: default
     });
   })();
 
+  // Section dropdown in reading bar
+  (function () {
+    var btn   = document.getElementById('reading-toc-btn');
+    var panel = document.getElementById('reading-toc-panel');
+    if (!btn || !panel) return;
+    function close() {
+      panel.hidden = true;
+      btn.setAttribute('aria-expanded', 'false');
+    }
+    btn.addEventListener('click', function () {
+      var open = panel.hidden;
+      panel.hidden = !open;
+      btn.setAttribute('aria-expanded', String(open));
+    });
+    panel.addEventListener('click', function (e) {
+      if (e.target.closest('a')) close();
+    });
+    document.addEventListener('click', function (e) {
+      if (!btn.contains(e.target) && !panel.contains(e.target)) close();
+    });
+  })();
+
   (function () {
     var bar = document.getElementById('progress-bar');
     if (!bar) return;
@@ -228,19 +263,59 @@ layout: default
     h.appendChild(a);
   });
 
-  // Highlight active TOC section while scrolling
+  // Highlight active section + drive the reading-bar section indicator
   (function () {
     var headings = Array.from(document.querySelectorAll('.post-content h2, .post-content h3'));
     var tocLinks = document.querySelectorAll('#markdown-toc a');
-    if (!headings.length || !tocLinks.length) return;
+    var sections = Array.from(document.querySelectorAll('.post-content h2[id]'));
+
+    function cleanText(el) { return el.textContent.replace(/[#¶]/g, '').trim(); }
+
+    // Build the reading-bar dropdown from top-level (h2) sections
+    var readingToc   = document.getElementById('reading-toc');
+    var readingList  = document.getElementById('reading-toc-list');
+    var readingLabel = document.getElementById('reading-toc-label');
+    var sectionText  = {};
+    if (readingToc && readingList && sections.length) {
+      sections.forEach(function (h) {
+        sectionText[h.id] = cleanText(h);
+        var li = document.createElement('li');
+        var a  = document.createElement('a');
+        a.className = 'reading-toc-link';
+        a.href = '#' + h.id;
+        a.dataset.section = h.id;
+        a.textContent = sectionText[h.id];
+        li.appendChild(a);
+        readingList.appendChild(li);
+      });
+      readingToc.hidden = false;
+    }
+
+    if (!headings.length) return;
+
+    // Map every heading to its governing section (nearest h2 at or above it)
+    var sectionOf = {}, lastH2 = null;
+    headings.forEach(function (h) {
+      if (h.tagName === 'H2') lastH2 = h.id;
+      if (h.id) sectionOf[h.id] = lastH2 || h.id;
+    });
+
+    var readingLinks = readingList ? readingList.querySelectorAll('.reading-toc-link') : [];
+
+    function setActive(id) {
+      var sid = sectionOf[id] || id;
+      tocLinks.forEach(function (a) {
+        a.classList.toggle('toc-active', a.getAttribute('href') === '#' + id);
+      });
+      readingLinks.forEach(function (a) {
+        a.classList.toggle('toc-active', a.dataset.section === sid);
+      });
+      if (readingLabel && sectionText[sid]) readingLabel.textContent = sectionText[sid];
+    }
 
     var observer = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
-        if (!entry.isIntersecting) return;
-        var id = entry.target.id;
-        tocLinks.forEach(function (a) {
-          a.classList.toggle('toc-active', a.getAttribute('href') === '#' + id);
-        });
+        if (entry.isIntersecting) setActive(entry.target.id);
       });
     }, { rootMargin: '-10% 0% -80% 0%', threshold: 0 });
 

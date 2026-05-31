@@ -1600,6 +1600,86 @@ figcaption {
   flex-shrink: 0;
 }
 
+/* Section indicator / jump menu in the reading bar */
+.post-reading-toc { position: relative; flex-shrink: 0; min-width: 0; }
+
+.post-reading-toc-btn {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  max-width: 15rem;
+  font-size: .75rem;
+  font-weight: 500;
+  color: var(--accent);
+  background: var(--accent-sub);
+  border: 1px solid var(--cat-border);
+  border-radius: var(--radius);
+  padding: .28rem .55rem;
+  cursor: pointer;
+  transition: background .15s;
+  &:hover { background: rgba(83, 155, 245, .18); }
+  svg:first-child { flex-shrink: 0; opacity: .8; }
+  svg:last-child { flex-shrink: 0; transition: transform .2s; }
+  &[aria-expanded="true"] svg:last-child { transform: rotate(180deg); }
+}
+
+.post-reading-toc-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.post-reading-toc-panel {
+  position: absolute;
+  top: calc(100% + .4rem);
+  right: 0;
+  min-width: 240px;
+  max-width: 340px;
+  max-height: min(360px, 70vh);
+  overflow-y: auto;
+  background: var(--bg-card);
+  border: 1px solid var(--border-em);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  z-index: 100;
+}
+
+.reading-toc-heading {
+  font-size: .68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--accent);
+  padding: .7rem 1rem .35rem;
+  margin: 0;
+}
+
+.reading-toc-list {
+  list-style: none;
+  padding: .2rem 0 .5rem;
+  margin: 0;
+  counter-reset: toc;
+  li { margin: 0; }
+}
+
+.reading-toc-link {
+  display: block;
+  padding: .42rem 1rem;
+  font-size: .82rem;
+  line-height: 1.4;
+  color: var(--text-3);
+  text-decoration: none;
+  border-left: 2px solid transparent;
+  &:hover { background: var(--bg-card-2); color: var(--text); }
+  &.toc-active {
+    color: var(--accent);
+    font-weight: 500;
+    background: var(--accent-sub);
+    border-left-color: var(--accent);
+  }
+}
+
 @media (max-width: 767px) {
   .post-reading-bar {
     position: fixed;
@@ -1614,7 +1694,13 @@ figcaption {
   }
   [data-theme="light"] .post-reading-bar { background: rgba(246, 248, 250, .92); }
   .post-reading-bar-inner { height: var(--header-h); padding: 0 1rem; }
-  .post-reading-series-panel { max-width: calc(100vw - 2rem); }
+  .post-reading-series-panel,
+  .post-reading-toc-panel { max-width: calc(100vw - 2rem); }
+  .post-reading-toc-btn { max-width: 11rem; }
+}
+
+@media (max-width: 480px) {
+  .post-reading-toc-btn { max-width: 8.5rem; }
 }
 
 /* ============================================================
