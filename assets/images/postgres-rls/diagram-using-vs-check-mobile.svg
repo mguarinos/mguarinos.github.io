@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 452">
+  <style>text { font-family: Inter, system-ui, sans-serif; } .m { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }</style>
+  <defs>
+    <marker id="ar" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0L8 4L0 8z" fill="#9ca3af"/>
+    </marker>
+  </defs>
+  <rect width="360" height="452" fill="#f8f9fa"/>
+  <rect x="16" y="16" width="12" height="12" rx="3" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="36" y="22" font-size="12.5" font-weight="600" fill="#1e3a8a" text-anchor="start" dominant-baseline="central">USING — existing rows</text>
+  <text x="36" y="40" font-size="11" fill="#6b7280" text-anchor="start" dominant-baseline="central">fails silently: the row is filtered out</text>
+  <rect x="16" y="56" width="12" height="12" rx="3" fill="#fff7ed" stroke="#f97316" stroke-width="1.5"/>
+  <text x="36" y="62" font-size="12.5" font-weight="600" fill="#9a3412" text-anchor="start" dominant-baseline="central">WITH CHECK — new rows</text>
+  <text x="36" y="80" font-size="11" fill="#6b7280" text-anchor="start" dominant-baseline="central">fails loudly: the statement errors</text>
+  <text x="16" y="114" class="m" font-size="13" font-weight="600" fill="#374151" text-anchor="start" dominant-baseline="central">SELECT</text>
+  <rect x="16" y="128" width="156" height="52" rx="6" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="94" y="146" font-size="11.5" fill="#1e3a8a" text-anchor="middle" dominant-baseline="central">which rows</text>
+  <text x="94" y="162" font-size="11.5" fill="#1e3a8a" text-anchor="middle" dominant-baseline="central">are visible</text>
+  <rect x="188" y="128" width="156" height="52" rx="6" fill="none" stroke="#d1d5db" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text x="266" y="154" font-size="11.5" fill="#9ca3af" text-anchor="middle" dominant-baseline="central">not checked</text>
+  <text x="16" y="200" class="m" font-size="13" font-weight="600" fill="#374151" text-anchor="start" dominant-baseline="central">INSERT</text>
+  <rect x="16" y="214" width="156" height="52" rx="6" fill="none" stroke="#d1d5db" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text x="94" y="232" font-size="11.5" fill="#9ca3af" text-anchor="middle" dominant-baseline="central">not checked</text>
+  <text x="94" y="248" font-size="11.5" fill="#9ca3af" text-anchor="middle" dominant-baseline="central">(no old row)</text>
+  <rect x="188" y="214" width="156" height="52" rx="6" fill="#fff7ed" stroke="#f97316" stroke-width="1.5"/>
+  <text x="266" y="232" font-size="11.5" fill="#9a3412" text-anchor="middle" dominant-baseline="central">is the new row</text>
+  <text x="266" y="248" font-size="11.5" fill="#9a3412" text-anchor="middle" dominant-baseline="central">allowed?</text>
+  <text x="16" y="286" class="m" font-size="13" font-weight="600" fill="#374151" text-anchor="start" dominant-baseline="central">UPDATE</text>
+  <rect x="16" y="300" width="156" height="52" rx="6" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="94" y="318" font-size="11.5" fill="#1e3a8a" text-anchor="middle" dominant-baseline="central">which rows it may</text>
+  <text x="94" y="334" font-size="11.5" fill="#1e3a8a" text-anchor="middle" dominant-baseline="central">target (old version)</text>
+  <rect x="188" y="300" width="156" height="52" rx="6" fill="#fff7ed" stroke="#f97316" stroke-width="1.5"/>
+  <text x="266" y="318" font-size="11.5" fill="#9a3412" text-anchor="middle" dominant-baseline="central">is the result allowed?</text>
+  <text x="266" y="334" font-size="11.5" fill="#9a3412" text-anchor="middle" dominant-baseline="central">(new version)</text>
+  <line x1="173" y1="326" x2="186" y2="326" stroke="#9ca3af" stroke-width="1.5" marker-end="url(#ar)"/>
+  <text x="16" y="372" class="m" font-size="13" font-weight="600" fill="#374151" text-anchor="start" dominant-baseline="central">DELETE</text>
+  <rect x="16" y="386" width="156" height="52" rx="6" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="94" y="404" font-size="11.5" fill="#1e3a8a" text-anchor="middle" dominant-baseline="central">which rows it</text>
+  <text x="94" y="420" font-size="11.5" fill="#1e3a8a" text-anchor="middle" dominant-baseline="central">may remove</text>
+  <rect x="188" y="386" width="156" height="52" rx="6" fill="none" stroke="#d1d5db" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text x="266" y="412" font-size="11.5" fill="#9ca3af" text-anchor="middle" dominant-baseline="central">not checked</text>
+</svg>
