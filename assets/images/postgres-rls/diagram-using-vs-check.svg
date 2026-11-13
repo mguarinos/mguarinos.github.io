@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 330">
+  <style>text { font-family: Inter, system-ui, sans-serif; } .m { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }</style>
+  <defs>
+    <marker id="uc" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M0 0L8 4L0 8z" fill="#9ca3af"/>
+    </marker>
+  </defs>
+
+  <rect width="700" height="330" fill="#f8f9fa"/>
+
+  <!-- column headers -->
+  <text x="110" y="34" font-size="12" font-weight="600" fill="#374151" text-anchor="middle">Statement</text>
+  <text x="330" y="34" font-size="12" font-weight="600" fill="#1e3a8a" text-anchor="middle">USING — existing rows</text>
+  <text x="575" y="34" font-size="12" font-weight="600" fill="#9a3412" text-anchor="middle">WITH CHECK — new rows</text>
+  <text x="330" y="50" font-size="9" fill="#6b7280" text-anchor="middle">fails silently: row is filtered out</text>
+  <text x="575" y="50" font-size="9" fill="#6b7280" text-anchor="middle">fails loudly: statement errors</text>
+
+  <!-- rows -->
+  <!-- SELECT -->
+  <rect x="50" y="68" width="120" height="44" rx="5" fill="#fff" stroke="#d1d5db" stroke-width="1.5"/>
+  <text x="110" y="90" class="m" font-size="12" fill="#374151" text-anchor="middle" dominant-baseline="central">SELECT</text>
+  <rect x="250" y="72" width="160" height="36" rx="5" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="330" y="90" font-size="10" fill="#1e3a8a" text-anchor="middle" dominant-baseline="central">which rows are visible</text>
+  <line x1="170" y1="90" x2="248" y2="90" stroke="#9ca3af" stroke-width="1.5" marker-end="url(#uc)"/>
+  <text x="575" y="90" font-size="10" fill="#9ca3af" text-anchor="middle" dominant-baseline="central">—</text>
+
+  <!-- INSERT -->
+  <rect x="50" y="128" width="120" height="44" rx="5" fill="#fff" stroke="#d1d5db" stroke-width="1.5"/>
+  <text x="110" y="150" class="m" font-size="12" fill="#374151" text-anchor="middle" dominant-baseline="central">INSERT</text>
+  <text x="330" y="141" font-size="9" fill="#9ca3af" text-anchor="middle">no existing row to filter</text>
+  <rect x="495" y="132" width="160" height="36" rx="5" fill="#fff7ed" stroke="#f97316" stroke-width="1.5"/>
+  <text x="575" y="150" font-size="10" fill="#9a3412" text-anchor="middle" dominant-baseline="central">is the new row allowed?</text>
+  <path d="M170,150 L493,150" stroke="#9ca3af" stroke-width="1.5" stroke-dasharray="4 3" fill="none" marker-end="url(#uc)"/>
+
+  <!-- UPDATE -->
+  <rect x="50" y="188" width="120" height="64" rx="5" fill="#fff" stroke="#d1d5db" stroke-width="1.5"/>
+  <text x="110" y="220" class="m" font-size="12" fill="#374151" text-anchor="middle" dominant-baseline="central">UPDATE</text>
+  <rect x="250" y="192" width="160" height="56" rx="5" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="330" y="212" font-size="10" fill="#1e3a8a" text-anchor="middle" dominant-baseline="central">which rows it may target</text>
+  <text x="330" y="228" font-size="9" fill="#6b7280" text-anchor="middle" dominant-baseline="central">(the old version)</text>
+  <rect x="495" y="192" width="160" height="56" rx="5" fill="#fff7ed" stroke="#f97316" stroke-width="1.5"/>
+  <text x="575" y="212" font-size="10" fill="#9a3412" text-anchor="middle" dominant-baseline="central">is the result allowed?</text>
+  <text x="575" y="228" font-size="9" fill="#6b7280" text-anchor="middle" dominant-baseline="central">(the new version)</text>
+  <line x1="170" y1="220" x2="248" y2="220" stroke="#9ca3af" stroke-width="1.5" marker-end="url(#uc)"/>
+  <line x1="410" y1="220" x2="493" y2="220" stroke="#9ca3af" stroke-width="1.5" marker-end="url(#uc)"/>
+  <text x="452" y="212" font-size="9" fill="#6b7280" text-anchor="middle">then</text>
+
+  <!-- DELETE -->
+  <rect x="50" y="268" width="120" height="44" rx="5" fill="#fff" stroke="#d1d5db" stroke-width="1.5"/>
+  <text x="110" y="290" class="m" font-size="12" fill="#374151" text-anchor="middle" dominant-baseline="central">DELETE</text>
+  <rect x="250" y="272" width="160" height="36" rx="5" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="330" y="290" font-size="10" fill="#1e3a8a" text-anchor="middle" dominant-baseline="central">which rows it may remove</text>
+  <line x1="170" y1="290" x2="248" y2="290" stroke="#9ca3af" stroke-width="1.5" marker-end="url(#uc)"/>
+  <text x="575" y="290" font-size="10" fill="#9ca3af" text-anchor="middle" dominant-baseline="central">—</text>
+</svg>

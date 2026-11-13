@@ -38,7 +38,6 @@ Most of what ends up here is hard-won: things that weren't obvious from the docs
 <ul>
   <li>CKA: Certified Kubernetes Administrator</li>
   <li>AWS Certified Solutions Architect – Professional</li>
-  <li>AWS Certified Solutions Architect – Associate</li>
   <li>AWS Certified SysOps Administrator – Associate</li>
   <li>AWS Certified Advanced Networking – Specialty</li>
 </ul>
